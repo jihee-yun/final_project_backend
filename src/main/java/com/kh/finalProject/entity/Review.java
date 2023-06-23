@@ -6,15 +6,16 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "T_Review")
+@Table(name = "t_review")
 @Getter @Setter @ToString
-@NoArgsConstructor // 빌더용
+@NoArgsConstructor // 빌더용(안쓰면 없어도 됨)
 public class Review {
     @Id
+    @Column(name = "review_id_pk")
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long reviewId; // 리뷰 구분용 ID
-    private Long userId; // 리뷰 작성자 ID (일반 회원)
-    private Long cafeId; // 리뷰 대상 카페 ID
+    private Long reviewNum; // 리뷰 구분용 ID
+    private Long userNum; // 리뷰 작성자 ID (일반 회원)
+    private Long cafeNum; // 리뷰 대상 카페 ID
     @Lob // 문자열 길이 증가
     @Column(nullable = false) // null 방지
     private String reviewContent; // 리뷰 내용

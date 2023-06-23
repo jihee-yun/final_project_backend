@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 @Table(name = "member") // 테이블 이름 정의
 @Getter @Setter @ToString
 @NoArgsConstructor // 디폴트 생성자 생성
-public class Member {
+public class Member { // 사업자 회원, 아직 강사님 코드 그대로
     @Id
     @Column(name = "member_id")
     @GeneratedValue(strategy = GenerationType.AUTO)

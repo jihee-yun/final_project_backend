@@ -23,9 +23,9 @@ public class ReviewService {
         List<ReviewDto> reviewDtoList = new ArrayList<>();
         for (Review review : reviewList) {
             ReviewDto reviewDto = new ReviewDto();
-            reviewDto.setReviewId(review.getReviewId());
-            reviewDto.setUserId(review.getUserId());
-            reviewDto.setCafeId(review.getCafeId());
+//            reviewDto.setReviewId(review.getReviewId());
+//            reviewDto.setUserId(review.getUserId());
+//            reviewDto.setCafeId(review.getCafeId());
             reviewDto.setReviewContent(review.getReviewContent());
             reviewDto.setReviewImgUrl1(review.getReviewImgUrl1());
             reviewDto.setReviewImgUrl2(review.getReviewImgUrl2());
@@ -42,9 +42,9 @@ public class ReviewService {
         List<ReviewDto> reviewDtoList = new ArrayList<>();
         for (Review review : reviewList) {
             ReviewDto reviewDto = new ReviewDto();
-            reviewDto.setReviewId(review.getReviewId());
-            reviewDto.setUserId(review.getUserId());
-            reviewDto.setCafeId(review.getCafeId());
+//            reviewDto.setReviewId(review.getReviewId());
+//            reviewDto.setUserId(review.getUserId());
+//            reviewDto.setCafeId(review.getCafeId());
             reviewDto.setReviewContent(review.getReviewContent());
             reviewDto.setReviewImgUrl1(review.getReviewImgUrl1());
             reviewDto.setReviewImgUrl2(review.getReviewImgUrl2());

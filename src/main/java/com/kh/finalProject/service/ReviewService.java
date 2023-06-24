@@ -23,9 +23,9 @@ public class ReviewService {
         List<ReviewDto> reviewDtoList = new ArrayList<>();
         for (Review review : reviewList) {
             ReviewDto reviewDto = new ReviewDto();
-            reviewDto.setReviewId(review.getReviewNum());
-            reviewDto.setUserId(review.getUserNum());
-            reviewDto.setCafeId(review.getCafeNum());
+            reviewDto.setReviewNum(review.getReviewNum());
+            reviewDto.setUserNum(review.getUserNum());
+            reviewDto.setCafeNum(review.getCafeNum());
             reviewDto.setReviewContent(review.getReviewContent());
             reviewDto.setReviewImgUrl1(review.getReviewImgUrl1());
             reviewDto.setReviewImgUrl2(review.getReviewImgUrl2());
@@ -37,14 +37,14 @@ public class ReviewService {
         return reviewDtoList;
     }
 
-    public List<ReviewDto> getReviewListById(Long userId) {
-        List<Review> reviewList = reviewRepository.findByUserId(userId);
+    public List<ReviewDto> getReviewListByNum(Long userId) {
+        List<Review> reviewList = reviewRepository.findByUserNum(userId);
         List<ReviewDto> reviewDtoList = new ArrayList<>();
         for (Review review : reviewList) {
             ReviewDto reviewDto = new ReviewDto();
-            reviewDto.setReviewId(review.getReviewNum());
-            reviewDto.setUserId(review.getUserNum());
-            reviewDto.setCafeId(review.getCafeNum());
+            reviewDto.setReviewNum(review.getReviewNum());
+            reviewDto.setUserNum(review.getUserNum());
+            reviewDto.setCafeNum(review.getCafeNum());
             reviewDto.setReviewContent(review.getReviewContent());
             reviewDto.setReviewImgUrl1(review.getReviewImgUrl1());
             reviewDto.setReviewImgUrl2(review.getReviewImgUrl2());

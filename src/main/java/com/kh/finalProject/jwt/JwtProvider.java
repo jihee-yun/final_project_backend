@@ -13,9 +13,9 @@ import java.util.Date;
 
 @Component
 public class JwtProvider {
-    @Value("${springboot.jw.secret}")
+    @Value("${springboot.jwt.secret}")
     private String jwtSecret;
-    @Value("${springboot.secret.Expiration}")
+    @Value("${springboot.jwt.secret.Expiration}")
     private int accessTokenExpiration;
     @Value("${springboot.jwt.secret.Expiration}")
     private int refreshTokenExpiration;
@@ -27,13 +27,25 @@ public class JwtProvider {
     }
 
     public String generateAccessToken(String userId) {
-        Date date = new Date();
-        Date expDate = new Date(date.getTime() + accessTokenExpiration*1000);
+        Date now = new Date();
+        Date expiryDate = new Date(now.getTime() + accessTokenExpiration * 1000);
 
         return Jwts.builder()
                 .setSubject(userId)
-                .setIssuedAt(date)
-                .setExpiration(expDate)
+                .setIssuedAt(now)
+                .setExpiration(expiryDate)
+                .signWith(secretKey)
+                .compact();
+    }
+
+    public String generateRefreshToken(String userId) {
+        Date now = new Date();
+        Date expiryDate = new Date(now.getTime() + refreshTokenExpiration * 1000);
+
+        return Jwts.builder()
+                .setSubject(userId)
+                .setIssuedAt(now)
+                .setExpiration(expiryDate)
                 .signWith(secretKey)
                 .compact();
     }

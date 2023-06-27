@@ -17,7 +17,11 @@ public class CafeMenu {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @Column(nullable = false)
     private String name;
+
+    @Column(nullable = false)
+    private String price;
 
     @ManyToOne
     @JoinColumn(name = "cafe_id")

@@ -21,6 +21,4 @@ public class CafeImg {
     @ManyToOne
     @JoinColumn(name = "cafe_id")
     private Cafe cafe;
-
-
 }

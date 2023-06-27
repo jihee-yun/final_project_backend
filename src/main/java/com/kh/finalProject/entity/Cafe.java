@@ -11,7 +11,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "cafe")
-@Getter @Setter @ToString
+@Getter @Setter @ToString(exclude = {"cafeImgList", "cafeMenuList"})
 @NoArgsConstructor
 public class Cafe {
     @Id

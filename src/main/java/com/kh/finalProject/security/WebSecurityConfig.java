@@ -42,7 +42,7 @@ public class WebSecurityConfig {
                 .and()
                 .authorizeRequests()
                 // 경로에 대해 인증 없이 접근을 허용
-                .antMatchers("/auth/**", "/mypage/**", "/review/**", "/cafe/**").permitAll() // 어떤 패스로 들어올 때 접근을 허용해줄건지
+                .antMatchers("/auth/**", "/mypage/**", "/review/**", "/cafe/**", "/event/**").permitAll() // 어떤 패스로 들어올 때 접근을 허용해줄건지
                 .anyRequest().authenticated()
 
                 .and()

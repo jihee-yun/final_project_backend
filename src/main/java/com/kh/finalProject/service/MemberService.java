@@ -21,12 +21,11 @@ public class MemberService {
     private final MemberRepository memberRepository;
 
     // 회원 가입
-    public boolean regMember(String userId, String password, String name, String email) {
+    public boolean regMember(String userId, String password, String name) {
         Member member = new Member();
         member.setUserId(userId);
         member.setPassword(password);
         member.setName(name);
-        member.setEmail(email);
         if(regMemberCheck(member)) {
             memberRepository.save(member);
             return true;
@@ -56,9 +55,30 @@ public class MemberService {
             memberDto.setUserId(info.getUserId());
             memberDto.setPassword(info.getPassword());
             memberDto.setName(info.getName());
-            memberDto.setEmail(info.getEmail());
             memberDtos.add(memberDto);
         }
         return memberDtos;
+    }
+
+    // 비밀번호 찾기
+    public String findPw(String email) {
+        try {
+            Optional<Member> memberOptional = memberRepository.findByEmail(email);
+            if (memberOptional.isPresent()) {
+                Member member = memberOptional.get();
+                return member.getPassword(); // 비밀번호 반환
+            } else {
+                return null; // 멤버가 존재하지 않는 경우 null 반환
+            }
+        } catch (Exception e) {
+            // 예외 처리
+            return null;
+        }
+    }
+
+    // 회원가입 여부
+    public boolean checkUserIdExist(String userId) {
+        Optional<Member> memberInfo = memberRepository.findByUserId(userId);
+        return memberInfo.isPresent();
     }
 }

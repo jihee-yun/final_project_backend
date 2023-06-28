@@ -6,10 +6,11 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
+
 @Repository
 public interface MemberRepository extends JpaRepository<Member, Long> {
     Optional<Member> findByEmail(String email); // Optional -> wrapper 클래스(널값 방지해주는 역할)
+    Optional<Member> findByUserId(String userId);
     Optional<Member> findByUserIdAndPassword(String userId, String password);
     boolean existsByEmail(String email);
-
 }

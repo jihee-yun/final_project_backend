@@ -19,7 +19,7 @@ public class User { // 일반 회원
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long userNum;
-    private String Id;
+    private String userId;
     private String name;
     private String password;
     private String phone;

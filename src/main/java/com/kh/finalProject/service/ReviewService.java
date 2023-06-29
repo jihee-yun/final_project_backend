@@ -8,7 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -57,7 +57,7 @@ public class ReviewService {
         return reviewDtoList;
     }
 
-    public List<ReviewDto> getReviewListByNumAndDate(Long userNum, LocalDateTime startDate, LocalDateTime endDate) {
+    public List<ReviewDto> getReviewListByNumAndDate(Long userNum, LocalDate startDate, LocalDate endDate) {
         List<Review> reviewList = reviewRepository.findByUserNumAndWrittenTimeBetween(userNum, startDate, endDate);
         List<ReviewDto> reviewDtoList = new ArrayList<>();
         for (Review review : reviewList) {
@@ -75,6 +75,10 @@ public class ReviewService {
         }
         return reviewDtoList;
     }
+
+
+
+
 
 
 }

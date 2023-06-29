@@ -3,7 +3,7 @@ package com.kh.finalProject.entity;
 import lombok.*;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "t_review")
@@ -21,7 +21,7 @@ public class Review {
     private String reviewContent; // 리뷰 내용
     private String reviewImgUrl1; // 이미지 url 1
     private String reviewImgUrl2; // 이미지 url 2
-    private LocalDateTime writtenTime; // 글 작성일
+    private LocalDate writtenTime; // 글 작성일
     private int likeCount; // 좋아요 카운트
     private double score; // 리뷰 점수
 

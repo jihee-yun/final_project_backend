@@ -9,7 +9,9 @@ import lombok.ToString;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "T_User")
@@ -35,5 +37,11 @@ public class User { // 일반 회원
     private String intro; // 한 줄 소개
     @Enumerated(EnumType.STRING)
     private Existence existence; // 탈퇴 여부
+
+    @OneToMany(mappedBy = "user")
+    private List<Guild> guildList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user")
+    private List<GuildMember> guildMemberList = new ArrayList<>();
 
 }

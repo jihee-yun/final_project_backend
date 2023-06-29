@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "cafe")
+@Table(name = "t_cafe")
 @Getter @Setter @ToString(exclude = {"cafeImgList", "cafeMenuList"})
 @NoArgsConstructor
 public class Cafe {

@@ -8,7 +8,7 @@ import lombok.ToString;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "cafe_menu")
+@Table(name = "t_cafe_menu")
 @Getter @Setter @ToString
 @NoArgsConstructor
 public class CafeMenu {

@@ -48,15 +48,15 @@ public class UserService {
         List<User> userInfoList;
         userInfoList = userRepository.findAll();
 
-        List<UserDto> memberDtos = new ArrayList<>();
+        List<UserDto> userDtos = new ArrayList<>();
         for(User info : userInfoList) {
             UserDto userDto = new UserDto();
             userDto.setUserId(info.getUserId());
             userDto.setPassword(info.getPassword());
             userDto.setName(info.getName());
-            memberDtos.add(userDto);
+            userDtos.add(userDto);
         }
-        return memberDtos;
+        return userDtos;
     }
 
     // 비밀번호 찾기
@@ -77,7 +77,7 @@ public class UserService {
 
     // 회원가입 여부
     public boolean checkUserIdExist(String userId) {
-        Optional<User> memberInfo = userRepository.findByUserId(userId);
-        return memberInfo.isPresent();
+        Optional<User> userInfo = userRepository.findByUserId(userId);
+        return userInfo.isPresent();
     }
 }

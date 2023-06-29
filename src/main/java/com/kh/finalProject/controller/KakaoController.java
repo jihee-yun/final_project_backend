@@ -31,7 +31,6 @@ public class KakaoController {
         return ResponseEntity.ok(token);
     }
 
-
     @PostMapping("/userinfo")
     public ResponseEntity<String> getUserInfo(@RequestBody String token) {
         String userInfo = kakaoService.requestKakaoUserInfo(token);

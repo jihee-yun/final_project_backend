@@ -1,12 +1,18 @@
 package com.kh.finalProject.service;
 
 
+import com.kh.finalProject.dto.TokenDto;
 import com.kh.finalProject.dto.UserDto;
 import com.kh.finalProject.entity.User;
+import com.kh.finalProject.jwt.TokenProvider;
 import com.kh.finalProject.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
+
+import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +24,8 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
+    private final HttpSession session;
+    private final TokenProvider tokenProvider;
 
     // 회원 가입
     public boolean regMember(String userId, String password, String name) {
@@ -25,7 +33,7 @@ public class UserService {
         user.setUserId(userId);
         user.setPassword(password);
         user.setName(name);
-        if(regMemberCheck(user)) {
+        if (regMemberCheck(user)) {
             userRepository.save(user);
             return true;
         }
@@ -49,7 +57,7 @@ public class UserService {
         userInfoList = userRepository.findAll();
 
         List<UserDto> userDtos = new ArrayList<>();
-        for(User info : userInfoList) {
+        for (User info : userInfoList) {
             UserDto userDto = new UserDto();
             userDto.setUserId(info.getUserId());
             userDto.setPassword(info.getPassword());
@@ -79,5 +87,20 @@ public class UserService {
     public boolean checkUserIdExist(String userId) {
         Optional<User> userInfo = userRepository.findByUserId(userId);
         return userInfo.isPresent();
+    }
+
+    // 카카오
+    public UserDto kakaoLogin() {
+        String email = (String) session.getAttribute("email");
+        log.info("userService.kakaoLogin mail check = {}", email);
+
+        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(email, "");
+        log.info("userService.kakaoLogin authentication token check = {}", authenticationToken);
+
+//        Authentication authentication = kakaoAuthProvider.authenticate(authenticationToken);
+//        log.info("authentication = {}", authentication);
+
+//        return tokenProvider.generateTokenDto(authentication);
+        return null;
     }
 }

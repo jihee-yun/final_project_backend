@@ -11,6 +11,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.stereotype.Component;
+import org.springframework.web.reactive.function.client.WebClient;
 
 @RequiredArgsConstructor
 @Configuration
@@ -21,6 +22,11 @@ public class WebSecurityConfig {
         private final TokenProvider tokenProvider;
         private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
         private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
+
+        @Bean
+        public WebClient webClient() {
+            return WebClient.create();
+        }
 
         @Bean
         public PasswordEncoder passwordEncoder() {
@@ -43,7 +49,7 @@ public class WebSecurityConfig {
                     .and()
                     .authorizeRequests()
                     // 경로에 대해 인증 없이 접근을 허용
-                    .antMatchers("/auth/**", "/mypage/**", "/review/**", "/cafe/**", "/event/**", "/kakao/**", "/couponstore/**", "/guild/**").permitAll() // 어떤 패스로 들어올 때 접근을 허용해줄건지
+                    .antMatchers("/auth/**", "/mypage/**", "/review/**", "/cafe/**", "/event/**", "/koauth/**", "/couponstore/**", "/guild/**").permitAll() // 어떤 패스로 들어올 때 접근을 허용해줄건지
                     .anyRequest().authenticated()
 
                     .and()

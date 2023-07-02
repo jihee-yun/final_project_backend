@@ -1,39 +1,48 @@
 package com.kh.finalProject.controller;
 
-import com.kh.finalProject.dto.KakaoAuthRequestDto;
+
+
 import com.kh.finalProject.service.KAKAOService;
+import com.kh.finalProject.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.util.UriComponentsBuilder;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.nio.charset.StandardCharsets;
 
-
-@RestController
-@RequestMapping("/kakao")
+@Slf4j
+@RequestMapping("/koauth/login")
+@Controller
 @RequiredArgsConstructor
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class KakaoController {
+    String email = "taehoon1999@nate.com";
     private final KAKAOService kakaoService;
+    private final UserService userService;
 
-    @PostMapping("/login")
-    public ResponseEntity<String> kakaoLogin(@RequestBody KakaoAuthRequestDto kakaoAuth){
-        Map<String, String> kakaoAuthMap = new HashMap<>();
-        kakaoAuthMap.put("grant_type", "authorization_code");
-        kakaoAuthMap.put("client_id", kakaoAuth.getClient_id());
-        kakaoAuthMap.put("client_secret", kakaoAuth.getSecretKey());
-        kakaoAuthMap.put("redirect_uri", kakaoAuth.getRedirect_uri());
-        kakaoAuthMap.put("code", kakaoAuth.getCode());
+    // authorization code를 받아옴
+    @GetMapping("/kakao")
+    public String redirectKakaoLogin(@RequestParam(value = "code") String authCode, RedirectAttributes redirectAttributes) {
+        kakaoService.requestAccessToken(authCode);
+        if (kakaoService.checkRegistrationByEmail(email)) {
+            String jwt = kakaoService.generateJWT(userService.kakaoLogin());
+            log.info("JWT = {}", jwt);
 
-        String token = kakaoService.requestKakaoToken(kakaoAuthMap);
+            redirectAttributes.addAttribute("LoginKakao", true);
+            redirectAttributes.addAttribute("needSignup", false);
+            redirectAttributes.addAttribute("jwt", jwt);
 
-        return ResponseEntity.ok(token);
-    }
+            return "redirect:http://localhost:3000/";
+        }
 
-    @PostMapping("/userinfo")
-    public ResponseEntity<String> getUserInfo(@RequestBody String token) {
-        String userInfo = kakaoService.requestKakaoUserInfo(token);
-        return ResponseEntity.ok(userInfo);
+        return UriComponentsBuilder.fromUriString("redirect:http://localhost:3000/login")
+                .queryParam("isKakao", true)
+                .queryParam("needSignup", true)
+                .encode(StandardCharsets.UTF_8)
+                .build()
+                .toUriString();
     }
 }

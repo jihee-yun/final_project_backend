@@ -27,7 +27,7 @@ public class UserController {
     public String userLogin(@RequestBody Map<String, String> loginData) {
         String userId = loginData.get("userId");
         String pw = loginData.get("pw");
-        System.out.println("아이디 패스워드 확인 : "+userId + " " + pw);
+        System.out.println("아이디 패스워드 확인 : " + userId + " " + pw);
         boolean result = userService.loginCheck(userId, pw);
         return Boolean.toString(result);
     }
@@ -35,11 +35,11 @@ public class UserController {
     // 회원가입
     @PostMapping("/new")
     public ResponseEntity<Map<String, Object>> signUp(@RequestBody Map<String, String> signData) {
-        try {
+        //try {
             String userId = signData.get("userId");
-            String pw = signData.get("pw");
+            String password = signData.get("password");
             String name = signData.get("name");
-            boolean result = userService.regMember(userId, name, pw);
+            boolean result = userService.regMember(userId, name, password);
             log.warn(String.valueOf(result));
             if (result) {
                 Map<String, Object> response = new HashMap<>();
@@ -49,14 +49,14 @@ public class UserController {
                 log.warn("값이 false");
                 Map<String, Object> response = new HashMap<>();
                 response.put("success", false);
-                return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+                return new ResponseEntity<>(response, HttpStatus.OK);
             }
-        } catch (Exception e) {
-            log.warn("Controller 오류");
-            Map<String, Object> response = new HashMap<>();
-            response.put("success", false);
-            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
-        }
+//        } catch (Exception e) {
+//            log.warn("Controller 오류");
+//            Map<String, Object> response = new HashMap<>();
+//            response.put("success", false);
+//            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+//        }
     }
 
     @Autowired
@@ -93,25 +93,26 @@ public class UserController {
         String email = find.get("email");
 
         String resultString = userService.findPw(email);
-        boolean result =  Boolean.parseBoolean(resultString);
+        boolean result = Boolean.parseBoolean(resultString);
 
-        if(result == true) return new ResponseEntity<>(true, HttpStatus.OK);
+        if (result == true) return new ResponseEntity<>(true, HttpStatus.OK);
         else return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
     }
 
     // 회원가입 중복
-    @PostMapping("/check")
+    @GetMapping("/check")
     public ResponseEntity<Boolean> doubleCheck(@RequestParam("userId") String userId) {
-        try {
-            boolean result = userService.checkUserIdExist(userId);
-            if(result) {
-                return new ResponseEntity<>(true, HttpStatus.OK);
-            }else {
-                return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
-            }
-        }catch(Exception e) {
-            return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
+        //try {
+        boolean result = userService.checkUserIdExist(userId);
+        if (result) {
+            return new ResponseEntity<>(true, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(false, HttpStatus.OK);
         }
+//        }catch(Exception e) {
+//            return new ResponseEntity<>(false, HttpStatus.ACCEPTED);
+//        }
+
     }
 }
 

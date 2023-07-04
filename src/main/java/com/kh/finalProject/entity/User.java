@@ -21,6 +21,7 @@ public class User { // 일반 회원
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long userNum;
+    @Column(unique = true)
     private String userId;
     private String name;
     private String password;

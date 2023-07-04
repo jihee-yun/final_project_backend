@@ -9,6 +9,7 @@ import com.kh.finalProject.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
@@ -28,11 +29,11 @@ public class UserService {
 
     // 회원 가입
     public boolean regMember(String userId, String password, String name) {
-        User user = new User();
-        user.setUserId(userId);
-        user.setPassword(password);
-        user.setName(name);
-        if (regMemberCheck(user)) {
+        if (userRepository.findByEmail(userId).isEmpty()) {
+            User user = new User();
+            user.setUserId(userId);
+            user.setPassword(password);
+            user.setName(name);
             userRepository.save(user);
             return true;
         }

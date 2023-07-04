@@ -5,6 +5,7 @@ import com.kh.finalProject.dto.UserDto;
 import com.kh.finalProject.entity.User;
 import com.kh.finalProject.repository.UserRepository;
 import com.kh.finalProject.service.UserService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,13 +16,11 @@ import java.util.*;
 
 @Slf4j
 @RestController
+@RequiredArgsConstructor
 @CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/user")
 public class UserController {
     private final UserService userService;
-    public UserController(UserService userService) {
-        this.userService = userService;
-    }
 
     // 로그인
     @PostMapping("/login")
@@ -38,8 +37,8 @@ public class UserController {
     public ResponseEntity<Map<String, Object>> signUp(@RequestBody Map<String, String> signData) {
         try {
             String userId = signData.get("userId");
-            String name = signData.get("name");
             String pw = signData.get("pw");
+            String name = signData.get("name");
             boolean result = userService.regMember(userId, name, pw);
             log.warn(String.valueOf(result));
             if (result) {
@@ -101,7 +100,7 @@ public class UserController {
     }
 
     // 회원가입 중복
-    @GetMapping("/check")
+    @PostMapping("/check")
     public ResponseEntity<Boolean> doubleCheck(@RequestParam("userId") String userId) {
         try {
             boolean result = userService.checkUserIdExist(userId);

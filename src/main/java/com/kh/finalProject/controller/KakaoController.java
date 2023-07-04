@@ -19,13 +19,12 @@ import java.nio.charset.StandardCharsets;
 @RequiredArgsConstructor
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class KakaoController {
-    String email = "taehoon1999@nate.com";
     private final KAKAOService kakaoService;
     private final UserService userService;
 
     // authorization code를 받아옴
     @GetMapping("/kakao")
-    public String redirectKakaoLogin(@RequestParam(value = "code") String authCode, RedirectAttributes redirectAttributes) {
+    public String redirectKakaoLogin(@RequestParam(value = "code") String authCode,  @RequestParam(value = "email") String email, RedirectAttributes redirectAttributes) {
         kakaoService.requestAccessToken(authCode);
         if (kakaoService.checkRegistrationByEmail(email)) {
             String jwt = kakaoService.generateJWT(userService.kakaoLogin());

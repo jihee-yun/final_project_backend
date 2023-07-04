@@ -27,7 +27,8 @@ public class TokenProvider {
     private static final String AUTHORITIES_KEY = "auth";
     private static final String BEARER_TYPE = "bearer";
     // 토큰의 만료 시간
-    private static final long ACCESS_TOKEN_EXPIRE_TIME = 1000 * 60 * 30;
+    private static final long ACCESS_TOKEN_EXPIRE_TIME = 60 * 60 * 1000;
+    private static final long REFRESH_TOKEN_EXPIRE_TIME = 1L * 24 * 60 * 60 * 1000;
     // 암호화 키 생성을 위해 사용
     private final Key key;
 
@@ -47,6 +48,7 @@ public class TokenProvider {
 
 
         Date tokenExpiresIn = new Date(now + ACCESS_TOKEN_EXPIRE_TIME);
+        Date refreshTokenExpiresIn = new Date(now + REFRESH_TOKEN_EXPIRE_TIME);
 
         System.out.println(tokenExpiresIn);
 
@@ -57,9 +59,17 @@ public class TokenProvider {
                 .signWith(key, SignatureAlgorithm.HS512)
                 .compact();
 
+        String refreshToken = Jwts.builder()
+                .setSubject(authentication.getName())
+                .claim(AUTHORITIES_KEY, authorities)
+                .setExpiration(refreshTokenExpiresIn)
+                .signWith(key, SignatureAlgorithm.HS512)
+                .compact();
+
         return TokenDto.builder()
                 .grantType(BEARER_TYPE)
                 .accessToken(accessToken)
+                .refreshToken(refreshToken)
                 .tokenExpiresIn(tokenExpiresIn.getTime())
                 .build();
     }

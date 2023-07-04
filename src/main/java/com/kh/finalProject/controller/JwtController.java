@@ -19,7 +19,7 @@ public class JwtController {
     }
 
     public String refreshTokenCreate(String userId) throws Exception {
-        String refreshToken = jwtProvider.generateAccessToken(userId);
+        String refreshToken = jwtProvider.generateRefreshToken(userId);
         return refreshToken;
     }
 }

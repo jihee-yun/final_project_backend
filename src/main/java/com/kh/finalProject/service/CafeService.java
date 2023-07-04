@@ -47,6 +47,50 @@ public class CafeService {
         return cafeDtos;
     }
 
+    // 인기순 조회
+    public List<CafeDto> selectCafeListByPopularity(String region) {
+        System.out.println("현재 넘어온 지역 : " + region);
+        List<Cafe> cafes;
+        if(region.equals("전체")) {
+            cafes = cafeRepository.findAllByOrderByLikeCountDesc(); // 전체 카테고리 클릭 시
+        } else {
+            cafes = cafeRepository.findByRegionOrderByLikeCountDesc(region);
+        }
+        List<CafeDto> cafeDtos = new ArrayList<>();
+        for(Cafe cafe : cafes) {
+            CafeDto cafeDto = new CafeDto();
+            cafeDto.setCafeName(cafe.getCafeName());
+            cafeDto.setId(cafe.getId());
+            cafeDto.setIntro(cafe.getIntro());
+            cafeDto.setRegion(cafe.getRegion());
+            cafeDto.setThumbnail(cafe.getThumbnail());
+            cafeDtos.add(cafeDto);
+        }
+        return cafeDtos;
+    }
+
+    // 별점순 조회
+    public List<CafeDto> selectCafeListByScore(String region) {
+        System.out.println("현재 넘어온 지역 : " + region);
+        List<Cafe> cafes;
+        if(region.equals("전체")) {
+            cafes = cafeRepository.findAllByOrderByScoreDesc(); // 전체 카테고리 클릭 시
+        } else {
+            cafes = cafeRepository.findByRegionOrderByScoreDesc(region);
+        }
+        List<CafeDto> cafeDtos = new ArrayList<>();
+        for(Cafe cafe : cafes) {
+            CafeDto cafeDto = new CafeDto();
+            cafeDto.setCafeName(cafe.getCafeName());
+            cafeDto.setId(cafe.getId());
+            cafeDto.setIntro(cafe.getIntro());
+            cafeDto.setRegion(cafe.getRegion());
+            cafeDto.setThumbnail(cafe.getThumbnail());
+            cafeDtos.add(cafeDto);
+        }
+        return cafeDtos;
+    }
+
     // 카페 디테일 조회(카페 번호로)
     public List<CafeDetailDto> detailCafe(Long cafeNum) {
         System.out.println("현재 넘어온 카페 번호 :" + cafeNum);
@@ -73,6 +117,7 @@ public class CafeService {
         }
         return cafeDetailDtos;
     }
+
     // 카페 이미지 조회
     public List<ImgDto> imgListGet(Long cafeNum) {
         System.out.println("현재 넘어온 카페 번호 :" + cafeNum);

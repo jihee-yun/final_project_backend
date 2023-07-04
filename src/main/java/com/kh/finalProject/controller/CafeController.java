@@ -21,10 +21,22 @@ public class CafeController {
     private final CafeService cafeService;
 
     @GetMapping("/region")
-    public ResponseEntity<List<CafeDto>> selectCafeList(@RequestParam String region) {
+    public ResponseEntity<List<CafeDto>> selectCafeList(@RequestParam String region, @RequestParam(required = false) String sortingOption) {
         System.out.println("지역 : " + region);
-        List<CafeDto> list = cafeService.selectCafeList(region);
+        System.out.println("분류 : " + sortingOption);
+        List<CafeDto> list;
+
+        if ("인기순".equals(sortingOption)) {
+            list = cafeService.selectCafeListByPopularity(region);
+        } else if ("별점순".equals(sortingOption)) {
+            list = cafeService.selectCafeListByScore(region);
+        } else {
+            list = cafeService.selectCafeList(region);
+        }
         return new ResponseEntity<>(list, HttpStatus.OK);
+
+//        List<CafeDto> list = cafeService.selectCafeList(region);
+//        return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
     @GetMapping("/detail")

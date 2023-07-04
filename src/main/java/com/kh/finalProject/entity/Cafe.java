@@ -46,6 +46,9 @@ public class Cafe {
     @Column(nullable = false)
     private String operatingTime; // 운영 시간
 
+    @Column(nullable = false)
+    private double score; // 별점
+
     @OneToMany(mappedBy = "cafe")
     private List<CafeImg> cafeImgList = new ArrayList<>();
 

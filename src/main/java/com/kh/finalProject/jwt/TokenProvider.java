@@ -1,6 +1,8 @@
 package com.kh.finalProject.jwt;
 
 import com.kh.finalProject.dto.TokenDto;
+import com.kh.finalProject.entity.RefreshToken;
+import com.kh.finalProject.repository.RefreshTokenRepository;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import lombok.extern.slf4j.Slf4j;
@@ -23,6 +25,7 @@ import java.util.stream.Collectors;
 @Component
 @Slf4j
 public class TokenProvider {
+    private final RefreshTokenRepository refreshTokenRepository;
     // 토큰을 생성하고 검증할 때 사용하는 문자열
     private static final String AUTHORITIES_KEY = "auth";
     private static final String BEARER_TYPE = "bearer";
@@ -33,7 +36,8 @@ public class TokenProvider {
     private final Key key;
 
     // 주의점: 여기서 @Value는 `springframework.beans.factory.annotation.Value`소속이다! lombok의 @Value와 착각하지 말것!
-    public TokenProvider(@Value("${springboot.jwt.secret}") String secretKey) {
+    public TokenProvider(@Value("${springboot.jwt.secret}") String secretKey, RefreshTokenRepository refreshTokenRepository) {
+        this.refreshTokenRepository = refreshTokenRepository;
         this.key = Keys.secretKeyFor(SignatureAlgorithm.HS512);
     }
 
@@ -45,7 +49,6 @@ public class TokenProvider {
                 .collect(Collectors.joining(","));
 
         long now = (new Date()).getTime();
-
 
         Date tokenExpiresIn = new Date(now + ACCESS_TOKEN_EXPIRE_TIME);
         Date refreshTokenExpiresIn = new Date(now + REFRESH_TOKEN_EXPIRE_TIME);
@@ -65,6 +68,11 @@ public class TokenProvider {
                 .setExpiration(refreshTokenExpiresIn)
                 .signWith(key, SignatureAlgorithm.HS512)
                 .compact();
+
+        RefreshToken refreshTk = refreshTokenRepository.findByUserNum(Long.parseLong(authentication.getName()))
+                .map(tokenEntity -> tokenEntity.update(refreshToken))
+                .orElse(new RefreshToken(Long.parseLong(authentication.getName()), refreshToken));
+        refreshTokenRepository.save(refreshTk);
 
         return TokenDto.builder()
                 .grantType(BEARER_TYPE)
@@ -89,6 +97,35 @@ public class TokenProvider {
         UserDetails principal = new User(claims.getSubject(), "", authorities);
 
         return new UsernamePasswordAuthenticationToken(principal, "", authorities);
+    }
+
+    //리프레쉬 토큰을 확인 후 AccessToken 재발급 코드
+    public TokenDto generateAccessTokenDto(Authentication authentication) {
+
+        String authorities = authentication.getAuthorities().stream()
+                .map(GrantedAuthority::getAuthority)
+                .collect(Collectors.joining(","));
+
+        long now = (new Date()).getTime();
+
+
+        Date tokenExpiresIn = new Date(now + ACCESS_TOKEN_EXPIRE_TIME);
+
+        System.out.println(tokenExpiresIn);
+
+        String accessToken = Jwts.builder()
+                .setSubject(authentication.getName())
+                .claim(AUTHORITIES_KEY, authorities)
+                .setExpiration(tokenExpiresIn)
+                .signWith(key, SignatureAlgorithm.HS512)
+                .compact();
+
+        return TokenDto.builder()
+                .grantType(BEARER_TYPE)
+                .accessToken(accessToken)
+                .tokenExpiresIn(tokenExpiresIn.getTime())
+                .authority(authorities)
+                .build();
     }
 
     public boolean validateToken(String token) {

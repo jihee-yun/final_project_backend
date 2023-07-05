@@ -36,6 +36,8 @@ public class User { // 일반 회원
     private String intro; // 한 줄 소개
     @Enumerated(EnumType.STRING)
     private Existence existence; // 탈퇴 여부
+    @Enumerated(EnumType.STRING)
+    private Authority authority; // 회원 종류
 
     @Builder
     public User(String userId, String email, String password, String name, Existence existence) {

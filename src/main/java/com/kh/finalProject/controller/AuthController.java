@@ -26,15 +26,17 @@ public class AuthController {
         return ResponseEntity.ok(authService.userLogin(userRequestDto));
     }
 
-    @PostMapping("/signup")
+    // 사업자 회원 회원가입
+    @PostMapping("/member/signup")
     public ResponseEntity<MemberResponseDto> signup(@RequestBody MemberRequestDto requestDto) {
         return ResponseEntity.ok(authService.signup(requestDto));
     }
-
-    @PostMapping("/login")
+    // 사업자 회원 로그인
+    @PostMapping("/member/login")
     public ResponseEntity<TokenDto> login(@RequestBody MemberRequestDto requestDto) {
         return ResponseEntity.ok(authService.login(requestDto));
     }
+
 
     @PostMapping("/token")
     public ResponseEntity<AccessTokenDto> createNewAccessToken(@RequestBody RefreshTokenDto requestDto) {

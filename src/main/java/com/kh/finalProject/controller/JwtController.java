@@ -11,15 +11,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 public class JwtController {
-    private final JwtProvider jwtProvider;
-
-    public String accessToken(String userId) throws Exception{
-        String accessToken = jwtProvider.generateAccessToken(userId);
-        return accessToken;
-    }
-
-    public String refreshTokenCreate(String userId) throws Exception {
-        String refreshToken = jwtProvider.generateRefreshToken(userId);
-        return refreshToken;
-    }
+//    private final JwtProvider jwtProvider;
+//
+//    public String accessToken(String userId) throws Exception{
+//        String accessToken = jwtProvider.generateAccessToken(userId);
+//        return accessToken;
+//    }
+//
+//    public String refreshTokenCreate(String userId) throws Exception {
+//        String refreshToken = jwtProvider.generateRefreshToken(userId);
+//        return refreshToken;
+//    }
 }

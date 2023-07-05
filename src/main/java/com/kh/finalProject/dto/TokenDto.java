@@ -11,4 +11,5 @@ public class TokenDto {
     private String accessToken;     // 실제 사용될 토큰
     private String refreshToken;
     private Long tokenExpiresIn;    // 만료 시간
+    private String authority;
 }

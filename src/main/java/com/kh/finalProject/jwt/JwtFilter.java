@@ -17,7 +17,6 @@ import java.io.IOException;
 @RequiredArgsConstructor
 // OncePerRequestFilter 상속받아 JWT 토큰을 필터링하는 역할을 수행하는 JwtFilter 클래스
 public class JwtFilter extends OncePerRequestFilter {
-
     public static final String AUTHORIZATION_HEADER = "Authorization";
     public static final String BEARER_PREFIX = "Bearer ";
     private final TokenProvider tokenProvider;

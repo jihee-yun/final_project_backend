@@ -35,7 +35,6 @@ public class UserController {
     // 회원가입
     @PostMapping("/new")
     public ResponseEntity<Map<String, Object>> signUp(@RequestBody Map<String, String> signData) {
-        //try {
             String userId = signData.get("userId");
             String password = signData.get("password");
             String name = signData.get("name");
@@ -51,12 +50,6 @@ public class UserController {
                 response.put("success", false);
                 return new ResponseEntity<>(response, HttpStatus.OK);
             }
-//        } catch (Exception e) {
-//            log.warn("Controller 오류");
-//            Map<String, Object> response = new HashMap<>();
-//            response.put("success", false);
-//            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
-//        }
     }
 
     @Autowired
@@ -102,17 +95,12 @@ public class UserController {
     // 회원가입 중복
     @GetMapping("/check")
     public ResponseEntity<Boolean> doubleCheck(@RequestParam("userId") String userId) {
-        //try {
         boolean result = userService.checkUserIdExist(userId);
         if (result) {
             return new ResponseEntity<>(true, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(false, HttpStatus.OK);
         }
-//        }catch(Exception e) {
-//            return new ResponseEntity<>(false, HttpStatus.ACCEPTED);
-//        }
-
     }
 }
 

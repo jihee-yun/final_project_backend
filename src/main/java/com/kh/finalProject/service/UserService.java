@@ -29,7 +29,7 @@ public class UserService {
 
     // 회원 가입
     public boolean regMember(String userId, String password, String name) {
-        if (userRepository.findByEmail(userId).isEmpty()) {
+        if (userRepository.findByUserId(userId).isEmpty()) {
             User user = new User();
             user.setUserId(userId);
             user.setPassword(password);

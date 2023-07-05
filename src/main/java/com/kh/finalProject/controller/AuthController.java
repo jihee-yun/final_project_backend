@@ -35,6 +35,7 @@ public class AuthController {
     public ResponseEntity<TokenDto> login(@RequestBody MemberRequestDto requestDto) {
         return ResponseEntity.ok(authService.login(requestDto));
     }
+
     @PostMapping("/token")
     public ResponseEntity<AccessTokenDto> createNewAccessToken(@RequestBody RefreshTokenDto requestDto) {
         String newAccessToken = accessTokenService.createNewAccessToken(requestDto.getRefreshToken());

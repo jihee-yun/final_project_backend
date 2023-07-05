@@ -1,11 +1,9 @@
 package com.kh.finalProject.entity;
 
+import com.kh.finalProject.constant.Authority;
 import com.kh.finalProject.constant.Existence;
 import com.kh.finalProject.constant.Gender;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -38,6 +36,16 @@ public class User { // 일반 회원
     private String intro; // 한 줄 소개
     @Enumerated(EnumType.STRING)
     private Existence existence; // 탈퇴 여부
+
+    @Builder
+    public User(String userId, String email, String password, String name, Existence existence) {
+        this.userId = userId;
+        this.email = email;
+        this.password = password;
+        this.name = name;
+        this.existence = existence;
+    }
+
 
     @OneToMany(mappedBy = "user")
     private List<Guild> guildList = new ArrayList<>();

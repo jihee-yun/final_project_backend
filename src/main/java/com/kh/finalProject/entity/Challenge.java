@@ -9,7 +9,7 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "challenge")
+@Table(name = "t_challenge")
 @Getter @Setter @ToString
 @NoArgsConstructor
 public class Challenge {
@@ -35,8 +35,4 @@ public class Challenge {
 
     @Column (nullable = false)
     private LocalDateTime endTime;
-
-    @OneToOne
-    @JoinColumn(name = "member_id")
-    private Member member;
 }

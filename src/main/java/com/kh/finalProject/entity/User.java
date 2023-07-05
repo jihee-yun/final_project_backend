@@ -53,4 +53,7 @@ public class User { // 일반 회원
     @OneToMany(mappedBy = "user")
     private List<GuildMember> guildMemberList = new ArrayList<>();
 
+    @OneToOne(mappedBy = "user")
+    private Point point;
+
 }

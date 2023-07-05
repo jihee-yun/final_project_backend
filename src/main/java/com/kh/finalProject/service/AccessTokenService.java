@@ -36,7 +36,6 @@ public class AccessTokenService {
         Long userNum = refreshTokenRepository.findByRefreshToken(refreshToken).get().getUserNum();
         User user = userRepository.findByUserNum(userNum).get();
         List<GrantedAuthority> authorities = List.of(new SimpleGrantedAuthority(user.getAuthority().toString()));
-        // user를 Authentication 객체로 변환해야 함... 음..!!
         UserDetails userDetails = org.springframework.security.core.userdetails.User.withUsername(String.valueOf(user.getUserNum()))
                 .password(user.getPassword())
                 .authorities(authorities)

@@ -82,6 +82,7 @@ public class TokenProvider {
                 .build();
     }
 
+    // 기존 레퍼런스
     public Authentication getAuthentication(String accessToken) {
         Claims claims = parseClaims(accessToken);
 

@@ -44,7 +44,7 @@ public class AuthService {
         return tokenProvider.generateTokenDto(authentication);
     }
 
-
+    // 사업자 회원 가입
     public MemberResponseDto signup(MemberRequestDto requestDto) {
         if (memberRepository.existsByEmail(requestDto.getEmail())) {
             throw new RuntimeException("이미 가입되어 있는 유저입니다");
@@ -53,7 +53,7 @@ public class AuthService {
         Member member = requestDto.toMember(passwordEncoder);
         return MemberResponseDto.of(memberRepository.save(member));
     }
-
+    // 사업자 회원 로그인
     public TokenDto login(MemberRequestDto requestDto) {
         UsernamePasswordAuthenticationToken authenticationToken = requestDto.toAuthentication();
 

@@ -26,9 +26,9 @@ public class UserController {
     @PostMapping("/login")
     public String userLogin(@RequestBody Map<String, String> loginData) {
         String userId = loginData.get("userId");
-        String pw = loginData.get("pw");
-        System.out.println("아이디 패스워드 확인 : " + userId + " " + pw);
-        boolean result = userService.loginCheck(userId, pw);
+        String password = loginData.get("password");
+        System.out.println("아이디 패스워드 확인 : " + userId + " " + password);
+        boolean result = userService.loginCheck(userId, password);
         return Boolean.toString(result);
     }
 

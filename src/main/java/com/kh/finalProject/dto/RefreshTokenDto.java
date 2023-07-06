@@ -17,7 +17,7 @@ public class RefreshTokenDto {
     @Id
     @GeneratedValue
     @Column(name = "token_num")
-    private Long id; // 토큰 번호
+    private Long num; // 토큰 구분 번호
 
     @Column(nullable = false)
     private Long userId;

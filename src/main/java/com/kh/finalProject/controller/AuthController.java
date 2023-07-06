@@ -2,7 +2,6 @@ package com.kh.finalProject.controller;
 
 
 import com.kh.finalProject.dto.*;
-import com.kh.finalProject.service.AccessTokenService;
 import com.kh.finalProject.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin(origins = "http://localhost:3000")
 public class AuthController {
     private final AuthService authService;
-    private final AccessTokenService accessTokenService;
 
     @PostMapping("/signup")
     public ResponseEntity<UserResponseDto> userSignUp(@RequestBody UserRequestDto userRequestDto) {
@@ -40,7 +38,7 @@ public class AuthController {
 
     @PostMapping("/token")
     public ResponseEntity<AccessTokenDto> createNewAccessToken(@RequestBody RefreshTokenDto requestDto) {
-        String newAccessToken = accessTokenService.createNewAccessToken(requestDto.getRefreshToken());
+        String newAccessToken = authService.createNewAccessToken(requestDto.getRefreshToken());
         AccessTokenDto responseDto = new AccessTokenDto(newAccessToken);
         return ResponseEntity.ok(responseDto);
     }

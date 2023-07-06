@@ -20,6 +20,7 @@ public class Member { // 사업자 회원, 아직 수정 중
     @Column(name = "member_num_pk")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long memberNum;
+    @Column(unique = true)
     private String memberId;
     private String name;
     private String password;

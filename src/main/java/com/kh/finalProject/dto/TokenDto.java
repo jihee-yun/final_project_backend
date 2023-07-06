@@ -6,10 +6,12 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+// 엑세스와 리프레시 토큰 한번에 묶어둠
 public class TokenDto {
-    private String grantType;       // 토큰의 유형
-    private String accessToken;     // 실제 사용될 토큰
+    private String grantType;       // 토큰의 유형(Bearer 넣게됨)
+    private String accessToken;     // 통신으로 주고 받을 엑세스 토큰
     private String refreshToken;
-    private Long tokenExpiresIn;    // 만료 시간
+    private Long accessTokenExpiresIn;    // 만료 시간
+    private Long refreshTokenExpiresIn;
     private String authority;
 }

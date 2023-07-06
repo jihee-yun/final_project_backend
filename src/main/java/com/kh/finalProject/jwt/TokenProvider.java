@@ -50,15 +50,15 @@ public class TokenProvider {
 
         long now = (new Date()).getTime();
 
-        Date tokenExpiresIn = new Date(now + ACCESS_TOKEN_EXPIRE_TIME);
+        Date accessTokenExpiresIn = new Date(now + ACCESS_TOKEN_EXPIRE_TIME);
         Date refreshTokenExpiresIn = new Date(now + REFRESH_TOKEN_EXPIRE_TIME);
 
-        System.out.println(tokenExpiresIn);
+        System.out.println(accessTokenExpiresIn);
 
         String accessToken = Jwts.builder()
                 .setSubject(authentication.getName())
                 .claim(AUTHORITIES_KEY, authorities)
-                .setExpiration(tokenExpiresIn)
+                .setExpiration(accessTokenExpiresIn)
                 .signWith(key, SignatureAlgorithm.HS512)
                 .compact();
 
@@ -69,16 +69,17 @@ public class TokenProvider {
                 .signWith(key, SignatureAlgorithm.HS512)
                 .compact();
 
-        RefreshToken refreshTk = refreshTokenRepository.findByUserNum(Long.parseLong(authentication.getName()))
+        RefreshToken refreshTk = refreshTokenRepository.findByMemberId(authentication.getName())
                 .map(tokenEntity -> tokenEntity.update(refreshToken))
-                .orElse(new RefreshToken(Long.parseLong(authentication.getName()), refreshToken));
+                .orElse(new RefreshToken(authentication.getName(), refreshToken));
         refreshTokenRepository.save(refreshTk);
 
         return TokenDto.builder()
                 .grantType(BEARER_TYPE)
                 .accessToken(accessToken)
                 .refreshToken(refreshToken)
-                .tokenExpiresIn(tokenExpiresIn.getTime())
+                .accessTokenExpiresIn(accessTokenExpiresIn.getTime())
+                .refreshTokenExpiresIn(refreshTokenExpiresIn.getTime())
                 .build();
     }
 
@@ -107,20 +108,20 @@ public class TokenProvider {
                 .collect(Collectors.joining(","));
 
         long nowTime = (new Date()).getTime();
-        Date tokenExpiresIn = new Date(nowTime + ACCESS_TOKEN_EXPIRE_TIME);
-        System.out.println(tokenExpiresIn);
+        Date accessTokenExpiresIn = new Date(nowTime + ACCESS_TOKEN_EXPIRE_TIME);
+        System.out.println(accessTokenExpiresIn);
 
         String accessToken = Jwts.builder()
                 .setSubject(authentication.getName())
                 .claim(AUTHORITIES_KEY, authorities)
-                .setExpiration(tokenExpiresIn)
+                .setExpiration(accessTokenExpiresIn)
                 .signWith(key, SignatureAlgorithm.HS512)
                 .compact();
 
         return TokenDto.builder()
                 .grantType(BEARER_TYPE)
                 .accessToken(accessToken)
-                .tokenExpiresIn(tokenExpiresIn.getTime())
+                .accessTokenExpiresIn(accessTokenExpiresIn.getTime())
                 .authority(authorities)
                 .build();
     }

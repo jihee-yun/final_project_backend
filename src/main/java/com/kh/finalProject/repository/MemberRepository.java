@@ -10,7 +10,7 @@ import java.util.Optional;
 @Repository
 public interface MemberRepository extends JpaRepository<Member, Long> {
     Optional<Member> findByEmail(String email); // Optional -> wrapper 클래스(널값 방지해주는 역할)
-    Optional<Member> findByMemberId(String userId);
-    Optional<Member> findByMemberIdAndPassword(String userId, String password);
-    boolean existsByEmail(String email);
+    Optional<Member> findByMemberId(String memberId);
+    Optional<Member> findByMemberIdAndPassword(String memberId, String password);
+    boolean existsByMemberId(String memberId);
 }

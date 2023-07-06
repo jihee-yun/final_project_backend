@@ -12,16 +12,16 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @CrossOrigin(origins = "http://localhost:3000")
 public class AuthController {
-    private final AuthService authService;
+//    private final AuthService authService;
 
-    @PostMapping("/signup")
-    public ResponseEntity<UserResponseDto> userSignUp(@RequestBody UserRequestDto userRequestDto) {
-        return ResponseEntity.ok(authService.userSignUp(userRequestDto));
-    }
-
-    @PostMapping("/login")
-    public ResponseEntity<TokenDto> userLogin(@RequestBody UserRequestDto userRequestDto) {
-        return ResponseEntity.ok(authService.userLogin(userRequestDto));
-    }
+//    @PostMapping("/signup")
+//    public ResponseEntity<UserResponseDto> userSignUp(@RequestBody UserRequestDto userRequestDto) {
+//        return ResponseEntity.ok(authService.userSignUp(userRequestDto));
+//    }
+//
+//    @PostMapping("/login")
+//    public ResponseEntity<TokenDto> userLogin(@RequestBody UserRequestDto userRequestDto) {
+//        return ResponseEntity.ok(authService.userLogin(userRequestDto));
+//    }
 
 }

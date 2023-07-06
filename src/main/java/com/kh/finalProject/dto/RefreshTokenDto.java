@@ -20,13 +20,13 @@ public class RefreshTokenDto {
     private Long num; // 토큰 구분 번호
 
     @Column(nullable = false)
-    private Long userId;
+    private String memberId;
 
     @Column(nullable = false)
     private String refreshToken;
 
-    public RefreshTokenDto(Long userId, String refreshToken) {
-        this.userId = userId;
+    public RefreshTokenDto(String memberId, String refreshToken) {
+        this.memberId = memberId;
         this.refreshToken = refreshToken;
     }
 

@@ -21,13 +21,13 @@ public class RefreshToken {
     private Long num;             // 토큰 번호
 
     @Column(nullable = false)
-    private Long userNum;         // UserTb Primary Key
+    private String memberId;         // member 테이블에서 memberId
 
     @Column(nullable = false)
     private String refreshToken; // 리프레시 토큰
 
-    public RefreshToken(Long userNum, String refreshToken) {
-        this.userNum = userNum;
+    public RefreshToken(String memberId, String refreshToken) {
+        this.memberId = memberId;
         this.refreshToken = refreshToken;
     }
 
@@ -35,4 +35,5 @@ public class RefreshToken {
         this.refreshToken = newRefreshToken;
         return this;
     }
+
 }

@@ -1,11 +1,11 @@
 package com.kh.finalProject.service;
 
-import com.kh.finalProject.dto.*;
+import com.kh.finalProject.dto.MemberRequestDto;
+import com.kh.finalProject.dto.MemberResponseDto;
+import com.kh.finalProject.dto.TokenDto;
 import com.kh.finalProject.entity.Member;
 import com.kh.finalProject.jwt.TokenProvider;
 import com.kh.finalProject.repository.MemberRepository;
-import com.kh.finalProject.repository.RefreshTokenRepository;
-import com.kh.finalProject.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -27,7 +27,7 @@ public class MemberService {
 
     // 사업자 회원 가입
     public MemberResponseDto signup(MemberRequestDto requestDto) {
-        if (memberRepository.existsByEmail(requestDto.getEmail())) {
+        if (memberRepository.existsByMemberId(requestDto.getMemberId())) {
             throw new RuntimeException("이미 가입되어 있는 유저입니다");
         }
         Member member = requestDto.toMember(passwordEncoder);

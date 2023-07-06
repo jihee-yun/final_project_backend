@@ -1,6 +1,7 @@
 package com.kh.finalProject.service;
 
 import com.kh.finalProject.dto.*;
+import com.kh.finalProject.entity.Member;
 import com.kh.finalProject.entity.User;
 import com.kh.finalProject.jwt.TokenProvider;
 import com.kh.finalProject.repository.MemberRepository;
@@ -35,23 +36,23 @@ public class AuthService {
     private final TokenProvider tokenProvider;
 
 
-    // 사용자 회원가입
-    public UserResponseDto userSignUp(UserRequestDto userRequestDto) {
-        Optional<User> existingUser = userRepository.findByUserId(userRequestDto.getUserId());
-        if(existingUser.isPresent()) {
-            throw new RuntimeException("이미 가입된 유저입니다.");
-        }
-
-        User user = userRequestDto.toUser(passwordEncoder);
-        return UserResponseDto.of(userRepository.save(user));
-    }
-
-    // 사용자 로그인
-    public TokenDto userLogin(UserRequestDto userRequestDto) {
-        UsernamePasswordAuthenticationToken authenticationToken = userRequestDto.toAuthentication();
-        Authentication authentication = managerBuilder.getObject().authenticate(authenticationToken);
-        return tokenProvider.generateTokenDto(authentication);
-    }
+//    // 사용자 회원가입
+//    public UserResponseDto userSignUp(UserRequestDto userRequestDto) {
+//        Optional<User> existingUser = userRepository.findByUserId(userRequestDto.getUserId());
+//        if(existingUser.isPresent()) {
+//            throw new RuntimeException("이미 가입된 유저입니다.");
+//        }
+//
+//        User user = userRequestDto.toUser(passwordEncoder);
+//        return UserResponseDto.of(userRepository.save(user));
+//    }
+//
+//    // 사용자 로그인
+//    public TokenDto userLogin(UserRequestDto userRequestDto) {
+//        UsernamePasswordAuthenticationToken authenticationToken = userRequestDto.toAuthentication();
+//        Authentication authentication = managerBuilder.getObject().authenticate(authenticationToken);
+//        return tokenProvider.generateTokenDto(authentication);
+//    }
 
 
     // 엑세스 토큰 재발급
@@ -60,11 +61,11 @@ public class AuthService {
             throw new AccessTokenExpiredException("Refresh Token 만료되었습니다.");
         }
 
-        Long userNum = refreshTokenRepository.findByRefreshToken(refreshToken).get().getUserNum();
-        User user = userRepository.findByUserNum(userNum).get();
-        List<GrantedAuthority> authorities = List.of(new SimpleGrantedAuthority(user.getAuthority().toString()));
-        UserDetails userDetails = org.springframework.security.core.userdetails.User.withUsername(String.valueOf(user.getUserNum()))
-                .password(user.getPassword())
+        String memberId = refreshTokenRepository.findByRefreshToken(refreshToken).get().getMemberId();
+        Member member = memberRepository.findByMemberId(memberId).get();
+        List<GrantedAuthority> authorities = List.of(new SimpleGrantedAuthority(member.getAuthority().toString()));
+        UserDetails userDetails = org.springframework.security.core.userdetails.User.withUsername(String.valueOf(member.getMemberId()))
+                .password(member.getPassword())
                 .authorities(authorities)
                 .build();
 

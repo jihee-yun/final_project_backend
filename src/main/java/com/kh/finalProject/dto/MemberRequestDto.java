@@ -1,6 +1,7 @@
 package com.kh.finalProject.dto;
 
 import com.kh.finalProject.constant.Authority;
+import com.kh.finalProject.constant.Existence;
 import com.kh.finalProject.entity.Member;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,19 +15,18 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @NoArgsConstructor
 @Builder
 public class MemberRequestDto {
-    private String email;
+    private String memberId;
     private String password;
-    private String name;
 
     public Member toMember(PasswordEncoder passwordEncoder) {
         return Member.builder()
-                .email(email)
+                .memberId(memberId)
                 .password(passwordEncoder.encode(password))
-                .name(name)
-                .authority(Authority.ROLE_USER)
+                .existence(Existence.Yes)
+                .authority(Authority.ROLE_MEMBER)
                 .build();
     }
     public UsernamePasswordAuthenticationToken toAuthentication() {
-        return new UsernamePasswordAuthenticationToken(email, password);
+        return new UsernamePasswordAuthenticationToken(memberId, password);
     }
 }

@@ -11,12 +11,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class MemberResponseDto {
-    private String email;
-    private String name;
+    private String memberId;
     public static MemberResponseDto of(Member member) {
         return MemberResponseDto.builder()
-                .email(member.getEmail())
-                .name(member.getName())
+                .memberId(member.getMemberId())
                 .build();
     }
 }

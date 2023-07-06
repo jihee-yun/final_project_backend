@@ -86,6 +86,6 @@ public class AuthService {
 
         Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails, "", authorities);
 
-        return tokenProvider.generateAccessTokenDto(authentication).getAccessToken();
+        return tokenProvider.regenerateAccessTokenDto(authentication).getAccessToken();
     }
 }

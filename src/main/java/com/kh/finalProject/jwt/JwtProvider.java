@@ -40,7 +40,7 @@ public class JwtProvider {
 
     public String generateRefreshToken(String userId) {
         Date now = new Date();
-        Date expiryDate = new Date(now.getTime() + refreshTokenExpiration * 1000);
+        Date expiryDate = new Date(now.getTime() + refreshTokenExpiration * 1000 * 24);
 
         return Jwts.builder()
                 .setSubject(userId)

@@ -27,7 +27,7 @@ import java.util.stream.Collectors;
 public class TokenProvider {
     private final RefreshTokenRepository refreshTokenRepository;
     // 토큰을 생성하고 검증할 때 사용하는 문자열
-    private static final String AUTHORITIES_KEY = "auth";
+    private static final String AUTHORITIES_KEY = "sweetkingdom!";
     private static final String BEARER_TYPE = "bearer";
     // 토큰의 만료 시간
     private static final long ACCESS_TOKEN_EXPIRE_TIME = 60 * 60 * 1000;
@@ -41,7 +41,7 @@ public class TokenProvider {
         this.key = Keys.secretKeyFor(SignatureAlgorithm.HS512);
     }
 
-    // 토큰 생성
+    // 최초 멕세스, 리프레시 토큰 동시 생성
     public TokenDto generateTokenDto(Authentication authentication) {
 
         String authorities = authentication.getAuthorities().stream()
@@ -82,7 +82,7 @@ public class TokenProvider {
                 .build();
     }
 
-    // 기존 레퍼런스
+    // 자격 증명 메소드
     public Authentication getAuthentication(String accessToken) {
         Claims claims = parseClaims(accessToken);
 
@@ -100,18 +100,14 @@ public class TokenProvider {
         return new UsernamePasswordAuthenticationToken(principal, "", authorities);
     }
 
-    //리프레쉬 토큰을 확인 후 AccessToken 재발급 코드
-    public TokenDto generateAccessTokenDto(Authentication authentication) {
-
+    //리프레쉬 토큰을 확인 후 AccessToken 재발급 메소드
+    public TokenDto regenerateAccessTokenDto(Authentication authentication) {
         String authorities = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(","));
 
-        long now = (new Date()).getTime();
-
-
-        Date tokenExpiresIn = new Date(now + ACCESS_TOKEN_EXPIRE_TIME);
-
+        long nowTime = (new Date()).getTime();
+        Date tokenExpiresIn = new Date(nowTime + ACCESS_TOKEN_EXPIRE_TIME);
         System.out.println(tokenExpiresIn);
 
         String accessToken = Jwts.builder()

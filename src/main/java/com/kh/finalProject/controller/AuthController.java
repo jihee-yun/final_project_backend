@@ -35,12 +35,4 @@ public class AuthController {
         return ResponseEntity.ok(authService.login(requestDto));
     }
 
-
-    @PostMapping("/token")
-    public ResponseEntity<AccessTokenDto> createNewAccessToken(@RequestBody RefreshTokenDto requestDto) {
-        String newAccessToken = authService.createNewAccessToken(requestDto.getRefreshToken());
-        AccessTokenDto responseDto = new AccessTokenDto(newAccessToken);
-        return ResponseEntity.ok(responseDto);
-    }
-
 }

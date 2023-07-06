@@ -39,6 +39,6 @@ public class MemberService {
         UsernamePasswordAuthenticationToken authenticationToken = requestDto.toAuthentication();
         Authentication authentication = managerBuilder.getObject().authenticate(authenticationToken);
 
-        return tokenProvider.generateTokenDto(authentication);
+        return tokenProvider.generateToken(authentication);
     }
 }

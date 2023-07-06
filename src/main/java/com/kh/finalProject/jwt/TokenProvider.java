@@ -41,8 +41,8 @@ public class TokenProvider {
         this.key = Keys.secretKeyFor(SignatureAlgorithm.HS512);
     }
 
-    // 최초 멕세스, 리프레시 토큰 동시 생성
-    public TokenDto generateTokenDto(Authentication authentication) {
+    // 최초 엑세스, 리프레시 토큰 동시 생성
+    public TokenDto generateToken(Authentication authentication) {
 
         String authorities = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
@@ -102,14 +102,13 @@ public class TokenProvider {
     }
 
     //리프레쉬 토큰을 확인 후 AccessToken 재발급 메소드
-    public TokenDto regenerateAccessTokenDto(Authentication authentication) {
+    public TokenDto regenerateAccessToken(Authentication authentication) {
         String authorities = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(","));
 
         long nowTime = (new Date()).getTime();
         Date accessTokenExpiresIn = new Date(nowTime + ACCESS_TOKEN_EXPIRE_TIME);
-        System.out.println(accessTokenExpiresIn);
 
         String accessToken = Jwts.builder()
                 .setSubject(authentication.getName())

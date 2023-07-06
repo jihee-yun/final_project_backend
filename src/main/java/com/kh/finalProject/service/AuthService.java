@@ -58,7 +58,7 @@ public class AuthService {
     // 엑세스 토큰 재발급
     public String createNewAccessToken(String refreshToken) {
         if(!tokenProvider.validateToken(refreshToken)) {
-            throw new AccessTokenExpiredException("Refresh Token 만료되었습니다.");
+            throw new AccessTokenExpiredException("Refresh Token 만료");
         }
 
         String memberId = refreshTokenRepository.findByRefreshToken(refreshToken).get().getMemberId();
@@ -71,6 +71,6 @@ public class AuthService {
 
         Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails, "", authorities);
 
-        return tokenProvider.regenerateAccessTokenDto(authentication).getAccessToken();
+        return tokenProvider.regenerateAccessToken(authentication).getAccessToken();
     }
 }

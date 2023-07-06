@@ -129,6 +129,7 @@ public class TokenProvider {
                 .build();
     }
 
+    // 토큰이 유효한지 검증하는 메소드
     public boolean validateToken(String token) {
         try {
             Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
@@ -145,6 +146,7 @@ public class TokenProvider {
         return false;
     }
 
+    // 토큰 파싱 메소드
     private Claims parseClaims(String accessToken) {
         try {
             return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(accessToken).getBody();

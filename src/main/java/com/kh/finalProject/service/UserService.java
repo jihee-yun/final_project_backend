@@ -48,7 +48,7 @@ public class UserService {
     // 로그인 체크
     public boolean loginCheck(String userId, String password) {
         Optional<User> memberInfo = userRepository.findByUserIdAndPassword(userId, password);
-        return memberInfo.isEmpty();
+        return memberInfo.isPresent();
     }
 
     // 회원 조회

@@ -24,12 +24,12 @@ public class UserController {
 
     // 로그인
     @PostMapping("/login")
-    public String userLogin(@RequestBody Map<String, String> loginData) {
+    public ResponseEntity<Boolean> userLogin(@RequestBody Map<String, String> loginData) {
         String userId = loginData.get("userId");
         String password = loginData.get("password");
         System.out.println("아이디 패스워드 확인 : " + userId + " " + password);
         boolean result = userService.loginCheck(userId, password);
-        return Boolean.toString(result);
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     // 회원가입
@@ -38,7 +38,7 @@ public class UserController {
             String userId = signData.get("userId");
             String password = signData.get("password");
             String name = signData.get("name");
-            boolean result = userService.regMember(userId, name, password);
+            boolean result = userService.regMember(userId, password, name);
             log.warn(String.valueOf(result));
             if (result) {
                 Map<String, Object> response = new HashMap<>();

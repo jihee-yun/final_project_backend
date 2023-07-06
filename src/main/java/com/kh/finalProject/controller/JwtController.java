@@ -33,12 +33,12 @@ public class JwtController {
 
 
     // 처리 예정
-    public String accessToken(String userId) throws Exception{
-        String accessToken = jwtProvider.generateAccessToken(userId);
-        return accessToken;
-    }
-    public String refreshTokenCreate(String userId) throws Exception {
-        String refreshToken = jwtProvider.generateRefreshToken(userId);
-        return refreshToken;
-    }
+//    public String accessToken(String userId) throws Exception{
+//        String accessToken = jwtProvider.generateAccessToken(userId);
+//        return accessToken;
+//    }
+//    public String refreshTokenCreate(String userId) throws Exception {
+//        String refreshToken = jwtProvider.generateRefreshToken(userId);
+//        return refreshToken;
+//    }
 }

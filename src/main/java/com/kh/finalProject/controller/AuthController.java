@@ -24,15 +24,4 @@ public class AuthController {
         return ResponseEntity.ok(authService.userLogin(userRequestDto));
     }
 
-    // 사업자 회원 회원가입
-    @PostMapping("/member/signup")
-    public ResponseEntity<MemberResponseDto> signup(@RequestBody MemberRequestDto requestDto) {
-        return ResponseEntity.ok(authService.signup(requestDto));
-    }
-    // 사업자 회원 로그인
-    @PostMapping("/member/login")
-    public ResponseEntity<TokenDto> login(@RequestBody MemberRequestDto requestDto) {
-        return ResponseEntity.ok(authService.login(requestDto));
-    }
-
 }

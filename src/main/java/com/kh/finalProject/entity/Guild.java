@@ -29,9 +29,11 @@ public class Guild {
     @Column(nullable = false)
     private int limitMember;
 
+    @Lob
     @Column(nullable = false)
     private String detailIntro;
 
+    @Lob
     @Column(nullable = false)
     private String intro;
 

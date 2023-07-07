@@ -1,5 +1,6 @@
 package com.kh.finalProject.service;
 
+import com.kh.finalProject.constant.Existence;
 import com.kh.finalProject.dto.GuildDetailDto;
 import com.kh.finalProject.dto.GuildDto;
 import com.kh.finalProject.entity.Guild;
@@ -12,7 +13,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -25,6 +28,7 @@ public class GuildService {
     private final GuildRepository guildRepository;
     private final UserRepository userRepository;
     private final GuildMemberRepository guildMemberRepository;
+    private final EntityManager entityManager;
 
     // 생성 길드 전체 조회(네이티브 쿼리문 날리지 않고)
     public List<GuildDto> allGuildListWithUsers(String guildList) {
@@ -98,5 +102,27 @@ public class GuildService {
             guildDetailDtos.add(guildDetailDto);
         }
         return guildDetailDtos;
+    }
+
+    // 새로운 길드 생성
+    public boolean createNewGuild(Long memNum, String name, String intro, String detailIntro, LocalDateTime meetDay, int limitMem, String region, String thumbnail) {
+        Optional<User> user = userRepository.findByUserNum(memNum);
+        if (user.isPresent()) {
+            Guild guild = new Guild();
+            guild.setUser(user.get());
+            guild.setGuildName(name);
+            guild.setIntro(intro);
+            guild.setDetailIntro(detailIntro);
+            guild.setMeetDay(meetDay);
+            guild.setRegion(region);
+            guild.setThumbnail(thumbnail);
+            guild.setLimitMember(limitMem);
+            guild.setCreateDate(LocalDateTime.now());
+            guild.setExistence(Existence.Yes);
+            Guild newGuild = guildRepository.save(guild);
+            return true;
+        } else {
+            throw new IllegalArgumentException("해당 유저를 찾을 수 없습니다. memNum: " + memNum);
+        }
     }
 }

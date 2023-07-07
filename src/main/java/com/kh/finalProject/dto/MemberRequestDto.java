@@ -41,7 +41,7 @@ public class MemberRequestDto {
                 .authority(authority) // 회원 종류
                 .build();
     }
-    // 로그인시 넘겨받은 아이디와 비밀번호 조합으로 암호화된 정보와 일치 여부 확인
+    // 로그인시 넘겨받은 아이디와 비밀번호 조합으로 토큰 생성 준비
     public UsernamePasswordAuthenticationToken toAuthentication() {
         return new UsernamePasswordAuthenticationToken(memberId, password);
     }

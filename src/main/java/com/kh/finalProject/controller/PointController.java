@@ -20,6 +20,7 @@ import java.util.Map;
 public class PointController {
     public final PointService pointService;
 
+    // 내 포인트 조회
     @GetMapping("/mypoint")
     public ResponseEntity<List<PointDto>> pointList(@RequestParam String mypoint) {
         List<PointDto> list = pointService.getPointList();

@@ -28,7 +28,7 @@ public class TokenProvider {
     private final RefreshTokenRepository refreshTokenRepository;
     // 토큰을 생성하고 검증할 때 사용하는 문자열
     private static final String AUTHORITIES_KEY = "sweetkingdom!";
-    private static final String BEARER_TYPE = "bearer";
+    private static final String BEARER_TYPE = "Bearer";
     // 토큰의 만료 시간
     private static final long ACCESS_TOKEN_EXPIRE_TIME = 60 * 60 * 1000;
     private static final long REFRESH_TOKEN_EXPIRE_TIME = 1L * 24 * 60 * 60 * 1000;

@@ -1,6 +1,8 @@
 package com.kh.finalProject.service;
 
 
+import com.kh.finalProject.constant.Authority;
+import com.kh.finalProject.constant.Gender;
 import com.kh.finalProject.dto.TokenDto;
 import com.kh.finalProject.dto.UserDto;
 import com.kh.finalProject.entity.User;
@@ -14,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -28,12 +31,18 @@ public class UserService {
     private final TokenProvider tokenProvider;
 
     // 회원 가입
-    public boolean regMember(String userId, String password, String name) {
-        if (userRepository.findByUserId(userId).isEmpty()) {
+    public boolean regMember(String userId, String password, String name, String phone, String email,
+                             LocalDateTime birthDay, Gender gender, Authority authority) {
+        if (userRepository.findByUserId(userId).isPresent()) {
             User user = new User();
             user.setUserId(userId);
             user.setPassword(password);
             user.setName(name);
+            user.setPhone(phone);
+            user.setEmail(email);
+            user.setBirthday(birthDay);
+            user.setGender(gender);
+            user.setAuthority(authority);
             userRepository.save(user);
             return true;
         }

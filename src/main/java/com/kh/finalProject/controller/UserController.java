@@ -1,7 +1,10 @@
 package com.kh.finalProject.controller;
 
 
+import com.kh.finalProject.constant.Authority;
+import com.kh.finalProject.constant.Gender;
 import com.kh.finalProject.dto.UserDto;
+import com.kh.finalProject.dto.UserResponseDto;
 import com.kh.finalProject.entity.User;
 import com.kh.finalProject.repository.UserRepository;
 import com.kh.finalProject.service.UserService;
@@ -12,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Slf4j
@@ -27,29 +31,32 @@ public class UserController {
     public ResponseEntity<Boolean> userLogin(@RequestBody Map<String, String> loginData) {
         String userId = loginData.get("userId");
         String password = loginData.get("password");
-        System.out.println("아이디 패스워드 확인 : " + userId + " " + password);
+        System.out.println("아이디 확인 : " + userId);
+        System.out.print("비밀번호 : " + password);
         boolean result = userService.loginCheck(userId, password);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
-    // 회원가입
     @PostMapping("/new")
-    public ResponseEntity<Map<String, Object>> signUp(@RequestBody Map<String, String> signData) {
-            String userId = signData.get("userId");
-            String password = signData.get("password");
-            String name = signData.get("name");
-            boolean result = userService.regMember(userId, password, name);
-            log.warn(String.valueOf(result));
-            if (result) {
-                Map<String, Object> response = new HashMap<>();
-                response.put("success", true);
-                return new ResponseEntity<>(response, HttpStatus.OK);
-            } else {
-                log.warn("값이 false");
-                Map<String, Object> response = new HashMap<>();
-                response.put("success", false);
-                return new ResponseEntity<>(response, HttpStatus.OK);
-            }
+    public ResponseEntity<UserResponseDto> signUp(@RequestBody UserDto signData) {
+        String userId = signData.getUserId();
+        String password = signData.getPassword();
+        String name = signData.getName();
+        String phone = signData.getPhone();
+        String email = signData.getEmail();
+        LocalDateTime birthDay = signData.getBirthday();
+        Gender gender = signData.getGender();
+        Authority authority = signData.getAuthority();
+
+        boolean result = userService.regMember(userId, password, name, phone, email, birthDay, gender, authority);
+        log.warn(String.valueOf(result));
+
+        UserResponseDto response = UserResponseDto.builder()
+                .userId(userId)
+                .password(password)
+                .build();
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @Autowired

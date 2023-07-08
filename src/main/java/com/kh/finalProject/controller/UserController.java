@@ -15,7 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.*;
 
 @Slf4j
@@ -44,7 +44,7 @@ public class UserController {
         String name = signData.getName();
         String phone = signData.getPhone();
         String email = signData.getEmail();
-        LocalDateTime birthDay = signData.getBirthday();
+        LocalDate birthDay = signData.getBirthday();
         Gender gender = signData.getGender();
         Authority authority = signData.getAuthority();
 
@@ -54,6 +54,12 @@ public class UserController {
         UserResponseDto response = UserResponseDto.builder()
                 .userId(userId)
                 .password(password)
+                .name(name)
+                .phone(phone)
+                .email(email)
+                .birthDay(birthDay)
+                .gender(gender)
+                .authority(authority)
                 .build();
 
         return new ResponseEntity<>(response, HttpStatus.OK);

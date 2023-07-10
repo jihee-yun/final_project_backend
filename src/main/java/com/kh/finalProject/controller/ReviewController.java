@@ -1,5 +1,6 @@
 package com.kh.finalProject.controller;
 
+import com.kh.finalProject.dto.CafeReviewDto;
 import com.kh.finalProject.dto.ReviewDateDto;
 import com.kh.finalProject.dto.ReviewDto;
 import com.kh.finalProject.service.ReviewService;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @Slf4j
@@ -41,4 +43,24 @@ public class ReviewController {
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
+    // 새로운 리뷰 작성
+    @PostMapping("/newReview")
+    public ResponseEntity<Boolean> createNewReview(@RequestBody Map<String, String> reviewData) {
+        Long memNum = Long.valueOf(reviewData.get("memNum"));
+        Long cafeNum = Long.valueOf(reviewData.get("cafeNum"));
+        String content = reviewData.get("content");
+        double score = Double.parseDouble(reviewData.get("score"));
+        String url1 = reviewData.get("url1");
+        String url2 = reviewData.get("url2");
+        boolean result = reviewService.createNewReview(memNum, cafeNum, content, score, url1, url2);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    // 특정 카페 리뷰 조회
+    @GetMapping("/cafeReview")
+    public ResponseEntity<List<CafeReviewDto>> cafeReview(@RequestParam Long cafeNum) {
+        System.out.println("넘어온 값 :" + cafeNum);
+        List<CafeReviewDto> list = reviewService.cafeReview(cafeNum);
+        return new ResponseEntity<>(list, HttpStatus.OK);
+    }
 }

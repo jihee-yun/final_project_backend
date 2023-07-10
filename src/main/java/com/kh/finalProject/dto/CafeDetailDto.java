@@ -15,6 +15,7 @@ public class CafeDetailDto {
     private String addr;
     private String tel;
     private String operatingTime;
+    private double avgScore;
     private List<String> imgList; // 상품 이미지 리스트
     private List<String> menuList; // 가게 대표 메뉴 리스트
 }

@@ -6,8 +6,10 @@ import com.kh.finalProject.dto.ImgDto;
 import com.kh.finalProject.entity.Cafe;
 import com.kh.finalProject.entity.CafeImg;
 import com.kh.finalProject.entity.CafeMenu;
+import com.kh.finalProject.entity.Review;
 import com.kh.finalProject.repository.CafeImgRepository;
 import com.kh.finalProject.repository.CafeRepository;
+import com.kh.finalProject.repository.ReviewRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -25,6 +27,7 @@ import java.util.stream.Collectors;
 public class CafeService {
     private final CafeRepository cafeRepository;
     private final CafeImgRepository cafeImgRepository;
+    private final ReviewRepository reviewRepository;
 
     // 지역별(카테고리 선택별) 카페 조회
     public List<CafeDto> selectCafeList(String region) {
@@ -93,10 +96,18 @@ public class CafeService {
 
     // 카페 디테일 조회(카페 번호로)
     public List<CafeDetailDto> detailCafe(Long cafeNum) {
-        System.out.println("현재 넘어온 카페 번호 :" + cafeNum);
         Optional<Cafe> cafe = cafeRepository.findByIdWithDetails(cafeNum);
-        System.out.println("카페 값 저장 확인 : " + cafe.isPresent());
         List<CafeDetailDto> cafeDetailDtos = new ArrayList<>();
+        List<Review> reviews = reviewRepository.findByCafeNum(cafeNum);
+        double totalScore = 0.0;
+
+        for(Review review : reviews) {
+            totalScore += review.getScore();
+        }
+
+        double avgScore = reviews.isEmpty() ? 0.0 : totalScore / reviews.size();
+        double roundedAvgScore = Math.round(avgScore * 10) / 10.0;
+
         if(cafe.isPresent()) {
             Cafe cafe1 = cafe.get();
             System.out.println("Cafe 정보가 존재합니다: " + cafe);
@@ -109,6 +120,7 @@ public class CafeService {
             cafeDetailDto.setAddr(cafe1.getAddress());
             cafeDetailDto.setTel(cafe1.getTel());
             cafeDetailDto.setOperatingTime(cafe1.getOperatingTime());
+            cafeDetailDto.setAvgScore(roundedAvgScore);
             cafeDetailDto.setMenuList(cafe1.getCafeMenuList()
                     .stream()
                     .map(menu -> menu.getId() + " - " + menu.getName() + " - " + menu.getPrice()) // name과 price를 함께 매핑

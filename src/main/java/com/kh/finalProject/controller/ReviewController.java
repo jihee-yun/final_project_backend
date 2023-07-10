@@ -15,7 +15,7 @@ import java.util.List;
 @RestController
 @Slf4j
 @RequiredArgsConstructor
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "http://localhost:3000", exposedHeaders = "Authorization")
 @RequestMapping("/review")
 public class ReviewController {
     private final ReviewService reviewService;
@@ -32,7 +32,7 @@ public class ReviewController {
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
-    @PostMapping("/getbynum&date")
+    @PostMapping("/getbynumdate")
     public ResponseEntity<List<ReviewDto>> reviewListByNumAndDate(@RequestBody ReviewDateDto checkData) {
         Long userNum = checkData.getUserNum();
         LocalDate startDate = checkData.getStartDate();

@@ -1,5 +1,6 @@
 package com.kh.finalProject.service;
 
+import com.kh.finalProject.dto.MemberDto;
 import com.kh.finalProject.dto.MemberRequestDto;
 import com.kh.finalProject.dto.MemberResponseDto;
 import com.kh.finalProject.dto.TokenDto;
@@ -14,6 +15,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -40,5 +44,18 @@ public class MemberService {
         Authentication authentication = managerBuilder.getObject().authenticate(authenticationToken);
 
         return tokenProvider.generateToken(authentication);
+    }
+
+    // 사업자 회원 아이디로 사업자 회원 번호 조회
+    public List<MemberDto> getMemberNumById(String memberId) {
+        Optional<Member> memberOptional = memberRepository.findByMemberId(memberId);
+        List<MemberDto> memberDtoList = new ArrayList<>();
+        if (memberOptional.isPresent()) {
+            Member member = memberOptional.get();
+            MemberDto memberDto = new MemberDto();
+            memberDto.setMemberNum(member.getMemberNum());
+            memberDtoList.add(memberDto);
+        }
+        return memberDtoList;
     }
 }

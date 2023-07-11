@@ -1,5 +1,6 @@
 package com.kh.finalProject.service;
 
+import com.kh.finalProject.constant.Authority;
 import com.kh.finalProject.dto.MemberDto;
 import com.kh.finalProject.dto.MemberRequestDto;
 import com.kh.finalProject.dto.MemberResponseDto;
@@ -46,24 +47,42 @@ public class MemberService {
         return tokenProvider.generateToken(authentication);
     }
 
-    // 사업자 회원 아이디로 사업자 회원 번호 조회
-    public List<MemberDto> getMemberNumById(String memberId) {
-        Optional<Member> memberOptional = memberRepository.findByMemberId(memberId);
-        List<MemberDto> memberDtoList = new ArrayList<>();
-        if (memberOptional.isPresent()) {
-            Member member = memberOptional.get();
-            MemberDto memberDto = new MemberDto();
-            memberDto.setMemberNum(member.getMemberNum());
-            memberDtoList.add(memberDto);
-        }
-        return memberDtoList;
-    }
-
+//    // 사업자 회원 아이디로 사업자 회원 번호 조회
+//    public List<MemberDto> getMemberNumById(String memberId) {
+//        Optional<Member> memberOptional = memberRepository.findByMemberId(memberId);
+//        List<MemberDto> memberDtoList = new ArrayList<>();
+//        if (memberOptional.isPresent()) {
+//            Member member = memberOptional.get();
+//            MemberDto memberDto = new MemberDto();
+//            memberDto.setMemberNum(member.getMemberNum());
+//            memberDtoList.add(memberDto);
+//        }
+//        return memberDtoList;
+//    }
+    // 회원 아이디로 회원 번호 조회
     public Long getMemberNumByMemberId(String memberId) {
         Optional<Member> member = memberRepository.findByMemberId(memberId);
         if(member.isPresent()) {
             Member member1 = member.get();
             return member1.getMemberNum();
+        }
+        return null;
+    }
+    // 회원 아이디로 회원 이름 조회
+    public String getMemberNameByMemberId(String memberId) {
+        Optional<Member> member = memberRepository.findByMemberId(memberId);
+        if(member.isPresent()) {
+            Member member1 = member.get();
+            return member1.getName();
+        }
+        return null;
+    }
+    // 회원 아이디로 회원 종류(권한) 조회
+    public Authority getMemberAuthorityByMemberId(String memberId) {
+        Optional<Member> member = memberRepository.findByMemberId(memberId);
+        if(member.isPresent()) {
+            Member member1 = member.get();
+            return member1.getAuthority();
         }
         return null;
     }

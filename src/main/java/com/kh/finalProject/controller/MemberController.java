@@ -32,11 +32,12 @@ public class MemberController {
         return ResponseEntity.ok(memberService.login(requestDto));
     }
 
-    @PostMapping("/numget")
-    public ResponseEntity<List<MemberDto>> memberNum(@RequestBody MemberDto memberIdData) {
-        String memberId = memberIdData.getMemberId();
-        List<MemberDto> list = memberService.getMemberNumById(memberId);
-        return new ResponseEntity<>(list, HttpStatus.OK);
-    }
+    // 회원 아이디로 회원 번호 조회
+//    @PostMapping("/numget")
+//    public ResponseEntity<List<MemberDto>> memberNum(@RequestBody MemberDto memberIdData) {
+//        String memberId = memberIdData.getMemberId();
+//        List<MemberDto> list = memberService.getMemberNumById(memberId);
+//        return new ResponseEntity<>(list, HttpStatus.OK);
+//    }
 
 }

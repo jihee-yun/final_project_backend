@@ -8,4 +8,5 @@ import lombok.Setter;
 public class CouponDto {
     private String couponName;
     private int price;
+    private Long id;
 }

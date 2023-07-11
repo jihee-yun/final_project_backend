@@ -17,7 +17,7 @@ import java.util.List;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/couponstore")
+@RequestMapping({"/couponstore", "/couponpayment"})
 @CrossOrigin(origins = "http://localhost:3000")
 public class CouponController {
     public final CouponService couponService;

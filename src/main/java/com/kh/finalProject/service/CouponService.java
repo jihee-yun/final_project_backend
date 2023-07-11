@@ -27,6 +27,7 @@ public class CouponService {
             CouponDto couponDto = new CouponDto();
             couponDto.setCouponName(coupon.getCouponName());
             couponDto.setPrice(coupon.getPrice());
+            couponDto.setId(coupon.getId());
             couponDtoList.add(couponDto);
         }
         return couponDtoList;

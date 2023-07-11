@@ -28,6 +28,7 @@ public class ChallengeService {
 //            System.out.println(challenge.getDetail());
 //            System.out.println(challenge.getCount());
             ChallengeDto challengeDto = new ChallengeDto();
+            challengeDto.setId(challenge.getId());
             challengeDto.setChallengeName(challenge.getChallengeName());
             challengeDto.setThumbnail(challenge.getThumbnail());
             challengeDto.setDetail(challenge.getDetail());

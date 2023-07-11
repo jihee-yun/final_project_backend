@@ -32,6 +32,7 @@ public class PointService {
         List<PointDto> pointDtoList = new ArrayList<>();
         for (Point point : points) {
             PointDto pointDto = new PointDto();
+            pointDto.setId(point.getId());
             pointDto.setTotalPoint(point.getTotalPoint());
             pointDto.setName(point.getUser().getName());
         }

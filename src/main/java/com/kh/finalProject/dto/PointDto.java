@@ -6,6 +6,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class PointDto {
+    private Long id;
     private int totalPoint;
     private String name;
 }

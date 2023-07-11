@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 public class ChallengeDto {
+    private Long id;
     private String challengeName;
     private String thumbnail;
     private String detail;

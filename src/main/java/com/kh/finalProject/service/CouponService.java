@@ -25,6 +25,7 @@ public class CouponService {
 
         for(Coupon coupon : coupons) {
             CouponDto couponDto = new CouponDto();
+            couponDto.setId(coupon.getId());
             couponDto.setCouponName(coupon.getCouponName());
             couponDto.setPrice(coupon.getPrice());
             couponDto.setId(coupon.getId());

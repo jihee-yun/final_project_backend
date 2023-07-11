@@ -125,6 +125,7 @@ public class ReviewService {
                 cafeReviewDto.setContent(review.getReviewContent());
                 cafeReviewDto.setUrl1(review.getReviewImgUrl1());
                 cafeReviewDto.setUrl2(review.getReviewImgUrl2());
+                cafeReviewDto.setLikeCount(review.getLikeCount());
                 cafeReviewDto.setScore(review.getScore());
                 totalScore += review.getScore();
                 cafeReviewDto.setCountReview(reviews.size());

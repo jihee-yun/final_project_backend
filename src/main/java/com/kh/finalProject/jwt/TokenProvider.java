@@ -3,10 +3,12 @@ package com.kh.finalProject.jwt;
 import com.kh.finalProject.dto.TokenDto;
 import com.kh.finalProject.entity.RefreshToken;
 import com.kh.finalProject.repository.RefreshTokenRepository;
+import com.kh.finalProject.service.MemberService;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -26,6 +28,8 @@ import java.util.stream.Collectors;
 @Slf4j
 public class TokenProvider {
     private final RefreshTokenRepository refreshTokenRepository;
+    private final MemberService memberService;
+
     // 토큰을 생성하고 검증할 때 사용하는 문자열
     private static final String AUTHORITIES_KEY = "sweetkingdom!";
     private static final String BEARER_TYPE = "Bearer";
@@ -36,13 +40,16 @@ public class TokenProvider {
     private final Key key;
 
     // 주의점: 여기서 @Value는 `springframework.beans.factory.annotation.Value`소속이다! lombok의 @Value와 착각하지 말것!
-    public TokenProvider(@Value("${springboot.jwt.secret}") String secretKey, RefreshTokenRepository refreshTokenRepository) {
+    public TokenProvider(@Value("${springboot.jwt.secret}") String secretKey, RefreshTokenRepository refreshTokenRepository, @Lazy MemberService memberService) {
         this.refreshTokenRepository = refreshTokenRepository;
+        this.memberService = memberService;
         this.key = Keys.secretKeyFor(SignatureAlgorithm.HS512);
     }
 
     // 최초 엑세스, 리프레시 토큰 동시 생성
     public TokenDto generateToken(Authentication authentication) {
+        String memberId = authentication.getName();
+        Long memNum = memberService.getMemberNumByMemberId(memberId);
 
         String authorities = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
@@ -58,6 +65,7 @@ public class TokenProvider {
         String accessToken = Jwts.builder()
                 .setSubject(authentication.getName())
                 .claim(AUTHORITIES_KEY, authorities)
+                .claim("userNum", memNum)
                 .setExpiration(accessTokenExpiresIn)
                 .signWith(key, SignatureAlgorithm.HS512)
                 .compact();

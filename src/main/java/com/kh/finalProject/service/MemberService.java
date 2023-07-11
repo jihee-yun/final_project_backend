@@ -58,4 +58,15 @@ public class MemberService {
         }
         return memberDtoList;
     }
+
+    public Long getMemberNumByMemberId(String memberId) {
+        Optional<Member> member = memberRepository.findByMemberId(memberId);
+        if(member.isPresent()) {
+            Member member1 = member.get();
+            return member1.getMemberNum();
+        }
+        return null;
+    }
 }
+
+

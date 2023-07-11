@@ -15,6 +15,7 @@ public class CafeReviewDto {
     private String url1;
     private String url2;
     private double score;
+    private int likeCount;
     private double avgScore; // 평균 별점
     private int countReview; // 리뷰 개수
     private LocalDate writtenDay;

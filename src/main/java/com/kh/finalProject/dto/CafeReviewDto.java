@@ -9,7 +9,9 @@ import java.time.LocalDate;
 @Setter
 public class CafeReviewDto {
     private Long id; // 리뷰 고유번호
+    private Long userNum;
     private String userId;
+
     private String profile;
     private String content;
     private String url1;

@@ -120,6 +120,7 @@ public class ReviewService {
                 User userData = user.get();
                 CafeReviewDto cafeReviewDto = new CafeReviewDto();
                 cafeReviewDto.setId(review.getReviewNum());
+                cafeReviewDto.setUserNum(userData.getUserNum());
                 cafeReviewDto.setUserId(userData.getUserId());
                 cafeReviewDto.setProfile(userData.getProfileImgUrl());
                 cafeReviewDto.setContent(review.getReviewContent());

@@ -62,4 +62,9 @@ public class User { // 일반 회원
     @OneToOne(mappedBy = "user")
     private Point point;
 
+    @OneToMany(mappedBy = "user")
+    private List<MyChallenge> myChallenges = new ArrayList<>();
+
+
+
 }

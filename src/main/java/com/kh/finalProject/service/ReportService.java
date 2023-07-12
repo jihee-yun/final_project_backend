@@ -34,8 +34,8 @@ public class ReportService {
         return reportDtoList;
     }
 
-    public List<ReportDto> getReportUserId(String userId) {
-        List<Report> reportList = reportRepository.findAllByUserId(userId);
+    public List<ReportDto> getReportNum(Long reportNum) {
+        List<Report> reportList = reportRepository.findAllByReportNum(reportNum);
         List<ReportDto> reportDtoList = new ArrayList<>();
         for(Report report : reportList) {
             ReportDto reportDto = new ReportDto();

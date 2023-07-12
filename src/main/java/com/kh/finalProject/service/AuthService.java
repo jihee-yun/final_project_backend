@@ -4,8 +4,10 @@ import com.kh.finalProject.dto.*;
 import com.kh.finalProject.entity.Member;
 import com.kh.finalProject.entity.User;
 import com.kh.finalProject.jwt.TokenProvider;
+import com.kh.finalProject.jwt.UserTokenProvider;
 import com.kh.finalProject.repository.MemberRepository;
 import com.kh.finalProject.repository.RefreshTokenRepository;
+import com.kh.finalProject.repository.UserRefreshTokenRepository;
 import com.kh.finalProject.repository.UserRepository;
 import com.kh.finalProject.security.AccessTokenExpiredException;
 import lombok.RequiredArgsConstructor;
@@ -32,8 +34,10 @@ public class AuthService {
     private final MemberRepository memberRepository;
     private final UserRepository userRepository;
     private final RefreshTokenRepository refreshTokenRepository;
+    private final UserRefreshTokenRepository userRefreshTokenRepository;
     private final PasswordEncoder passwordEncoder;
     private final TokenProvider tokenProvider;
+    private final UserTokenProvider userTokenProvider;
 
 
 //    // 사용자 회원가입
@@ -72,5 +76,24 @@ public class AuthService {
         Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails, "", authorities);
 
         return tokenProvider.regenerateAccessToken(authentication).getAccessToken();
+    }
+
+    // User 엑세스 토큰 재발급
+    public String createNewUserAccessTk(String userRefreshToken) {
+        if(!userTokenProvider.validateUserToken(userRefreshToken)) {
+            throw new AccessTokenExpiredException("Refresh Token 만료");
+        }
+
+        String userId = userRefreshTokenRepository.findByUserRefreshToken(userRefreshToken).get().getUserId();
+        User user = userRepository.findByUserId(userId).get();
+        List<GrantedAuthority> authorities = List.of(new SimpleGrantedAuthority(user.getAuthority().toString()));
+        UserDetails userDetails = org.springframework.security.core.userdetails.User.withUsername(String.valueOf(user.getUserId()))
+                .password(user.getPassword())
+                .authorities(authorities)
+                .build();
+
+        Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails, "", authorities);
+
+        return userTokenProvider.regenerateAccessUserToken(authentication).getAccessToken();
     }
 }

@@ -8,6 +8,6 @@ import java.time.LocalDate;
 import java.util.List;
 
 public interface ReportRepository extends JpaRepository<Report, Long> {
-    List<Report> findAllByUserId(String userId);
+    List<Report> findAllByReportNum(Long ReportNum);
     List<Report> findByUserIdAndReportDateBetween(String userId, LocalDate startDate, LocalDate endDate);
 }

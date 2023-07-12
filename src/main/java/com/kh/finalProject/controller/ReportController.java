@@ -26,9 +26,9 @@ public class ReportController {
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
-    @GetMapping("/getUserId")
-    public ResponseEntity<List<ReportDto>> reportByNum(@RequestParam String userId) {
-        List<ReportDto> list = reportService.getReportUserId(userId);
+    @GetMapping("/getReportNum")
+    public ResponseEntity<List<ReportDto>> reportByNum(@RequestParam Long reportNum) {
+        List<ReportDto> list = reportService.getReportNum(reportNum);
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
 

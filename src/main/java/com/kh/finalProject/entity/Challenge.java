@@ -37,6 +37,7 @@ public class Challenge {
     @Column (nullable = false)
     private LocalDateTime endTime;
 
+
 //    @ManyToMany
 //    @JoinTable(
 //            name = "t_my_challenge",

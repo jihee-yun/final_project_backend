@@ -100,9 +100,68 @@ public class ReviewService {
             review.setLikeCount(0);
             review.setWrittenTime(LocalDate.now());
             Review newReview = reviewRepository.save(review);
+
+            updateAvgScore(cafeNum); // 리뷰 작성이 완료된 후 카페 테이블에 스코어 업데이트
+
             return true;
         } else {
             throw new IllegalArgumentException("해당 유저를 찾을 수 없습니다. ");
+        }
+    }
+
+    // 리뷰 수정
+    public boolean editReview(Long reviewNum, Long cafeNum, String content, double score, String url1, String url2) {
+        Optional<Review> review = reviewRepository.findById(reviewNum);
+        if(review.isPresent()) {
+            Review editReview = review.get();
+            editReview.setReviewContent(content);
+            editReview.setScore(score);
+            editReview.setReviewImgUrl1(url1);
+            editReview.setReviewImgUrl2(url2);
+            editReview.setWrittenTime(LocalDate.now());
+            Review update = reviewRepository.save(editReview);
+
+            updateAvgScore(cafeNum);
+            return true;
+        } else {
+            throw new IllegalArgumentException("해당 리뷰를 찾을 수 없습니다.");
+        }
+    }
+
+    // 리뷰 삭제
+    public boolean deleteReview(Long reviewNum, Long cafeNum) {
+        Optional<Review> review = reviewRepository.findById(reviewNum);
+        if(review.isPresent()) {
+            Review deleteReview = review.get();
+            reviewRepository.delete(deleteReview);
+
+            updateAvgScore(cafeNum);
+            return true;
+        } else return false;
+    }
+
+    // 카페 테이블 스코어 값 업데이트를 위한 메소드
+    public void updateAvgScore(Long cafeNum) {
+        List<Review> reviews = reviewRepository.findByCafeNum(cafeNum);
+        int reviewCount = reviews.size();
+        double totalScore = 0.0;
+
+        for(Review review : reviews) {
+            totalScore += review.getScore();
+        }
+
+        double avgScore;
+        if (reviewCount > 0) {
+            avgScore = Math.round((totalScore / reviewCount) * 10) / 10.0;
+        } else {
+            avgScore = 0.0; // 리뷰 수가 0인 경우 0으로 업데이트
+        }
+
+        Optional<Cafe> cafe = cafeRepository.findById(cafeNum);
+        if(cafe.isPresent()) {
+            Cafe cafe1 = cafe.get();
+            cafe1.setScore(avgScore);
+            cafeRepository.save(cafe1);
         }
     }
 

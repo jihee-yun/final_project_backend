@@ -63,4 +63,26 @@ public class ReviewController {
         List<CafeReviewDto> list = reviewService.cafeReview(cafeNum);
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
+
+    // 리뷰 수정
+    @PostMapping("/edit")
+    public ResponseEntity<Boolean> editReview(@RequestBody Map<String, String> reviewData) {
+        Long reviewNum = Long.valueOf(reviewData.get("reviewNum"));
+        Long cafeNum = Long.valueOf(reviewData.get("cafeNum"));
+        String content = reviewData.get("content");
+        double score = Double.parseDouble(reviewData.get("editScore"));
+        String url1 = reviewData.get("url1");
+        String url2 = reviewData.get("url2");
+        boolean result = reviewService.editReview(reviewNum, cafeNum, content, score, url1, url2);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    // 리뷰 삭제
+    @PostMapping("/delete")
+    public ResponseEntity<Boolean> deleteReview(@RequestBody Map<String, String> reviewData) {
+        Long reviewNum = Long.valueOf(reviewData.get("reviewId"));
+        Long cafeNum = Long.valueOf(reviewData.get("cafeNum"));
+        boolean result = reviewService.deleteReview(reviewNum, cafeNum);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
 }

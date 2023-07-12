@@ -19,6 +19,7 @@ import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 @Slf4j
 @Service
@@ -88,8 +89,8 @@ public class MemberService {
     }
 
     // 회원 번호로 정보 조회
-    public List<MemberDto> getMemberInfoByNum(Long userNum) {
-        Optional<Member> memberOptional = memberRepository.findByMemberNum(userNum);
+    public List<MemberDto> getMemberInfoByNum(Long memberNum) {
+        Optional<Member> memberOptional = memberRepository.findByMemberNum(memberNum);
         List<MemberDto> memberDtoList = new ArrayList<>();
         if (memberOptional.isPresent()) {
             Member member = memberOptional.get();
@@ -109,6 +110,29 @@ public class MemberService {
             memberDtoList.add(memberDto);
         }
         return memberDtoList;
+    }
+
+    // 회원 한 줄 소개 변경
+    public Boolean changeMemberIntroByNum(Long memberNum, String intro) {
+        Optional<Member> memberOptional = memberRepository.findByMemberNum(memberNum);
+        AtomicBoolean result = new AtomicBoolean(false);
+        memberOptional.ifPresent(member -> {
+            member.setIntro(intro);
+            memberRepository.save(member);
+            result.set(true);
+        });
+        return result.get();
+    }
+    // 회원 전화 번호 변경
+    public Boolean changeMemberPhoneByNum(Long memberNum, String phone) {
+        Optional<Member> memberOptional = memberRepository.findByMemberNum(memberNum);
+        AtomicBoolean result = new AtomicBoolean(false);
+        memberOptional.ifPresent(member -> {
+            member.setPhone(phone);
+            memberRepository.save(member);
+            result.set(true);
+        });
+        return result.get();
     }
 }
 

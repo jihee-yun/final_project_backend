@@ -7,6 +7,7 @@ import lombok.ToString;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "t_challenge")
@@ -35,4 +36,12 @@ public class Challenge {
 
     @Column (nullable = false)
     private LocalDateTime endTime;
+
+//    @ManyToMany
+//    @JoinTable(
+//            name = "t_my_challenge",
+//            joinColumns = @JoinColumn(name = "challenge_id"),
+//            inverseJoinColumns = @JoinColumn(name = "my_challenge_id")
+//    )
+//    private List<MyChallenge> myChallenges;
 }

@@ -13,6 +13,6 @@ public class ChallengeDto {
     private String thumbnail;
     private String detail;
     private int count;
-//    private LocalDateTime startTime;
-//    private LocalDateTime endTime; // 보류..
+    private LocalDateTime startTime;
+    private LocalDateTime endTime;
 }

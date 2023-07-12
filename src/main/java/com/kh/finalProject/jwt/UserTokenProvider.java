@@ -3,10 +3,12 @@ package com.kh.finalProject.jwt;
 import com.kh.finalProject.dto.UserTokenDto;
 import com.kh.finalProject.entity.UserRefreshToken;
 import com.kh.finalProject.repository.UserRefreshTokenRepository;
+import com.kh.finalProject.service.UserService;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -25,6 +27,7 @@ import java.util.stream.Collectors;
 @Slf4j
 public class UserTokenProvider {
     private final UserRefreshTokenRepository userRefreshTokenRepository;
+    private final UserService userService;
 
     // 토큰을 생성하고 검증할 때 사용하는 문자열
     private static final String AUTHORITIES_KEY = "sweetkingdom!";
@@ -36,8 +39,9 @@ public class UserTokenProvider {
     private Key key;
 
     // 주의점: 여기서 @Value는 `springframework.beans.factory.annotation.Value`소속이다! lombok의 @Value와 착각하지 말것!
-    public UserTokenProvider(@Value("${springboot.jwt.secret}") String secretKey, UserRefreshTokenRepository userRefreshTokenRepository){
+    public UserTokenProvider(@Value("${springboot.jwt.secret}") String secretKey, UserRefreshTokenRepository userRefreshTokenRepository, @Lazy UserService userService){
         this.userRefreshTokenRepository = userRefreshTokenRepository;
+        this.userService = userService;
         this.key = Keys.secretKeyFor(SignatureAlgorithm.HS512);
     }
 

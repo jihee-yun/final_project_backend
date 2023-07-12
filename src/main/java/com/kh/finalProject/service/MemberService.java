@@ -86,6 +86,30 @@ public class MemberService {
         }
         return null;
     }
+
+    // 회원 번호로 정보 조회
+    public List<MemberDto> getMemberInfoByNum(Long userNum) {
+        Optional<Member> memberOptional = memberRepository.findByMemberNum(userNum);
+        List<MemberDto> memberDtoList = new ArrayList<>();
+        if (memberOptional.isPresent()) {
+            Member member = memberOptional.get();
+            MemberDto memberDto = new MemberDto();
+            memberDto.setMemberId(member.getMemberId());
+            memberDto.setPhone(member.getPhone());
+            memberDto.setEmail(member.getEmail());
+            memberDto.setBirthday(member.getBirthday());
+            memberDto.setGender(member.getGender());
+            memberDto.setSignUpDay(member.getSignUpDay());
+            memberDto.setFollowingId(member.getFollowingId());
+            memberDto.setFollowedId(member.getFollowedId());
+            memberDto.setProfileImgUrl(member.getProfileImgUrl());
+            memberDto.setIntro(member.getIntro());
+            memberDto.setExistence(member.getExistence());
+            memberDto.setAuthority(member.getAuthority());
+            memberDtoList.add(memberDto);
+        }
+        return memberDtoList;
+    }
 }
 
 

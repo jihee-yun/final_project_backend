@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.util.StringUtils;
+import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -15,10 +16,10 @@ import java.io.IOException;
 @Slf4j
 @RequiredArgsConstructor
 // OncePerRequestFilter 상속받아 JWT 토큰을 필터링하는 역할을 수행하는 JwtFilter 클래스
-public class UserJwtFilter {
+public class UserJwtFilter extends OncePerRequestFilter {
     public static final String AUTHORIZATION_HEADER = "Authorization";
     public static final String BEARER_PREFIX = "Bearer ";
-    private UserTokenProvider userTokenProvider;
+    private final UserTokenProvider userTokenProvider;
 
     private String resolveUserToken(HttpServletRequest request) {
         String bearerToken = request.getHeader(AUTHORIZATION_HEADER); // 해더에서 Authorization 해더 추출

@@ -137,4 +137,24 @@ public class UserService {
 //        return tokenProvider.generateTokenDto(authentication);
         return null;
     }
+
+    // 유저 아이디로 유저 번호 조회
+    public Long getUserNumByUserId(String userId) {
+        Optional<User> user = userRepository.findByUserId(userId);
+        if(user.isPresent()) {
+            User user1 = user.get();
+            return user1.getUserNum();
+        }
+        return null;
+    }
+
+    // 유저 아이디로 유저 이름 조회
+    public String getUserNameByUserId(String userId) {
+        Optional<User> user = userRepository.findByUserId(userId);
+        if(user.isPresent()) {
+            User user1 = user.get();
+            return user1.getName();
+        }
+        return null;
+    }
 }

@@ -1,6 +1,7 @@
 package com.kh.finalProject.security;
 
 import com.kh.finalProject.jwt.TokenProvider;
+import com.kh.finalProject.jwt.UserTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,6 +22,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 
 public class WebSecurityConfig {
         private final TokenProvider tokenProvider;
+        private final UserTokenProvider userTokenProvider;
         private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
         private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
 
@@ -55,7 +57,7 @@ public class WebSecurityConfig {
                     .anyRequest().authenticated()
 
                     .and()
-                    .apply(new JwtSecurityConfig(tokenProvider));
+                    .apply(new JwtSecurityConfig(tokenProvider, userTokenProvider ));
 
             return http.build();
         }

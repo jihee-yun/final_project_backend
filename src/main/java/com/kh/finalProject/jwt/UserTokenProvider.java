@@ -47,7 +47,9 @@ public class UserTokenProvider {
 
     // 최초 엑세스, 리프레시 토큰 동시 생성
     public UserTokenDto generateUserToken(Authentication authentication) {
-
+        String userId = authentication.getName();
+        Long userNum = userService.getUserNumByUserId(userId);
+        String userName = userService.getUserNameByUserId(userId);
 
 
         String authorities = authentication.getAuthorities().stream()
@@ -64,6 +66,8 @@ public class UserTokenProvider {
         String accessToken = Jwts.builder()
                 .setSubject(authentication.getName())
                 .claim(AUTHORITIES_KEY, authorities)
+                .claim("userNum", userNum)
+                .claim("userName", userName)
                 .setExpiration(accessTokenExpiresIn)
                 .signWith(key, SignatureAlgorithm.HS512)
                 .compact();

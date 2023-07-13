@@ -32,7 +32,7 @@ public class UserRequestDto {
     public User toUser(PasswordEncoder passwordEncoder) {
         return User.builder()
                 .userId(userId)
-                .password(password)
+                .password(passwordEncoder.encode(password))
                 .name(name)
                 .phone(phone)
                 .email(email)

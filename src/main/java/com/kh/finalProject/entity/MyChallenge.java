@@ -6,6 +6,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -22,11 +23,11 @@ public class MyChallenge {
     @JoinColumn(name = "user_num")
     private User user;
 
-    @ManyToMany
-    @JoinTable(
-            name = "my_challenge_challenge",
-            joinColumns = @JoinColumn(name = "my_challenge_id"),
-            inverseJoinColumns = @JoinColumn(name = "challenge_id")
-    )
-    private List<Challenge> challenges;
+    // 장바구니
+//    @OneToMany(mappedBy = "myChallenge")
+//    private List<Challenge> challenges = new ArrayList<>();
+    @ManyToOne
+    @JoinColumn(name = "challenge_id")
+    private Challenge challenge;
+
 }

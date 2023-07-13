@@ -7,6 +7,7 @@ import lombok.ToString;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -37,11 +38,11 @@ public class Challenge {
     @Column (nullable = false)
     private LocalDateTime endTime;
 
-//    @ManyToMany
-//    @JoinTable(
-//            name = "t_my_challenge",
-//            joinColumns = @JoinColumn(name = "challenge_id"),
-//            inverseJoinColumns = @JoinColumn(name = "my_challenge_id")
-//    )
-//    private List<MyChallenge> myChallenges;
+    // 상품
+//    @ManyToOne
+//    @JoinColumn(name = "my_challenge_id")
+//    private MyChallenge myChallenge;
+    @OneToMany(mappedBy = "challenge")
+    private List<MyChallenge> myChallenges = new ArrayList<>();
+
 }

@@ -26,6 +26,7 @@ public class MyChallengeService {
         for (MyChallenge myChallenge : myChallenges) {
             MyChallengeDto myChallengeDto = new MyChallengeDto();
             myChallengeDto.setId(myChallenge.getId());
+            // 오류 부분
             myChallengeDto.setChallengeName(myChallengeDto.getChallengeName());
             myChallengeDto.setUserNum(myChallengeDto.getUserNum());
             myChallengeDto.setChallengeId(myChallengeDto.getChallengeId());

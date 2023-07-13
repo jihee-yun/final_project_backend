@@ -18,9 +18,8 @@ import java.util.List;
 public class MyChallengeController {
     private final MyChallengeService myChallengeService;
 
-    @GetMapping("/mychallnege")
+    @GetMapping("/mychallenge")
     public ResponseEntity<List<MyChallengeDto>> MyChallengeList(@RequestParam Long userNum) {
-//        System.out.println("mychallnege" + mychallnege);
         List<MyChallengeDto> list = myChallengeService.getMyChallengeList(userNum);
         return new ResponseEntity<>(list, HttpStatus.OK);
     }

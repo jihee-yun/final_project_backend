@@ -26,13 +26,13 @@ public class ReportController {
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
-    @GetMapping("/getReportNum")
-    public ResponseEntity<List<ReportDto>> reportByNum(@RequestParam Long reportNum) {
+    @GetMapping("/getReportNum/{reportNum}")
+    public ResponseEntity<List<ReportDto>> reportByNum(@PathVariable Long reportNum) {
         List<ReportDto> list = reportService.getReportNum(reportNum);
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
-    @PostMapping("getDate")
+    @PostMapping("/getDate")
     public ResponseEntity<List<ReportDto>> reportByNumAndDate(@RequestParam ReportDateDto reportDateDto) {
         String userId = reportDateDto.getUserId();
         LocalDate startDate = reportDateDto.getStartDate();

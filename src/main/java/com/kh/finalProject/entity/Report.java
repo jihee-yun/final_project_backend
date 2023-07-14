@@ -14,14 +14,20 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class Report {
     @Id
-    @Column(name = "report_num_pk")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue
+    @Column(name = "report_num")
     private Long reportNum;
-    @Lob
+
     @Column(nullable = false)
     private String userId;
+
+    @Column(nullable = false, length=2000)
     private String reportContent;
+
+    @Column(nullable = false)
     private String title;
+
+    @Column(nullable = false)
     private LocalDate reportDate;
 
 }

@@ -54,4 +54,22 @@ public class GuildController {
         boolean result = guildService.createNewGuild(num, name, intro, detailIntro, meetDay, limitMem, region, thumbnail);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
+
+    // 길드 가입 회원 확인
+    @GetMapping("/isMember")
+    public ResponseEntity<Integer> isMember(@RequestParam Long guildNum, Long userNum) {
+        System.out.println("유저 번호 : " + userNum);
+        System.out.println("길드 번호 : " + guildNum);
+        int isMember = guildService.isMember(guildNum, userNum);
+        return new ResponseEntity<>(isMember, HttpStatus.OK);
+    }
+
+    // 길드 가입하기
+    @PostMapping("/join")
+    public ResponseEntity<Boolean> joinGuild(@RequestBody Map<String, Long> joinData) {
+        Long guildNum = joinData.get("guildNum");
+        Long userNum = joinData.get("userNum");
+        boolean result = guildService.joinGuild(guildNum, userNum);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
 }

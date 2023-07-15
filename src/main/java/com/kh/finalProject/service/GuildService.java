@@ -70,6 +70,7 @@ public class GuildService {
         List<GuildDetailDto> guildDetailDtos = new ArrayList<>();
         List<GuildMember> guildMembers = guildMemberRepository.findByGuildId(guildNum);
         List<String> memberProfileList = new ArrayList<>();
+        List<Long> memberNumList = new ArrayList<>();
         int members = guildMembers.size();
 
         for(GuildMember guildMember : guildMembers) {
@@ -79,6 +80,7 @@ public class GuildService {
             if (user.isPresent()) {
                 User userData = user.get();
                 memberProfileList.add(userData.getProfileImgUrl());
+                memberNumList.add(userData.getUserNum());
             }
         }
 
@@ -98,6 +100,7 @@ public class GuildService {
             guildDetailDto.setDetailIntro(guild1.getDetailIntro());
             guildDetailDto.setThumbnail(guild1.getThumbnail());
             guildDetailDto.setMemberProfileList(memberProfileList);
+            guildDetailDto.setMemberNumList(memberNumList);
             guildDetailDto.setCountMember(members);
             guildDetailDtos.add(guildDetailDto);
         }
@@ -123,6 +126,34 @@ public class GuildService {
             return true;
         } else {
             throw new IllegalArgumentException("해당 유저를 찾을 수 없습니다. memNum: " + memNum);
+        }
+    }
+
+    // 길드 가입 회원 확인
+    public int isMember(Long guildNum, Long userNum) {
+        Optional<Long> isLeader = guildRepository.findUserNumByGuildIdAndMemberId(guildNum, userNum);
+        Optional<Long> isMember = guildMemberRepository.findMemberNumByGuildIdAndMemberId(guildNum, userNum);
+
+        if(isLeader.isPresent() || isMember.isPresent()) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
+    // 길드 가입하기
+    public boolean joinGuild(Long guildNum, Long userNum) {
+        Optional<Guild> guild = guildRepository.findById(guildNum);
+        Optional<User> user = userRepository.findByUserNum(userNum);
+
+        if(guild.isPresent() && user.isPresent()) {
+            GuildMember guildMember = new GuildMember();
+            guildMember.setGuild(guild.get());
+            guildMember.setUser(user.get());
+            GuildMember newGuildMember = guildMemberRepository.save(guildMember);
+            return true;
+        } else {
+            throw new IllegalArgumentException("오류");
         }
     }
 }

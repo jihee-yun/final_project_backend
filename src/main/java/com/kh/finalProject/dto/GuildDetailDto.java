@@ -19,6 +19,7 @@ public class GuildDetailDto {
     private String leaderIntro;
     private int countMember;
 
-    private String leaderProfileList; // 길드장 프로필 리스트
+    private String leaderProfileList; // 길드장 프로필
     private List<String> memberProfileList; // 길드원 프로필 리스트
+    private List<Long> memberNumList; // 길드원 넘버 리스트
 }

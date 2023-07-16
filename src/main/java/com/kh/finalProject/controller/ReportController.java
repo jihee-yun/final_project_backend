@@ -16,20 +16,13 @@ import java.util.List;
 @Slf4j
 @RequiredArgsConstructor
 @CrossOrigin(origins = "http://localhost:3000")
-@RequestMapping("/admin/report")
+@RequestMapping("/report")
 public class ReportController {
     private final ReportService reportService;
 
     @GetMapping("/all")
     public ResponseEntity<List<ReportDto>> reportAll() {
         List<ReportDto> list = reportService.getReportList();
-        return new ResponseEntity<>(list, HttpStatus.OK);
-    }
-
-    // 번호로 신고 조회
-    @GetMapping("/getbynum")
-    public ResponseEntity<List<ReportDto>> reportByNum(@RequestParam Long reportNum) {
-        List<ReportDto> list = reportService.getAllReportsByReportNum(reportNum);
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
 

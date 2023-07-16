@@ -19,4 +19,18 @@ import java.util.List;
 public class AdminController {
     private final ReportService reportService;
 
+    // 신고 전제 조회
+    @GetMapping("/report/all")
+    public ResponseEntity<List<ReportDto>> reportAll() {
+        List<ReportDto> list = reportService.getReportList();
+        return new ResponseEntity<>(list, HttpStatus.OK);
+    }
+
+    // 번호로 신고 조회
+    @GetMapping("/report/getbynum")
+    public ResponseEntity<List<ReportDto>> reportByNum(@RequestParam Long reportNum) {
+        List<ReportDto> list = reportService.getAllReportsByReportNum(reportNum);
+        return new ResponseEntity<>(list, HttpStatus.OK);
+    }
+
 }

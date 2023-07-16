@@ -16,7 +16,7 @@ import java.util.List;
 @Slf4j
 @RequiredArgsConstructor
 @CrossOrigin(origins = "http://localhost:3000")
-@RequestMapping("/report")
+@RequestMapping("/admin/report")
 public class ReportController {
     private final ReportService reportService;
 

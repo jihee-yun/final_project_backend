@@ -52,7 +52,7 @@ public class WebSecurityConfig {
                     .and()
                     .authorizeRequests()
                     // 경로에 대해 인증 없이 접근을 허용
-                    .antMatchers("/auth/**", "/mypage/**", "/cafe/**", "/event/**", "/koauth/**", "/couponstore/**", "/guild/**", "/user/**", "/roulette/**", "/quizmain/**", "/member/**", "/token/**", "/review/**", "/couponpayment/**", "/report/**").permitAll() // 어떤 패스로 들어올 때 접근을 허용해줄건지
+                    .antMatchers("/auth/**", "/mypage/**", "/cafe/**", "/event/**", "/koauth/**", "/couponstore/**", "/guild/**", "/user/**", "/roulette/**", "/quizmain/**", "/member/**", "/token/**", "/review/**", "/couponpayment/**", "/admin/report/**").permitAll() // 어떤 패스로 들어올 때 접근을 허용해줄건지
                     .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                     .anyRequest().authenticated()
 

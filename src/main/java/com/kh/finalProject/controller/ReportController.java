@@ -26,9 +26,10 @@ public class ReportController {
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
-    @GetMapping("/getReportNum/{reportNum}")
-    public ResponseEntity<List<ReportDto>> reportByNum(@PathVariable Long reportNum) {
-        List<ReportDto> list = reportService.getReportNum(reportNum);
+    // 번호로 신고 조회
+    @GetMapping("/getbynum")
+    public ResponseEntity<List<ReportDto>> reportByNum(@RequestParam Long reportNum) {
+        List<ReportDto> list = reportService.getAllReportsByReportNum(reportNum);
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
 

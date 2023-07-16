@@ -29,8 +29,8 @@ public class ReviewController {
     }
 
     @GetMapping("/getbynum")
-    public ResponseEntity<List<ReviewDto>> reviewListByNum(@RequestParam Long usernum) {
-        List<ReviewDto> list = reviewService.getReviewListByNum(usernum);
+    public ResponseEntity<List<ReviewDto>> reviewListByNum(@RequestParam Long userNum) {
+        List<ReviewDto> list = reviewService.getReviewListByNum(userNum);
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
 

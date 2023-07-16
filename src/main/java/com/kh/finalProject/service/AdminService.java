@@ -76,6 +76,7 @@ public class AdminService {
             reportDto.setUserId(report.getUserId());
             reportDto.setContent(report.getReportContent());
             reportDto.setTitle(report.getTitle());
+            reportDto.setReportDate(report.getReportDate());
             reportDtos.add(reportDto);
         }
         return reportDtos;

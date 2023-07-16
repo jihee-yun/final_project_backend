@@ -6,7 +6,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "t_report")
@@ -27,7 +27,6 @@ public class Report {
     @Column(nullable = false)
     private String title;
 
-    @Column(nullable = false)
-    private LocalDate reportDate;
+    private LocalDateTime reportDate;
 
 }

@@ -29,12 +29,13 @@ public class ReportService {
             reportDto.setUserId(report.getUserId());
             reportDto.setContent(report.getReportContent());
             reportDto.setTitle(report.getTitle());
+            reportDto.setReportDate(report.getReportDate());
             reportDtoList.add(reportDto);
         }
         return reportDtoList;
     }
 
-    public List<ReportDto> getReportNum(Long reportNum) {
+    public List<ReportDto> getAllReportsByReportNum(Long reportNum) {
         List<Report> reportList = reportRepository.findAllByReportNum(reportNum);
         List<ReportDto> reportDtoList = new ArrayList<>();
         for(Report report : reportList) {
@@ -43,6 +44,7 @@ public class ReportService {
             reportDto.setUserId(report.getUserId());
             reportDto.setContent(report.getReportContent());
             reportDto.setTitle(report.getTitle());
+            reportDto.setReportDate(report.getReportDate());
             reportDtoList.add(reportDto);
         }
         return reportDtoList;
@@ -57,6 +59,7 @@ public class ReportService {
             reportDto.setUserId(report.getUserId());
             reportDto.setContent(report.getReportContent());
             reportDto.setTitle(report.getTitle());
+            reportDto.setReportDate(report.getReportDate());
             reportDtoList.add(reportDto);
         }
         return reportDtoList;

@@ -6,18 +6,16 @@ import com.kh.finalProject.jwt.UserTokenProvider;
 import com.kh.finalProject.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.mail.MailSendException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
+import org.springframework.mail.javamail.JavaMailSender;
 import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Random;
+import java.util.*;
 
 @Service
 @Transactional
@@ -29,6 +27,9 @@ public class UserService {
     private final HttpSession session;
     private final PasswordEncoder passwordEncoder;
     private final UserTokenProvider tokenProvider;
+    private final JavaMailSender mailSender;
+    private final EmailService emailService;
+
 
     // 일반 회원 로그인
     public UserTokenDto userLogin(UserRequestDto userRequestDto) {
@@ -58,36 +59,26 @@ public class UserService {
         }
     }
 
-    // 비밀번호 찾기
-    public String findPassword(String email) {
+    // 비밀번호 재설정 이메일 발송
+    public void findPassWordByEmail(String email) {
         Optional<User> userInfo = userRepository.findByEmail(email);
         if (userInfo.isPresent()) {
-            String temporaryPassword = generateTemporaryPassword();
             User user = userInfo.get();
-            user.setPassword(passwordEncoder.encode(temporaryPassword));
-            userRepository.save(user);
+            String temporaryPassword = emailService.createKey(); // 인증키로 임시 비밀번호 생성
+            user.setPassword(passwordEncoder.encode(temporaryPassword)); // 비밀번호 업데이트
+            userRepository.save(user); // 사용자 정보 저장
 
-            return "임시 비밀번호를 이메일로 전송하였습니다.";
+            try {
+                emailService.sendSimpleMessage(email); // 이메일 전송
+            } catch (MailSendException e) {
+                throw new RuntimeException("이메일 전송에 실패했습니다.");
+            } catch (Exception e) {
+                // 기타 다른 예외 처리 (예: 인터넷 연결 불가 등)
+                throw new RuntimeException("알 수 없는 이메일 전송 실패입니다.");
+            }
         } else {
             throw new RuntimeException("일치하는 회원 정보를 찾을 수 없습니다.");
         }
-    }
-
-    // 임시 비밀번호 생성 메서드
-    private String generateTemporaryPassword() {
-        int length = 10; // 임시 비밀번호 길이 설정
-        String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()"; // 사용할 문자 범위 설정
-
-        StringBuilder sb = new StringBuilder();
-        Random random = new Random();
-
-        for (int i = 0; i < length; i++) {
-            int index = random.nextInt(characters.length());
-            char randomChar = characters.charAt(index);
-            sb.append(randomChar);
-        }
-
-        return sb.toString();
     }
 
 

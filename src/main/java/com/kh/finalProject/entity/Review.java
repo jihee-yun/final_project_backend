@@ -26,8 +26,7 @@ public class Review {
     private LocalDate writtenTime; // 글 작성일
     private int likeCount; // 좋아요 카운트
     private double score; // 리뷰 점수
-
-    @OneToMany(mappedBy = "review")
+    @OneToMany(mappedBy = "review", cascade = CascadeType.ALL)
     private List<ReviewLike> reviewLikeList = new ArrayList<>();
 
 

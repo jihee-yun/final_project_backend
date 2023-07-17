@@ -4,8 +4,10 @@ import com.kh.finalProject.dto.CafeReviewDto;
 import com.kh.finalProject.dto.ReviewDto;
 import com.kh.finalProject.entity.Cafe;
 import com.kh.finalProject.entity.Review;
+import com.kh.finalProject.entity.ReviewLike;
 import com.kh.finalProject.entity.User;
 import com.kh.finalProject.repository.CafeRepository;
+import com.kh.finalProject.repository.ReviewLikeRepository;
 import com.kh.finalProject.repository.ReviewRepository;
 import com.kh.finalProject.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -27,6 +29,7 @@ public class ReviewService {
     private final ReviewRepository reviewRepository;
     private final UserRepository userRepository;
     private final CafeRepository cafeRepository;
+    private final ReviewLikeRepository reviewLikeRepository;
 
     public List<ReviewDto> getReviewList() {
         List<Review> reviewList = reviewRepository.findAll();
@@ -200,5 +203,44 @@ public class ReviewService {
             cafeReviewDto.setAvgScore(roundedAvgScore);
         }
         return cafeReviewDtos;
+    }
+
+    // 리뷰 좋아요 기능
+    public boolean changeReviewLike(Long memNum, Long reviewNum) {
+        Optional<User> user = userRepository.findByUserNum(memNum);
+        Optional<Review> review = reviewRepository.findById(reviewNum);
+
+        if(user.isPresent() && review.isPresent()) {
+            Optional<ReviewLike> reviewLike = reviewLikeRepository.findByUserAndReview(user.get(), review.get());
+
+            if(reviewLike.isPresent()) {
+                reviewLikeRepository.delete(reviewLike.get());
+
+                reviewLikeCountUpdate(reviewNum, -1);
+                return false;
+            } else {
+                ReviewLike newLike = new ReviewLike();
+                newLike.setUser(user.get());
+                newLike.setReview(review.get());
+                reviewLikeRepository.save(newLike);
+
+                reviewLikeCountUpdate(reviewNum, 1);
+                return true;
+            }
+        } else {
+            throw new IllegalArgumentException("해당 유저 또는 리뷰를 찾을 수 없습니다.");
+        }
+    }
+
+    // 리뷰 좋아요 카운트 반영을 위한 메소드
+    public void reviewLikeCountUpdate(Long reviewNum, int count) {
+        Optional<Review> review = reviewRepository.findById(reviewNum);
+
+        if(review.isPresent()) {
+            Review review1 = review.get();
+            int likeCount = review1.getLikeCount();
+            review1.setLikeCount(likeCount + count);
+            reviewRepository.save(review1);
+        }
     }
 }

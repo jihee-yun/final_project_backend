@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @Slf4j
@@ -54,5 +55,14 @@ public class CafeController {
         System.out.println("카페번호 : " + cafeNum);
         List<ImgDto> list = cafeService.imgListGet(cafeNum);
         return new ResponseEntity<>(list, HttpStatus.OK);
+    }
+
+    // 카페 좋아요 기능
+    @PostMapping("/like")
+    public ResponseEntity<Boolean> changeCafeLike(@RequestBody Map<String, Long> likeData) {
+        Long cafeNum = likeData.get("cafeNum");
+        Long memNum = likeData.get("memNum");
+        boolean result = cafeService.changeCafeLike(cafeNum, memNum);
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 }

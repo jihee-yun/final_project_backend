@@ -4,10 +4,12 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "t_review")
-@Getter @Setter @ToString
+@Getter @Setter @ToString(exclude = {"reviewLikeList"})
 @NoArgsConstructor // 빌더용(안쓰면 없어도 됨)
 public class Review {
     @Id
@@ -24,5 +26,9 @@ public class Review {
     private LocalDate writtenTime; // 글 작성일
     private int likeCount; // 좋아요 카운트
     private double score; // 리뷰 점수
+
+    @OneToMany(mappedBy = "review")
+    private List<ReviewLike> reviewLikeList = new ArrayList<>();
+
 
 }

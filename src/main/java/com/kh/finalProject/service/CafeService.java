@@ -3,13 +3,8 @@ package com.kh.finalProject.service;
 import com.kh.finalProject.dto.CafeDetailDto;
 import com.kh.finalProject.dto.CafeDto;
 import com.kh.finalProject.dto.ImgDto;
-import com.kh.finalProject.entity.Cafe;
-import com.kh.finalProject.entity.CafeImg;
-import com.kh.finalProject.entity.CafeMenu;
-import com.kh.finalProject.entity.Review;
-import com.kh.finalProject.repository.CafeImgRepository;
-import com.kh.finalProject.repository.CafeRepository;
-import com.kh.finalProject.repository.ReviewRepository;
+import com.kh.finalProject.entity.*;
+import com.kh.finalProject.repository.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -28,6 +23,8 @@ public class CafeService {
     private final CafeRepository cafeRepository;
     private final CafeImgRepository cafeImgRepository;
     private final ReviewRepository reviewRepository;
+    private final UserRepository userRepository;
+    private final CafeLikeRepository cafeLikeRepository;
 
     // 지역별(카테고리 선택별) 카페 조회
     public List<CafeDto> selectCafeList(String region) {
@@ -142,5 +139,44 @@ public class CafeService {
             imgDtos.add(imgDto);
         }
         return imgDtos;
+    }
+
+    // 카페 좋아요 기능
+    public boolean changeCafeLike(Long cafeNum, Long memNum) {
+        Optional<Cafe> cafe = cafeRepository.findById(cafeNum);
+        Optional<User> user = userRepository.findByUserNum(memNum);
+
+        if(cafe.isPresent() && user.isPresent()) {
+            Optional<CafeLike> cafeLike = cafeLikeRepository.findByUserAndCafe(user.get(), cafe.get());
+
+            if(cafeLike.isPresent()) {
+                cafeLikeRepository.delete(cafeLike.get());
+
+                cafeLikeCountUpdate(cafeNum, -1);
+                return false;
+            } else {
+                CafeLike newLike = new CafeLike();
+                newLike.setUser(user.get());
+                newLike.setCafe(cafe.get());
+                cafeLikeRepository.save(newLike);
+
+                cafeLikeCountUpdate(cafeNum, 1);
+                return true;
+            }
+        } else {
+            throw new IllegalArgumentException("해당 유저 또는 리뷰를 찾을 수 없습니다.");
+        }
+    }
+
+    // 카페 좋아요 카운트 반영을 위한 메소드
+    public void cafeLikeCountUpdate(Long cafeNum, int count) {
+        Optional<Cafe> cafe = cafeRepository.findById(cafeNum);
+
+        if(cafe.isPresent()) {
+            Cafe cafe1 = cafe.get();
+            Long likeCount = cafe1.getLikeCount();
+            cafe1.setLikeCount(likeCount + count);
+            cafeRepository.save(cafe1);
+        }
     }
 }

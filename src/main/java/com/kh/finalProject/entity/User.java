@@ -65,6 +65,10 @@ public class User { // 일반 회원
     @OneToMany(mappedBy = "user")
     private List<MyChallenge> myChallenges = new ArrayList<>();
 
+    @OneToMany(mappedBy = "user")
+    private List<CafeLike> cafeLikeList = new ArrayList<>();
 
+    @OneToMany(mappedBy = "user")
+    private List<ReviewLike> reviewLikeList = new ArrayList<>();
 
 }

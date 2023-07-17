@@ -11,7 +11,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "t_cafe")
-@Getter @Setter @ToString(exclude = {"cafeImgList", "cafeMenuList"})
+@Getter @Setter @ToString(exclude = {"cafeImgList", "cafeMenuList", "cafeLikeList"})
 @NoArgsConstructor
 public class Cafe {
     @Id
@@ -54,4 +54,7 @@ public class Cafe {
 
     @OneToMany(mappedBy = "cafe")
     private List<CafeMenu> cafeMenuList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "cafe")
+    private List<CafeLike> cafeLikeList = new ArrayList<>();
 }

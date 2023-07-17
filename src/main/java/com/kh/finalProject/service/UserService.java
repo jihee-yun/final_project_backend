@@ -27,7 +27,7 @@ public class UserService {
     private final HttpSession session;
     private final PasswordEncoder passwordEncoder;
     private final UserTokenProvider tokenProvider;
-    private final JavaMailSender mailSender;
+//    private final JavaMailSender mailSender;
 
 
 

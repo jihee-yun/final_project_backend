@@ -85,4 +85,13 @@ public class ReviewController {
         boolean result = reviewService.deleteReview(reviewNum, cafeNum);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
+
+    // 리뷰 좋아요 기능
+    @PostMapping("/like")
+    public ResponseEntity<Boolean> changeReviewLike(@RequestBody Map<String, Long> likeData) {
+        Long memNum = likeData.get("memNum");
+        Long reviewNum = likeData.get("reviewId");
+        boolean result = reviewService.changeReviewLike(memNum, reviewNum);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
 }

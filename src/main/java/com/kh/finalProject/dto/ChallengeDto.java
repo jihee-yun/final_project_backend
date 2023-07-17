@@ -11,8 +11,9 @@ public class ChallengeDto {
     private Long id;
     private String challengeName;
     private String thumbnail;
-    private String detail;
+//    private String detail;
     private int count;
-    private LocalDateTime startTime;
-    private LocalDateTime endTime;
+    private Long myChallengeId;
+//    private LocalDateTime startTime;
+//    private LocalDateTime endTime;
 }

@@ -23,15 +23,11 @@ public class ChallengeService {
         List<Challenge> challenges = challengeRepository.findAll();
         List<ChallengeDto> challengeDtoList = new ArrayList<>();
         for (Challenge challenge : challenges) {
-//            System.out.println(challenge.getChallengeName());
-//            System.out.println(challenge.getThumbnail());
-//            System.out.println(challenge.getDetail());
-//            System.out.println(challenge.getCount());
             ChallengeDto challengeDto = new ChallengeDto();
             challengeDto.setId(challenge.getId());
             challengeDto.setChallengeName(challenge.getChallengeName());
             challengeDto.setThumbnail(challenge.getThumbnail());
-            challengeDto.setDetail(challenge.getDetail());
+//            challengeDto.setDetail(challenge.getDetail());
             challengeDto.setCount(challenge.getCount());
             challengeDtoList.add(challengeDto);
         }

@@ -12,7 +12,7 @@ import java.util.Map;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/roulette")
+@RequestMapping({"/roulette", "/quizmain"})
 @CrossOrigin(origins = "http://localhost:3000")
 public class RouletteController {
     public final PointService pointService;

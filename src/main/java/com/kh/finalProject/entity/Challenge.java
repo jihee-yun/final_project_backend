@@ -39,10 +39,11 @@ public class Challenge {
     private LocalDateTime endTime;
 
     // 상품
-//    @ManyToOne
-//    @JoinColumn(name = "my_challenge_id")
-//    private MyChallenge myChallenge;
-    @OneToMany(mappedBy = "challenge")
-    private List<MyChallenge> myChallenges = new ArrayList<>();
+    @ManyToOne
+    @JoinColumn(name = "my_challenge_id")
+    private MyChallenge myChallenge;
+
+//    @OneToMany(mappedBy = "challenge")
+//    private List<MyChallenge> myChallenges = new ArrayList<>();
 
 }

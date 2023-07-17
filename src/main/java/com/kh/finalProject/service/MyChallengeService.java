@@ -1,6 +1,7 @@
 package com.kh.finalProject.service;
 
 import com.kh.finalProject.dto.MyChallengeDto;
+import com.kh.finalProject.entity.Challenge;
 import com.kh.finalProject.entity.MyChallenge;
 import com.kh.finalProject.repository.MyChallengeRepository;
 import lombok.RequiredArgsConstructor;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -20,18 +22,20 @@ public class MyChallengeService {
 
     // 마이 챌린지 조회
     public List<MyChallengeDto> getMyChallengeList(Long userNum) {
-        List<MyChallenge> myChallenges = myChallengeRepository.findByUser(userNum);
+        log.info("userNum : " + userNum);
+        Optional<MyChallenge> myChallenges = myChallengeRepository.findById(userNum);
         List<MyChallengeDto> myChallengeDtoList = new ArrayList<>();
 
-        for (MyChallenge myChallenge : myChallenges) {
-            MyChallengeDto myChallengeDto = new MyChallengeDto();
-            myChallengeDto.setId(myChallenge.getId());
-            // 오류 부분
-            myChallengeDto.setChallengeName(myChallengeDto.getChallengeName());
-            myChallengeDto.setUserNum(myChallengeDto.getUserNum());
-            myChallengeDto.setChallengeId(myChallengeDto.getChallengeId());
-            myChallengeDtoList.add(myChallengeDto);
+        if(myChallenges.isPresent()) {
+            log.info("getId : " + myChallenges.get().getChallenges());
+            for(Challenge challenge : myChallenges.get().getChallenges()) {
+                log.info("getMyChallenge : " + challenge.getMyChallenge());
+                log.info("getChallengeName : " + challenge.getChallengeName());
+                log.info("getId : " + challenge.getId());
+            }
         }
+
+
         return myChallengeDtoList;
     }
 }

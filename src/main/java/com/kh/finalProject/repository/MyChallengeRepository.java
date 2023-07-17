@@ -3,8 +3,8 @@ package com.kh.finalProject.repository;
 import com.kh.finalProject.entity.MyChallenge;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.List;
+import java.util.Optional;
 
 public interface MyChallengeRepository extends JpaRepository<MyChallenge, Long>{
-    List<MyChallenge> findByUser(Long user);
+    Optional<MyChallenge> findById(Long id);
 }

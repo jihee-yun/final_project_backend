@@ -5,6 +5,7 @@ import com.kh.finalProject.dto.ReportDto;
 import com.kh.finalProject.dto.ReviewDto;
 import com.kh.finalProject.dto.UserDto;
 import com.kh.finalProject.service.ReportService;
+import com.kh.finalProject.service.ReviewService;
 import com.kh.finalProject.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,6 +22,7 @@ import java.util.List;
 public class AdminController {
     private final ReportService reportService;
     private final UserService userService;
+    private final ReviewService reviewService;
 
     // 전체 회원 조회
     @GetMapping("/usermanage")
@@ -33,6 +35,20 @@ public class AdminController {
     @GetMapping("/report/all")
     public ResponseEntity<List<ReportDto>> reportAll() {
         List<ReportDto> list = reportService.getReportList();
+        return new ResponseEntity<>(list, HttpStatus.OK);
+    }
+
+    // 리뷰 전체 조회
+    @GetMapping("/review/all")
+    public ResponseEntity<List<ReviewDto>> reviewAll() {
+        List<ReviewDto> list = reviewService.getAdminReview();
+        return new ResponseEntity<>(list, HttpStatus.OK);
+    }
+
+    // userNum 리뷰 조회
+    @GetMapping("/review/getbynum")
+    public ResponseEntity<List<ReviewDto>> reviewByNum(@RequestParam Long userNum) {
+        List<ReviewDto> list = reviewService.getAdminReviewNum(userNum);
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
 

@@ -50,6 +50,46 @@ public class ReviewService {
         return reviewDtoList;
     }
 
+    // 관리자 리뷰관리
+    public List<ReviewDto> getAdminReview() {
+        List<Review> adminReview = reviewRepository.findAll();
+        List<ReviewDto> adminReviewList = new ArrayList<>();
+        for(Review review : adminReview) {
+            ReviewDto reviewDto = new ReviewDto();
+            reviewDto.setReviewNum(review.getReviewNum());
+            reviewDto.setUserNum(review.getUserNum());
+            reviewDto.setCafeNum(review.getCafeNum());
+            reviewDto.setReviewContent(review.getReviewContent());
+            reviewDto.setReviewImgUrl1(review.getReviewImgUrl1());
+            reviewDto.setReviewImgUrl2(review.getReviewImgUrl2());
+            reviewDto.setWrittenTime(review.getWrittenTime());
+            reviewDto.setLikeCount(review.getLikeCount());
+            reviewDto.setScore(review.getScore());
+            adminReviewList.add(reviewDto);
+        }
+        return adminReviewList;
+    }
+
+    // 관리자 리뷰번호
+    public List<ReviewDto> getAdminReviewNum(Long userNum) {
+        List<Review> adminReviewNum = reviewRepository.findByUserNum(userNum);
+        List<ReviewDto> adminReviewNumList = new ArrayList<>();
+        for(Review review : adminReviewNum) {
+            ReviewDto reviewDto = new ReviewDto();
+            reviewDto.setReviewNum(review.getReviewNum());
+            reviewDto.setUserNum(review.getUserNum());
+            reviewDto.setCafeNum(review.getCafeNum());
+            reviewDto.setReviewContent(review.getReviewContent());
+            reviewDto.setReviewImgUrl1(review.getReviewImgUrl1());
+            reviewDto.setReviewImgUrl2(review.getReviewImgUrl2());
+            reviewDto.setWrittenTime(review.getWrittenTime());
+            reviewDto.setLikeCount(review.getLikeCount());
+            reviewDto.setScore(review.getScore());
+            adminReviewNumList.add(reviewDto);
+        }
+            return adminReviewNumList;
+    }
+
     public List<ReviewDto> getReviewListByNum(Long userNum) {
         List<Review> reviewList = reviewRepository.findByUserNum(userNum);
         List<ReviewDto> reviewDtoList = new ArrayList<>();

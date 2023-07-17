@@ -50,6 +50,22 @@ public class ReportService {
         return reportDtoList;
     }
 
+    public List<ReportDto> getReportContent(Long reportNum) {
+        List<Report> reportList = reportRepository.findAllByReportNum(reportNum);
+        List<ReportDto> reportDtoList = new ArrayList<>();
+        for(Report report : reportList) {
+            ReportDto reportDto = new ReportDto();
+            reportDto.setReportNum(report.getReportNum());
+            reportDto.setUserId(report.getUserId());
+            reportDto.setContent(report.getReportContent());
+            reportDto.setTitle(report.getTitle());
+            reportDto.setReportDate(report.getReportDate());
+            reportDtoList.add(reportDto);
+        }
+        return reportDtoList;
+    }
+
+
     public List<ReportDto> getReportByNumAndDate(String userId, LocalDate startDate, LocalDate endDate) {
         List<Report> reportList = reportRepository.findByUserIdAndReportDateBetween(userId, startDate, endDate);
         List<ReportDto> reportDtoList = new ArrayList<>();

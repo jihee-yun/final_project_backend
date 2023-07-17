@@ -45,40 +45,4 @@ public class AdminService {
         }
         return userDtos;
     }
-
-    // 전체 리뷰 조회
-    public List<ReviewDto> findAllReviewList(UserDetails userDetails, HttpServletRequest request) {
-        List<Review> reviews = reviewRepository.findAll();
-        List<ReviewDto> reviewDtos = new ArrayList<>();
-        for(Review review : reviews) {
-            ReviewDto reviewDto = new ReviewDto();
-            reviewDto.setReviewNum(review.getReviewNum());
-            reviewDto.setUserNum(review.getUserNum());
-            reviewDto.setCafeNum(review.getCafeNum());
-            reviewDto.setReviewContent(review.getReviewContent());
-            reviewDto.setReviewImgUrl1(review.getReviewImgUrl1());
-            reviewDto.setReviewImgUrl2(review.getReviewImgUrl2());
-            reviewDto.setWrittenTime(review.getWrittenTime());
-            reviewDto.setLikeCount(review.getLikeCount());
-            reviewDto.setScore(review.getScore());
-            reviewDtos.add(reviewDto);
-        }
-        return reviewDtos;
-    }
-
-    // 전체 신고 조회
-    public List<ReportDto> findAllReportList(UserDetails userDetails, HttpServletRequest request) {
-        List<Report> reports = reportRepository.findAll();
-        List<ReportDto> reportDtos = new ArrayList<>();
-        for(Report report : reports) {
-            ReportDto reportDto = new ReportDto();
-            reportDto.setReportNum(report.getReportNum());
-            reportDto.setUserId(report.getUserId());
-            reportDto.setContent(report.getReportContent());
-            reportDto.setTitle(report.getTitle());
-            reportDto.setReportDate(report.getReportDate());
-            reportDtos.add(reportDto);
-        }
-        return reportDtos;
-    }
 }

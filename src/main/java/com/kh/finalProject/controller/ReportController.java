@@ -20,11 +20,11 @@ import java.util.List;
 public class ReportController {
     private final ReportService reportService;
 
-    @GetMapping("/all")
-    public ResponseEntity<List<ReportDto>> reportAll() {
-        List<ReportDto> list = reportService.getReportList();
-        return new ResponseEntity<>(list, HttpStatus.OK);
-    }
+//    @GetMapping("/all")
+//    public ResponseEntity<List<ReportDto>> reportAll() {
+//        List<ReportDto> list = reportService.getReportList();
+//        return new ResponseEntity<>(list, HttpStatus.OK);
+//    }
 
     @PostMapping("/getDate")
     public ResponseEntity<List<ReportDto>> reportByNumAndDate(@RequestParam ReportDateDto reportDateDto) {

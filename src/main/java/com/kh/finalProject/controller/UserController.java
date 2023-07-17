@@ -46,19 +46,12 @@ public class UserController {
         return ResponseEntity.ok(userId);
     }
 
-    @PostMapping("/findPw")
-    public ResponseEntity<String> findPassword(@RequestBody Map<String, String> requestMap) {
-        String email = requestMap.get("email");
-        try {
-            userService.findPassWordByEmail(email);
-            return ResponseEntity.ok("임시 비밀번호가 이메일로 발송되었습니다.");
-        } catch (RuntimeException e) {
-            // 서버 내부 에러가 발생한 경우 클라이언트에게 에러 메시지를 전달하는 대신
-            // 사용자 친화적인 메시지를 작성하여 클라이언트로 반환하거나 에러 코드를 정의하여 반환할 수 있습니다.
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("임시 비밀번호 발송에 실패했습니다.");
-        }
-    }
+    // 비밀번호 찾기
+//    @PostMapping("/findPw")
+//    public ResponseEntity<String> findPassword(@RequestBody String email) {
+//        String password = userService.findPassWordByEmail(email);
+//        return ResponseEntity.ok(password);
+//    }
 
     // 회원가입 중복
     @GetMapping("/check")

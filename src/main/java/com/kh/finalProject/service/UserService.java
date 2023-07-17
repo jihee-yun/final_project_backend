@@ -28,7 +28,7 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
     private final UserTokenProvider tokenProvider;
     private final JavaMailSender mailSender;
-    private final EmailService emailService;
+
 
 
     // 일반 회원 로그인
@@ -59,27 +59,29 @@ public class UserService {
         }
     }
 
-    // 비밀번호 재설정 이메일 발송
-    public void findPassWordByEmail(String email) {
-        Optional<User> userInfo = userRepository.findByEmail(email);
-        if (userInfo.isPresent()) {
-            User user = userInfo.get();
-            String temporaryPassword = emailService.createKey(); // 인증키로 임시 비밀번호 생성
-            user.setPassword(passwordEncoder.encode(temporaryPassword)); // 비밀번호 업데이트
-            userRepository.save(user); // 사용자 정보 저장
+//    public String findPassWordByEmail(String email) {
+//        Optional<User> userInfo = userRepository.findByEmail(email);
+//        if (userInfo.isPresent()) {
+//            String temporaryPassword = emailService.createKey(); // 인증키로 임시 비밀번호 생성
+//            try {
+//                emailService.sendSimpleMessage(email); // 이메일 전송
+//            } catch (MailSendException e) {
+//                throw new RuntimeException("이메일 전송에 실패했습니다.");
+//            } catch (Exception e) {
+//                // 기타 다른 예외 처리 (예: 인터넷 연결 불가 등)
+//                throw new RuntimeException("알 수 없는 이메일 전송 실패입니다.");
+//            }
+//
+//            User user = userInfo.get();
+//            user.setPassword(passwordEncoder.encode(temporaryPassword)); // 임시 비밀번호 설정
+//            userRepository.save(user); // 사용자 정보 저장
+//
+//            return temporaryPassword; // 임시 비밀번호 반환
+//        } else {
+//            throw new RuntimeException("일치하는 회원 정보를 찾을 수 없습니다.");
+//        }
+//    }
 
-            try {
-                emailService.sendSimpleMessage(email); // 이메일 전송
-            } catch (MailSendException e) {
-                throw new RuntimeException("이메일 전송에 실패했습니다.");
-            } catch (Exception e) {
-                // 기타 다른 예외 처리 (예: 인터넷 연결 불가 등)
-                throw new RuntimeException("알 수 없는 이메일 전송 실패입니다.");
-            }
-        } else {
-            throw new RuntimeException("일치하는 회원 정보를 찾을 수 없습니다.");
-        }
-    }
 
 
     // 회원가입 여부

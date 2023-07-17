@@ -2,8 +2,10 @@ package com.kh.finalProject.controller;
 
 
 import com.kh.finalProject.dto.ReportDto;
-import com.kh.finalProject.service.AdminService;
+import com.kh.finalProject.dto.ReviewDto;
+import com.kh.finalProject.dto.UserDto;
 import com.kh.finalProject.service.ReportService;
+import com.kh.finalProject.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -18,6 +20,14 @@ import java.util.List;
 @RequestMapping("/admin")
 public class AdminController {
     private final ReportService reportService;
+    private final UserService userService;
+
+    // 전체 회원 조회
+    @GetMapping("/usermanage")
+    public ResponseEntity<List<UserDto>> userAll() {
+        List<UserDto> list = userService.getMemberList();
+        return new ResponseEntity<>(list, HttpStatus.OK);
+    }
 
     // 신고 전제 조회
     @GetMapping("/report/all")
@@ -33,4 +43,10 @@ public class AdminController {
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
+    // 신고 내용 보기
+    @GetMapping("/report/getContents")
+    public ResponseEntity<List<ReportDto>> getReportContent(@RequestParam Long reportNum) {
+        List<ReportDto> list = reportService.getReportContent(reportNum);
+        return new ResponseEntity<>(list, HttpStatus.OK);
+    }
 }

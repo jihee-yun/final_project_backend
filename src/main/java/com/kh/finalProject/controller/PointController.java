@@ -15,7 +15,7 @@ import java.util.Map;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/event")
+@RequestMapping("/couponstore")
 @CrossOrigin(origins = "http://localhost:3000")
 public class PointController {
     public final PointService pointService;

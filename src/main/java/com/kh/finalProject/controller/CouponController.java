@@ -30,10 +30,10 @@ public class CouponController {
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
-    @GetMapping("/myinfo")
-    public ResponseEntity<List<UserDto>> infoList(@RequestParam String myinfo) {
-        System.out.println("myinfo" + myinfo);
-        List<UserDto> list = userService.getMemberList();
-        return new ResponseEntity<>(list, HttpStatus.OK);
-    }
+//    @GetMapping("/myinfo")
+//    public ResponseEntity<List<UserDto>> infoList(@RequestParam String myinfo) {
+//        System.out.println("myinfo" + myinfo);
+//        List<UserDto> list = userService.getMemberList();
+//        return new ResponseEntity<>(list, HttpStatus.OK);
+//    }
 }

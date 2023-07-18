@@ -25,7 +25,11 @@ public class Guild {
     private User user;
 
     @Column(nullable = false)
+    private int category;
+
+    @Column(nullable = false)
     private String guildName;
+
     @Column(nullable = false)
     private int limitMember;
 

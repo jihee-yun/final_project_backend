@@ -48,10 +48,11 @@ public class GuildController {
         String meetDayStr = guildData.get("meetDay") + " 00:00:00";
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         LocalDateTime meetDay = LocalDateTime.parse(meetDayStr, formatter);
+        int category = Integer.parseInt(guildData.get("category"));
         int limitMem = Integer.parseInt(guildData.get("member"));
         String region = guildData.get("region");
         String thumbnail = guildData.get("thumbnail");
-        boolean result = guildService.createNewGuild(num, name, intro, detailIntro, meetDay, limitMem, region, thumbnail);
+        boolean result = guildService.createNewGuild(num, category, name, intro, detailIntro, meetDay, limitMem, region, thumbnail);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 

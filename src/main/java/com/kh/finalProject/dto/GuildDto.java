@@ -12,7 +12,7 @@ public class GuildDto {
     private String thumbnail;
     private String region;
     private int limitMember;
-
+    private int category;
     private int countMember;
 
     private List<String> memberProfileList; // 길드원 프로필 리스트

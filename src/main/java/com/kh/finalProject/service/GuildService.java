@@ -32,7 +32,19 @@ public class GuildService {
 
     // 생성 길드 전체 조회(네이티브 쿼리문 날리지 않고)
     public List<GuildDto> allGuildListWithUsers(String guildList) {
-        List<Guild> guilds = guildRepository.findAll();
+//        List<Guild> guilds = guildRepository.findAll();
+        List<Guild> guilds;
+
+        if (guildList.equals("All")) {
+            guilds = guildRepository.findAllByOrderByCreateDateDesc();
+        } else if (guildList.equals("퀘스트")) {
+            guilds = guildRepository.findAllByCategoryOrderByCreateDateDesc(2);
+        } else if (guildList.equals("친목")) {
+            guilds = guildRepository.findAllByCategoryOrderByCreateDateDesc(1);
+        } else {
+            throw new IllegalArgumentException("잘못된 카테고리입니다.");
+        }
+
         List<GuildDto> guildDtos = new ArrayList<>();
 
         for (Guild guild : guilds) {
@@ -108,12 +120,13 @@ public class GuildService {
     }
 
     // 새로운 길드 생성
-    public boolean createNewGuild(Long memNum, String name, String intro, String detailIntro, LocalDateTime meetDay, int limitMem, String region, String thumbnail) {
+    public boolean createNewGuild(Long memNum, int category, String name, String intro, String detailIntro, LocalDateTime meetDay, int limitMem, String region, String thumbnail) {
         Optional<User> user = userRepository.findByUserNum(memNum);
         if (user.isPresent()) {
             Guild guild = new Guild();
             guild.setUser(user.get());
             guild.setGuildName(name);
+            guild.setCategory(category);
             guild.setIntro(intro);
             guild.setDetailIntro(detailIntro);
             guild.setMeetDay(meetDay);

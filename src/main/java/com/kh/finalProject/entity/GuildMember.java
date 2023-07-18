@@ -21,6 +21,10 @@ public class GuildMember {
     public User user; // 참여자 번호
 
     @ManyToOne
+    @JoinColumn(name = "T_userNum")
+    private Member member;
+
+    @ManyToOne
     @JoinColumn(name = "guild_id")
     public Guild guild; // 소모임 번호
 }

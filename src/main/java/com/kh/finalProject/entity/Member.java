@@ -57,12 +57,21 @@ public class Member { // 사업자 회원, 아직 수정 중
     }
     
     // 아래는 맵핑 수정 필요
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "member")
     private List<Guild> guildList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "member")
     private List<GuildMember> guildMemberList = new ArrayList<>();
     
-    @OneToOne(mappedBy = "user")
+    @OneToOne(mappedBy = "member")
     private Point point;
+
+    @OneToMany(mappedBy = "member")
+    private List<MyChallenge> myChallenges = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member")
+    private List<CafeLike> cafeLikeList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member")
+    private List<ReviewLike> reviewLikeList = new ArrayList<>();
 }

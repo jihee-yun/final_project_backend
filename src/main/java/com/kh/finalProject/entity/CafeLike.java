@@ -22,6 +22,10 @@ public class CafeLike {
     private User user;
 
     @ManyToOne
+    @JoinColumn(name = "T_userNum")
+    private Member member;
+
+    @ManyToOne
     @JoinColumn(name = "cafe_id")
     private Cafe cafe;
 }

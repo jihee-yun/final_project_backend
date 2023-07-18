@@ -23,6 +23,10 @@ public class MyChallenge {
     @JoinColumn(name = "user_num")
     private User user;
 
+    @ManyToOne
+    @JoinColumn(name = "T_User_userNum")
+    private Member member;
+
     // 장바구니
 //    @OneToMany(mappedBy = "myChallenge")
 //    private List<Challenge> challenges = new ArrayList<>();

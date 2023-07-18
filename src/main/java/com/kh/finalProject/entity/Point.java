@@ -23,4 +23,8 @@ public class Point {
     @OneToOne
     @JoinColumn(name = "user_num", referencedColumnName = "userNum")
     private User user;
+
+    @ManyToOne
+    @JoinColumn(name = "T_User_userNum")
+    private Member member;
 }

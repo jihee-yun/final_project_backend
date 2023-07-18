@@ -35,7 +35,7 @@ public class ChallengeService {
             challengeDto.setChallengeName(challenge.getChallengeName());
             challengeDto.setThumbnail(challenge.getThumbnail());
 //            challengeDto.setDetail(challenge.getDetail());
-            challengeDto.setCount(challenge.getCount());
+//            challengeDto.setCount(challenge.getCount());
             challengeDtoList.add(challengeDto);
         }
         return challengeDtoList;

@@ -21,12 +21,14 @@ public class MyChallengeController {
     private final MyChallengeService myChallengeService;
     private final ChallengeService challengeService;
 
+    // 마이챌린지 조회
     @GetMapping("/get")
     public ResponseEntity<List<MyChallengeDto>> MyChallengeList(@RequestParam Long userNum, Long challengeId) {
         List<MyChallengeDto> list = myChallengeService.getMyChallengeList(userNum, challengeId);
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
+    // 챌린지 신청
     @PostMapping("/apply")
     public ResponseEntity<Boolean> applyChallenge(@RequestBody Map<String, Long> list) {
         Long challengeId = list.get("challengeId");

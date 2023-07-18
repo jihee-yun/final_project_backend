@@ -26,17 +26,17 @@ public class Challenge {
     @Column(nullable = false, length = 1000)
     private String thumbnail;
 
-    @Column(nullable = false, length = 1000)
-    private String detail; // 챌린지 내용
-
-    @Column (nullable = false)
-    private int count; // 챌린지 몇개 성공했는지
-
-    @Column (nullable = false)
-    private LocalDateTime startTime;
-
-    @Column (nullable = false)
-    private LocalDateTime endTime;
+//    @Column(nullable = false, length = 1000)
+//    private String detail;
+//
+//    @Column (nullable = false)
+//    private int count;
+//
+//    @Column (nullable = false)
+//    private LocalDateTime startTime;
+//
+//    @Column (nullable = false)
+//    private LocalDateTime endTime;
 
     // 상품
 //    @ManyToOne

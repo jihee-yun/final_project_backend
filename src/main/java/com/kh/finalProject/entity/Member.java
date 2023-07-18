@@ -63,8 +63,8 @@ public class Member { // 사업자 회원, 아직 수정 중
     @OneToMany(mappedBy = "member")
     private List<GuildMember> guildMemberList = new ArrayList<>();
     
-    @OneToOne(mappedBy = "member")
-    private Point point;
+    @OneToMany(mappedBy = "member")
+    private List<Point> pointList = new ArrayList<>();
 
     @OneToMany(mappedBy = "member")
     private List<MyChallenge> myChallenges = new ArrayList<>();

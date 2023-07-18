@@ -26,4 +26,5 @@ public class ChallengeController {
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
+
 }

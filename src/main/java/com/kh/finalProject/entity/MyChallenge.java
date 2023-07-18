@@ -24,10 +24,11 @@ public class MyChallenge {
     private User user;
 
     // 장바구니
-    @OneToMany(mappedBy = "myChallenge")
-    private List<Challenge> challenges = new ArrayList<>();
-//    @ManyToOne
-//    @JoinColumn(name = "challenge_id")
-//    private Challenge challenge;
+//    @OneToMany(mappedBy = "myChallenge")
+//    private List<Challenge> challenges = new ArrayList<>();
+
+    @ManyToOne
+    @JoinColumn(name = "challenge_id")
+    private Challenge challenge;
 
 }

@@ -5,9 +5,11 @@ import com.kh.finalProject.dto.GuildDetailDto;
 import com.kh.finalProject.dto.GuildDto;
 import com.kh.finalProject.entity.Guild;
 import com.kh.finalProject.entity.GuildMember;
+import com.kh.finalProject.entity.Member;
 import com.kh.finalProject.entity.User;
 import com.kh.finalProject.repository.GuildMemberRepository;
 import com.kh.finalProject.repository.GuildRepository;
+import com.kh.finalProject.repository.MemberRepository;
 import com.kh.finalProject.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,6 +29,7 @@ import java.util.Optional;
 public class GuildService {
     private final GuildRepository guildRepository;
     private final UserRepository userRepository;
+    private final MemberRepository memberRepository;
     private final GuildMemberRepository guildMemberRepository;
     private final EntityManager entityManager;
 
@@ -54,11 +57,11 @@ public class GuildService {
             int members = guildMembers.size();
 
             for (GuildMember guildMember : guildMembers) {
-                Long userId = guildMember.getUser().getUserNum();
-                Optional<User> user = userRepository.findByUserNum(userId);
+                Long userId = guildMember.getMember().getMemberNum();
+                Optional<Member> member = memberRepository.findByMemberNum(userId);
 
-                if (user.isPresent()) {
-                    User userData = user.get();
+                if (member.isPresent()) {
+                    Member userData = member.get();
                     memberProfileList.add(userData.getProfileImgUrl());
                 }
             }
@@ -86,19 +89,19 @@ public class GuildService {
         int members = guildMembers.size();
 
         for(GuildMember guildMember : guildMembers) {
-            Long userId = guildMember.getUser().getUserNum();
-            Optional<User> user = userRepository.findByUserNum(userId);
+            Long userId = guildMember.getMember().getMemberNum();
+            Optional<Member> member = memberRepository.findByMemberNum(userId);
 
-            if (user.isPresent()) {
-                User userData = user.get();
+            if (member.isPresent()) {
+                Member userData = member.get();
                 memberProfileList.add(userData.getProfileImgUrl());
-                memberNumList.add(userData.getUserNum());
+                memberNumList.add(userData.getMemberNum());
             }
         }
 
         if(guild.isPresent()) {
             Guild guild1 = guild.get();
-            User leader = guild1.getUser();
+            Member leader = guild1.getMember();
             GuildDetailDto guildDetailDto = new GuildDetailDto();
 
             guildDetailDto.setId(guild1.getId());
@@ -121,10 +124,10 @@ public class GuildService {
 
     // 새로운 길드 생성
     public boolean createNewGuild(Long memNum, int category, String name, String intro, String detailIntro, LocalDateTime meetDay, int limitMem, String region, String thumbnail) {
-        Optional<User> user = userRepository.findByUserNum(memNum);
-        if (user.isPresent()) {
+        Optional<Member> member = memberRepository.findByMemberNum(memNum);
+        if (member.isPresent()) {
             Guild guild = new Guild();
-            guild.setUser(user.get());
+            guild.setMember(member.get());
             guild.setGuildName(name);
             guild.setCategory(category);
             guild.setIntro(intro);
@@ -157,12 +160,12 @@ public class GuildService {
     // 길드 가입하기
     public boolean joinGuild(Long guildNum, Long userNum) {
         Optional<Guild> guild = guildRepository.findById(guildNum);
-        Optional<User> user = userRepository.findByUserNum(userNum);
+        Optional<Member> member = memberRepository.findByMemberNum(userNum);
 
-        if(guild.isPresent() && user.isPresent()) {
+        if(guild.isPresent() && member.isPresent()) {
             GuildMember guildMember = new GuildMember();
             guildMember.setGuild(guild.get());
-            guildMember.setUser(user.get());
+            guildMember.setMember(member.get());
             GuildMember newGuildMember = guildMemberRepository.save(guildMember);
             return true;
         } else {

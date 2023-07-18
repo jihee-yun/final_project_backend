@@ -2,14 +2,8 @@ package com.kh.finalProject.service;
 
 import com.kh.finalProject.dto.CafeReviewDto;
 import com.kh.finalProject.dto.ReviewDto;
-import com.kh.finalProject.entity.Cafe;
-import com.kh.finalProject.entity.Review;
-import com.kh.finalProject.entity.ReviewLike;
-import com.kh.finalProject.entity.User;
-import com.kh.finalProject.repository.CafeRepository;
-import com.kh.finalProject.repository.ReviewLikeRepository;
-import com.kh.finalProject.repository.ReviewRepository;
-import com.kh.finalProject.repository.UserRepository;
+import com.kh.finalProject.entity.*;
+import com.kh.finalProject.repository.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -28,6 +22,7 @@ import java.util.Optional;
 public class ReviewService {
     private final ReviewRepository reviewRepository;
     private final UserRepository userRepository;
+    private final MemberRepository memberRepository;
     private final CafeRepository cafeRepository;
     private final ReviewLikeRepository reviewLikeRepository;
 
@@ -130,11 +125,11 @@ public class ReviewService {
 
     // 새로운 리뷰 작성
     public boolean createNewReview(Long memNum, Long cafeNum, String content, double score, String url1, String url2) {
-        Optional<User> user = userRepository.findByUserNum(memNum);
+        Optional<Member> member = memberRepository.findByMemberNum(memNum);
         Optional<Cafe> cafe = cafeRepository.findById(cafeNum);
-        if (user.isPresent() && cafe.isPresent()) {
+        if (member.isPresent() && cafe.isPresent()) {
             Review review = new Review();
-            review.setUserNum(user.get().getUserNum());
+            review.setUserNum(member.get().getMemberNum());
             review.setCafeNum(cafe.get().getId());
             review.setReviewContent(content);
             review.setReviewImgUrl1(url1);
@@ -216,14 +211,14 @@ public class ReviewService {
 
         for (Review review : reviews) {
             Long memNum = review.getUserNum();
-            Optional<User> user = userRepository.findByUserNum(memNum);
+            Optional<Member> member = memberRepository.findByMemberNum(memNum);
 
-            if (user.isPresent()) {
-                User userData = user.get();
+            if (member.isPresent()) {
+                Member userData = member.get();
                 CafeReviewDto cafeReviewDto = new CafeReviewDto();
                 cafeReviewDto.setId(review.getReviewNum());
-                cafeReviewDto.setUserNum(userData.getUserNum());
-                cafeReviewDto.setUserId(userData.getUserId());
+                cafeReviewDto.setUserNum(userData.getMemberNum());
+                cafeReviewDto.setUserId(userData.getMemberId());
                 cafeReviewDto.setProfile(userData.getProfileImgUrl());
                 cafeReviewDto.setContent(review.getReviewContent());
                 cafeReviewDto.setUrl1(review.getReviewImgUrl1());
@@ -247,11 +242,11 @@ public class ReviewService {
 
     // 리뷰 좋아요 기능
     public boolean changeReviewLike(Long memNum, Long reviewNum) {
-        Optional<User> user = userRepository.findByUserNum(memNum);
+        Optional<Member> member = memberRepository.findByMemberNum(memNum);
         Optional<Review> review = reviewRepository.findById(reviewNum);
 
-        if(user.isPresent() && review.isPresent()) {
-            Optional<ReviewLike> reviewLike = reviewLikeRepository.findByUserAndReview(user.get(), review.get());
+        if(member.isPresent() && review.isPresent()) {
+            Optional<ReviewLike> reviewLike = reviewLikeRepository.findByUserAndReview(member.get(), review.get());
 
             if(reviewLike.isPresent()) {
                 reviewLikeRepository.delete(reviewLike.get());
@@ -260,7 +255,7 @@ public class ReviewService {
                 return false;
             } else {
                 ReviewLike newLike = new ReviewLike();
-                newLike.setUser(user.get());
+                newLike.setMember(member.get());
                 newLike.setReview(review.get());
                 reviewLikeRepository.save(newLike);
 

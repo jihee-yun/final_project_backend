@@ -21,6 +21,9 @@ public interface GuildRepository extends JpaRepository<Guild, Long> {
     List<Guild> findAllByCategoryOrderByCreateDateDesc(int category);
 
     // 가입 여부 확인
-    @Query("SELECT g.user.userNum FROM Guild g WHERE g.id = :guildId AND g.user.userNum = :memberId")
+//    @Query("SELECT g.user.userNum FROM Guild g WHERE g.id = :guildId AND g.user.userNum = :memberId")
+//    Optional<Long> findUserNumByGuildIdAndMemberId(@Param("guildId") Long guildId, @Param("memberId") Long memberId);
+
+    @Query("SELECT g.member.memberNum FROM Guild g WHERE g.id = :guildId AND g.member.memberNum = :memberId")
     Optional<Long> findUserNumByGuildIdAndMemberId(@Param("guildId") Long guildId, @Param("memberId") Long memberId);
 }

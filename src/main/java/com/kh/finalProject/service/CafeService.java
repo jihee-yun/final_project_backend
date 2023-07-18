@@ -24,6 +24,8 @@ public class CafeService {
     private final CafeImgRepository cafeImgRepository;
     private final ReviewRepository reviewRepository;
     private final UserRepository userRepository;
+
+    private final MemberRepository memberRepository;
     private final CafeLikeRepository cafeLikeRepository;
 
     // 지역별(카테고리 선택별) 카페 조회
@@ -144,10 +146,10 @@ public class CafeService {
     // 카페 좋아요 기능
     public boolean changeCafeLike(Long cafeNum, Long memNum) {
         Optional<Cafe> cafe = cafeRepository.findById(cafeNum);
-        Optional<User> user = userRepository.findByUserNum(memNum);
+        Optional<Member> member = memberRepository.findByMemberNum(memNum);
 
-        if(cafe.isPresent() && user.isPresent()) {
-            Optional<CafeLike> cafeLike = cafeLikeRepository.findByUserAndCafe(user.get(), cafe.get());
+        if(cafe.isPresent() && member.isPresent()) {
+            Optional<CafeLike> cafeLike = cafeLikeRepository.findByUserAndCafe(member.get(), cafe.get());
 
             if(cafeLike.isPresent()) {
                 cafeLikeRepository.delete(cafeLike.get());
@@ -156,7 +158,7 @@ public class CafeService {
                 return false;
             } else {
                 CafeLike newLike = new CafeLike();
-                newLike.setUser(user.get());
+                newLike.setMember(member.get());
                 newLike.setCafe(cafe.get());
                 cafeLikeRepository.save(newLike);
 

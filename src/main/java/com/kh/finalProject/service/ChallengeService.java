@@ -2,9 +2,11 @@ package com.kh.finalProject.service;
 
 import com.kh.finalProject.dto.ChallengeDto;
 import com.kh.finalProject.entity.Challenge;
+import com.kh.finalProject.entity.Member;
 import com.kh.finalProject.entity.MyChallenge;
 import com.kh.finalProject.entity.User;
 import com.kh.finalProject.repository.ChallengeRepository;
+import com.kh.finalProject.repository.MemberRepository;
 import com.kh.finalProject.repository.MyChallengeRepository;
 import com.kh.finalProject.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +26,7 @@ public class ChallengeService {
     private final ChallengeRepository challengeRepository;
     private final UserRepository userRepository;
     private final MyChallengeRepository myChallengeRepository;
+    private final MemberRepository memberRepository;
 
     // 챌린지 조회
     public List<ChallengeDto> getChallengeList() {
@@ -42,18 +45,18 @@ public class ChallengeService {
     }
 
     // 챌린지 신청
-    public boolean applyChallenge(Long challengeId, Long userId) {
+    public boolean applyChallenge(Long challengeId, Long memberId) {
         Optional<Challenge> challenge = challengeRepository.findById(challengeId);
-        Optional<User> user = userRepository.findByUserNum(userId);
+        Optional<Member> member = memberRepository.findByMemberNum(memberId);
 
-        if(challenge.isPresent() && user.isPresent()) {
+        if(challenge.isPresent() && member.isPresent()) {
             MyChallenge myChallenge = new MyChallenge();
             myChallenge.setChallenge(challenge.get());
-            myChallenge.setUser(user.get());
+            myChallenge.setMember(member.get());
             MyChallenge newData = myChallengeRepository.save(myChallenge);
             return true;
         } else {
-            throw new IllegalArgumentException("해당 챌린지와 유저를 찾을 수 없습니다");
+            throw new IllegalArgumentException("챌린지 신청을 실패하였습니다.");
         }
     }
 }

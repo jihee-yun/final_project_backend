@@ -23,8 +23,8 @@ public class MyChallengeController {
 
     // 마이챌린지 조회
     @GetMapping("/get")
-    public ResponseEntity<List<MyChallengeDto>> MyChallengeList(@RequestParam Long userNum, Long challengeId) {
-        List<MyChallengeDto> list = myChallengeService.getMyChallengeList(userNum, challengeId);
+    public ResponseEntity<List<MyChallengeDto>> MyChallengeList(@RequestParam Long memberNum, Long challengeId) {
+        List<MyChallengeDto> list = myChallengeService.getMyChallengeList(memberNum, challengeId);
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
@@ -32,8 +32,8 @@ public class MyChallengeController {
     @PostMapping("/apply")
     public ResponseEntity<Boolean> applyChallenge(@RequestBody Map<String, Long> list) {
         Long challengeId = list.get("challengeId");
-        Long userId = list.get("userId");
-        boolean result = challengeService.applyChallenge(challengeId, userId);
+        Long memberId = list.get("memberId");
+        boolean result = challengeService.applyChallenge(challengeId, memberId);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 

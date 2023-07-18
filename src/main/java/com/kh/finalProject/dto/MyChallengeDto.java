@@ -7,7 +7,7 @@ import lombok.Setter;
 @Setter
 public class MyChallengeDto {
     private Long id;
-    private Long userNum;
+    private Long memberNum;
     private String challengeName;
     private Long challengeId;
 }

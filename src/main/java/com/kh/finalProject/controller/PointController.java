@@ -22,8 +22,8 @@ public class PointController {
 
     // 내 포인트 조회
     @GetMapping("/mypoint")
-    public ResponseEntity<List<PointDto>> pointList(@RequestParam String mypoint) {
-        List<PointDto> list = pointService.getPointList();
+    public ResponseEntity<List<PointDto>> pointList(@RequestParam Long memberNum, Long pointId) {
+        List<PointDto> list = pointService.getPointList(memberNum, pointId);
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
 }

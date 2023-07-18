@@ -8,5 +8,5 @@ import lombok.Setter;
 public class PointDto {
     private Long id;
     private int totalPoint;
-    private String name;
+    private String memberName;
 }

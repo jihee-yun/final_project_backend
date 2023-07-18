@@ -149,7 +149,7 @@ public class CafeService {
         Optional<Member> member = memberRepository.findByMemberNum(memNum);
 
         if(cafe.isPresent() && member.isPresent()) {
-            Optional<CafeLike> cafeLike = cafeLikeRepository.findByUserAndCafe(member.get(), cafe.get());
+            Optional<CafeLike> cafeLike = cafeLikeRepository.findByMemberAndCafe(member.get(), cafe.get());
 
             if(cafeLike.isPresent()) {
                 cafeLikeRepository.delete(cafeLike.get());

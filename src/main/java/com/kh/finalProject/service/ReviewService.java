@@ -246,7 +246,7 @@ public class ReviewService {
         Optional<Review> review = reviewRepository.findById(reviewNum);
 
         if(member.isPresent() && review.isPresent()) {
-            Optional<ReviewLike> reviewLike = reviewLikeRepository.findByUserAndReview(member.get(), review.get());
+            Optional<ReviewLike> reviewLike = reviewLikeRepository.findByMemberAndReview(member.get(), review.get());
 
             if(reviewLike.isPresent()) {
                 reviewLikeRepository.delete(reviewLike.get());

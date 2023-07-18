@@ -11,5 +11,5 @@ import java.util.Optional;
 
 @Repository
 public interface CafeLikeRepository extends JpaRepository<CafeLike, Long> {
-    Optional<CafeLike> findByUserAndCafe(Member member, Cafe cafe);
+    Optional<CafeLike> findByMemberAndCafe(Member member, Cafe cafe);
 }

@@ -24,7 +24,9 @@ public class MemberController {
     // 사업자 회원 회원가입
     @PostMapping("/signup")
     public ResponseEntity<MemberResponseDto> signup(@RequestBody MemberRequestDto requestDto) {
-        return ResponseEntity.ok(memberService.signup(requestDto));
+        int points = requestDto.getPoints();
+        MemberResponseDto responseDto = memberService.signup(requestDto);
+        return ResponseEntity.ok(responseDto);
     }
     // 사업자 회원 로그인
     @PostMapping("/login")

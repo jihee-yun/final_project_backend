@@ -8,5 +8,6 @@ import lombok.Setter;
 public class PointDto {
     private Long id;
     private int totalPoint;
+    private Long memberNum;
     private String memberName;
 }

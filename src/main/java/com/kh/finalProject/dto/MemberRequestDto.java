@@ -26,6 +26,7 @@ public class MemberRequestDto {
     private LocalDate birthday;
     private Gender gender;
     private Authority authority;
+    private int points;
 
     public Member toMember(PasswordEncoder passwordEncoder) {
         return Member.builder()

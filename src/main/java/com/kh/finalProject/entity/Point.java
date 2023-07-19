@@ -20,6 +20,9 @@ public class Point {
     @Column(columnDefinition = "int default 0") // 0부터 시작
     private int totalPoint;
 
+    @Column
+    private String pointType;
+
     @OneToOne
     @JoinColumn(name = "user_num", referencedColumnName = "userNum")
     private User user;

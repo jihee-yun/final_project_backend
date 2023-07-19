@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class MemberResponseDto {
     private String memberId;
+    private int points;
     public static MemberResponseDto of(Member member) {
         return MemberResponseDto.builder()
                 .memberId(member.getMemberId())

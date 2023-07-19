@@ -17,11 +17,11 @@ import java.util.Map;
 public class RouletteController {
     public final PointService pointService;
 
-    @PostMapping("/pointadd")
-    public ResponseEntity<Boolean> addPoint(@RequestBody Map<String, Object> pointItem) {
-        int totalPoint = (Integer) pointItem.get("totalPoint");
-        log.info("받은 포인트 : " + totalPoint);
-        boolean result = pointService.addPoint(totalPoint);
-        return new ResponseEntity<>(result, HttpStatus.OK);
-    }
+//    @PostMapping("/pointadd")
+//    public ResponseEntity<Boolean> addPoint(@RequestBody Map<String, Object> pointItem) {
+//        int totalPoint = (Integer) pointItem.get("totalPoint");
+//        log.info("받은 포인트 : " + totalPoint);
+//        boolean result = pointService.addPoint(totalPoint);
+//        return new ResponseEntity<>(result, HttpStatus.OK);
+//    }
 }

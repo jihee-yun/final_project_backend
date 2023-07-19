@@ -15,7 +15,7 @@ import java.util.Map;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/couponstore")
+@RequestMapping("/point")
 @CrossOrigin(origins = "http://localhost:3000")
 public class PointController {
     public final PointService pointService;
@@ -25,5 +25,14 @@ public class PointController {
     public ResponseEntity<List<PointDto>> pointList(@RequestParam Long memberNum, Long pointId) {
         List<PointDto> list = pointService.getPointList(memberNum, pointId);
         return new ResponseEntity<>(list, HttpStatus.OK);
+    }
+
+    // 포인트 적립
+    @PostMapping("/pointadd")
+    public ResponseEntity<Boolean> addPoint(@RequestBody Map<String, Object> pointItem) {
+        int totalPoint = (Integer) pointItem.get("totalPoint");
+        log.info("받은 포인트 : " + totalPoint);
+        boolean result = pointService.addPoint(totalPoint);
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 }

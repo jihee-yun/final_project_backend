@@ -13,6 +13,7 @@ import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 @Slf4j
 @Service
@@ -46,5 +47,19 @@ public class PointService {
             }
         }
         return pointDtos;
+    }
+
+    // 포인트 충전
+    public Boolean chargePointByMemberNum(Long memberNum, Long chargingPoint) {
+        Optional<Member> memberOptional = memberRepository.findByMemberNum(memberNum);
+        AtomicBoolean result = new AtomicBoolean(false);
+        memberOptional.ifPresent(member -> {
+            Point point = pointRepository.findByMember(member).get(0);
+            int newTotalPoint = point.getTotalPoint() + chargingPoint.intValue();  // 기존 포인트에 충전 포인트를 더합니다.
+            point.setTotalPoint(newTotalPoint);
+            pointRepository.save(point);
+            result.set(true);
+        });
+        return result.get();
     }
 }

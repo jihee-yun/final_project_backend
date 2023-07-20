@@ -108,6 +108,7 @@ public class MemberService {
             memberDto.setExistence(member.getExistence());
             memberDto.setAuthority(member.getAuthority());
             memberDto.setTotalPoint(member.getTotalPoint());
+            memberDto.setName(member.getName());
             memberDtoList.add(memberDto);
         }
         return memberDtoList;

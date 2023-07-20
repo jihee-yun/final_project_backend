@@ -21,6 +21,7 @@ public class UserResponseDto {
     private String phone;
     private String email;
     private LocalDate birthDay;
+    private LocalDate signUpTime;
     private Gender gender;
     private Authority authority;
     public static UserResponseDto of(User user) {
@@ -31,6 +32,7 @@ public class UserResponseDto {
                 .phone(user.getPhone())
                 .email(user.getEmail())
                 .birthDay(user.getBirthday())
+                .signUpTime(user.getSignUpTime())
                 .gender(user.getGender())
                 .authority(user.getAuthority())
                 .build();

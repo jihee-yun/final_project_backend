@@ -1,9 +1,8 @@
 package com.kh.finalProject.controller;
 
 
-import com.kh.finalProject.dto.ReportDto;
-import com.kh.finalProject.dto.ReviewDto;
-import com.kh.finalProject.dto.UserDto;
+import com.kh.finalProject.dto.*;
+import com.kh.finalProject.service.AdminService;
 import com.kh.finalProject.service.ReportService;
 import com.kh.finalProject.service.ReviewService;
 import com.kh.finalProject.service.UserService;
@@ -13,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @Slf4j
@@ -23,11 +23,36 @@ public class AdminController {
     private final ReportService reportService;
     private final UserService userService;
     private final ReviewService reviewService;
+    private final AdminService adminService;
+
+    // 관리자 등록
+    @PostMapping("/register")
+    public ResponseEntity<AdminResponseDto> adminSignUp(@RequestBody AdminRequestDto adminRequestDto) {
+        System.out.println("서버에서 받은 비밀번호: " + adminRequestDto.getPassword());
+        return ResponseEntity.ok(adminService.adminSignUp(adminRequestDto));
+    }
+
+    // 관리자 로그인
+    @PostMapping("/login")
+    public ResponseEntity<AdminDto> adminLogin(@RequestBody Map<String, String> loginData) {
+        String adminId = loginData.get("adminId");
+        String password = loginData.get("password");
+
+        AdminDto adminDto = adminService.findByAdminIdAndPassWord(adminId, password);
+
+        if (adminDto != null) {
+            // 로그인 성공한 경우
+            return new ResponseEntity<>(adminDto, HttpStatus.OK);
+        } else {
+            // 로그인 실패한 경우
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
 
     // 전체 회원 조회
     @GetMapping("/usermanage")
     public ResponseEntity<List<UserDto>> userAll() {
-        List<UserDto> list = userService.getMemberList();
+        List<UserDto> list = adminService.findAllUserList();
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
 

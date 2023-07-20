@@ -104,12 +104,15 @@ public class UserService {
         List<UserDto> userDtos = new ArrayList<>();
         for (User info : userInfoList) {
             UserDto userDto = new UserDto();
+            userDto.setUserNum(info.getUserNum());
             userDto.setUserId(info.getUserId());
             userDto.setName(info.getName());
             userDto.setPhone(info.getPhone());
             userDto.setEmail(info.getEmail());
             userDto.setBirthday(info.getBirthday());
+            userDto.setSignUpTime(info.getSignUpTime());
             userDto.setGender(info.getGender());
+            userDto.setExistence(info.getExistence());
             userDto.setAuthority(info.getAuthority());
             userDtos.add(userDto);
         }

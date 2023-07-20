@@ -113,6 +113,20 @@ public class MemberService {
         return memberDtoList;
     }
 
+    // 회원 비밀번호 변경
+    public Boolean changeMemberPasswordByNum(Long memberNum, String password, String newPassword) {
+        Optional<Member> memberOptional = memberRepository.findByMemberNum(memberNum);
+        AtomicBoolean result = new AtomicBoolean(false);
+        memberOptional.ifPresent(member -> {
+            if (passwordEncoder.matches(password, member.getPassword())) {
+                member.setPassword(passwordEncoder.encode(newPassword));
+                memberRepository.save(member);
+                result.set(true);
+            }
+        });
+        return result.get();
+    }
+
     // 회원 한 줄 소개 변경
     public Boolean changeMemberIntroByNum(Long memberNum, String intro) {
         Optional<Member> memberOptional = memberRepository.findByMemberNum(memberNum);
@@ -135,7 +149,17 @@ public class MemberService {
         });
         return result.get();
     }
-
+    // 회원 이메일 변경
+    public Boolean changeMemberEmailByNum(Long memberNum, String email) {
+        Optional<Member> memberOptional = memberRepository.findByMemberNum(memberNum);
+        AtomicBoolean result = new AtomicBoolean(false);
+        memberOptional.ifPresent(member -> {
+            member.setEmail(email);
+            memberRepository.save(member);
+            result.set(true);
+        });
+        return result.get();
+    }
 }
 
 

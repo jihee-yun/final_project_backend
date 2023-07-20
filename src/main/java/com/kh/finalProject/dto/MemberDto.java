@@ -31,6 +31,7 @@ public class MemberDto {
     private String intro; // 한 줄 소개
     private Existence existence; // 탈퇴 여부
     private Authority authority; // 회원 종류 구분
+    private int totalPoint;
 
     // 길드 테이블 관련
     private List<Guild> guildList = new ArrayList<>();

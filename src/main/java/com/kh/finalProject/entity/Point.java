@@ -18,7 +18,7 @@ public class Point {
     private Long id;
 
     @Column(columnDefinition = "int default 0") // 0부터 시작
-    private int totalPoint;
+    private int point;
 
     @Column
     private String pointType;

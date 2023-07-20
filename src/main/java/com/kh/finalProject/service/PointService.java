@@ -24,29 +24,39 @@ public class PointService {
     public final MemberRepository memberRepository;
 
     // 포인트 적립
-    public boolean addPoint(int totalPoint) {
-        Point point = new Point();
-        point.setTotalPoint(totalPoint);
-        Point savePoint = pointRepository.save(point);
+    public boolean addPoints(Long memberNum, int points, String pointType) {
+        Optional<Member> memberOptional = memberRepository.findByMemberNum(memberNum);
+
+        if(memberOptional.isPresent()) {
+            Member member = memberOptional.get();
+            Point point = new Point();
+            point.setPoint(points);
+            point.setPointType(pointType);
+            point.setMember(member);
+
+            pointRepository.save(point);
+            member.setTotalPoint(member.getTotalPoint() + points);
+            memberRepository.save(member);
+        }
         return true;
     }
 
     // 포인트 조회
-    public List<PointDto> getPointList(Long memberNum, Long pointId) {
-        Optional<Member> member = memberRepository.findByMemberNum(memberNum);
-        List<PointDto> pointDtos = new ArrayList<>();
-        if(member.isPresent()) {
-            List<Point> points = pointRepository.findByMember(member.get());
-            for (Point point : points) {
-                PointDto pointDto = new PointDto();
-                pointDto.setId(point.getId());
-                pointDto.setTotalPoint(point.getTotalPoint());
-                pointDto.setMemberName(member.get().getName());
+    public List<PointDto> getPointList(Long memberNum) {
+        Member member = new Member();
+        member.setMemberNum(memberNum);
+        List<Point> pointList = pointRepository.findByMember(member);
 
-                pointDtos.add(pointDto);
-            }
+        List<PointDto> pointDtoList = new ArrayList<>();
+        for (Point point : pointList) {
+            PointDto pointDto = new PointDto();
+            pointDto.setId(point.getId());
+            pointDto.setPoint(point.getPoint());
+            pointDto.setMemberNum(point.getMember().getMemberNum());
+            pointDto.setPointType(point.getPointType());
+            pointDtoList.add(pointDto);
         }
-        return pointDtos;
+        return pointDtoList;
     }
 
     // 포인트 충전
@@ -55,8 +65,8 @@ public class PointService {
         AtomicBoolean result = new AtomicBoolean(false);
         memberOptional.ifPresent(member -> {
             Point point = pointRepository.findByMember(member).get(0);
-            int newTotalPoint = point.getTotalPoint() + chargingPoint.intValue();  // 기존 포인트에 충전 포인트를 더합니다.
-            point.setTotalPoint(newTotalPoint);
+            int newTotalPoint = point.getPoint() + chargingPoint.intValue();  // 기존 포인트에 충전 포인트를 더합니다.
+            point.setPoint(newTotalPoint);
             pointRepository.save(point);
             result.set(true);
         });

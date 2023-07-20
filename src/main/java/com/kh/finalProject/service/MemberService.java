@@ -6,10 +6,8 @@ import com.kh.finalProject.dto.MemberRequestDto;
 import com.kh.finalProject.dto.MemberResponseDto;
 import com.kh.finalProject.dto.TokenDto;
 import com.kh.finalProject.entity.Member;
-import com.kh.finalProject.entity.Point;
 import com.kh.finalProject.jwt.TokenProvider;
 import com.kh.finalProject.repository.MemberRepository;
-import com.kh.finalProject.repository.PointRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -32,23 +30,14 @@ public class MemberService {
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
     private final TokenProvider tokenProvider;
-    private final PointRepository pointRepository;
 
     // 사업자 회원 가입
     public MemberResponseDto signup(MemberRequestDto requestDto) {
-        int points = requestDto.getPoints();
         if (memberRepository.existsByMemberId(requestDto.getMemberId())) {
             throw new RuntimeException("이미 가입되어 있는 유저입니다");
         }
         Member member = requestDto.toMember(passwordEncoder);
-        memberRepository.save(member);
-
-        Point point = new Point();
-        point.setMember(member);
-        point.setTotalPoint(points);
-        pointRepository.save(point);
-
-        return MemberResponseDto.of(member);
+        return MemberResponseDto.of(memberRepository.save(member));
     }
 
     // 사업자 회원 로그인
@@ -118,6 +107,7 @@ public class MemberService {
             memberDto.setIntro(member.getIntro());
             memberDto.setExistence(member.getExistence());
             memberDto.setAuthority(member.getAuthority());
+            memberDto.setTotalPoint(member.getTotalPoint());
             memberDtoList.add(memberDto);
         }
         return memberDtoList;
@@ -145,6 +135,7 @@ public class MemberService {
         });
         return result.get();
     }
+
 }
 
 

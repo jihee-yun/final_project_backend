@@ -24,9 +24,7 @@ public class MemberController {
     // 사업자 회원 회원가입
     @PostMapping("/signup")
     public ResponseEntity<MemberResponseDto> signup(@RequestBody MemberRequestDto requestDto) {
-        int points = requestDto.getPoints();
-        MemberResponseDto responseDto = memberService.signup(requestDto);
-        return ResponseEntity.ok(responseDto);
+        return ResponseEntity.ok(memberService.signup(requestDto));
     }
     // 사업자 회원 로그인
     @PostMapping("/login")
@@ -41,5 +39,14 @@ public class MemberController {
 //        List<MemberDto> list = memberService.getMemberNumById(memberId);
 //        return new ResponseEntity<>(list, HttpStatus.OK);
 //    }
+
+    // 멤버 정보 조회
+    @GetMapping("/myinfo")
+    public ResponseEntity<List<MemberDto>> infoList(@RequestParam Long memberNum) {
+        List<MemberDto> list = memberService.getMemberInfoByNum(memberNum);
+        return new ResponseEntity<>(list, HttpStatus.OK);
+    }
+
+
 
 }

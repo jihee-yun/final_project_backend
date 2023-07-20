@@ -22,19 +22,21 @@ public class PointController {
 
     // 내 포인트 조회
     @GetMapping("/mypoint")
-    public ResponseEntity<List<PointDto>> pointList(@RequestParam Long memberNum, Long pointId) {
-        List<PointDto> list = pointService.getPointList(memberNum, pointId);
+    public ResponseEntity<List<PointDto>> pointList(@RequestParam Long memberNum) {
+        List<PointDto> list = pointService.getPointList(memberNum);
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
     // 포인트 적립
     @PostMapping("/pointadd")
-    public ResponseEntity<Boolean> addPoint(@RequestBody Map<String, Object> pointItem) {
-        int totalPoint = (Integer) pointItem.get("totalPoint");
-        log.info("받은 포인트 : " + totalPoint);
-        boolean result = pointService.addPoint(totalPoint);
+    public ResponseEntity<Boolean> addPoint(@RequestBody PointDto pointDto) {
+        Long memberNum = pointDto.getMemberNum();
+        int point = pointDto.getPoint();
+        String pointType = pointDto.getPointType();
+        boolean result = pointService.addPoints(memberNum, point, pointType);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
+
 
     // 포인트 충전
     @PostMapping("/chargepoint")

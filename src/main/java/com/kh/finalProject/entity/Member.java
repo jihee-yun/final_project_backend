@@ -40,6 +40,8 @@ public class Member { // 사업자 회원, 아직 수정 중
     private Existence existence; // 탈퇴 여부
     @Enumerated(EnumType.STRING)
     private Authority authority; // 회원 종류
+    @Column(columnDefinition = "int default 0")
+    private int totalPoint;
 
     @Builder
     public Member(String memberId, String password, String name, String phone, String email, LocalDate birthday,

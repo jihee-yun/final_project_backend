@@ -7,7 +7,7 @@ import lombok.Setter;
 @Setter
 public class PointDto {
     private Long id;
-    private int totalPoint;
+    private int point;
     private Long memberNum;
-    private String memberName;
+    private String pointType;
 }

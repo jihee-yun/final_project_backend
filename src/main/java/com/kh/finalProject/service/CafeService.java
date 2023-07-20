@@ -181,4 +181,20 @@ public class CafeService {
             cafeRepository.save(cafe1);
         }
     }
+
+    // 좋아요 상태값
+    public boolean isLike(Long cafeNum, Long memNum) {
+        Optional<Cafe> cafe = cafeRepository.findById(cafeNum);
+        Optional<Member> member = memberRepository.findByMemberNum(memNum);
+
+        if(cafe.isPresent() && member.isPresent()) {
+            Optional<CafeLike> cafeLike = cafeLikeRepository.findByMemberAndCafe(member.get(), cafe.get());
+
+            if(cafeLike.isPresent()) {
+                return true;
+            } else return false;
+        } else {
+            throw new IllegalArgumentException("해당 유저 또는 카페를 찾을 수 없습니다");
+        }
+    }
 }

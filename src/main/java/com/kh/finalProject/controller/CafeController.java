@@ -17,7 +17,7 @@ import java.util.Map;
 @Slf4j
 @RequiredArgsConstructor
 @RequestMapping("/cafe")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "http://localhost:3000", exposedHeaders = "Authorization")
 public class CafeController {
     private final CafeService cafeService;
 
@@ -64,5 +64,12 @@ public class CafeController {
         Long memNum = likeData.get("memNum");
         boolean result = cafeService.changeCafeLike(cafeNum, memNum);
         return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    // 좋아요 상태값 관리
+    @GetMapping("/getLike")
+    public ResponseEntity<Boolean> getLike(@RequestParam Long cafeNum, Long memNum) {
+        boolean isLike = cafeService.isLike(cafeNum, memNum);
+        return new ResponseEntity<>(isLike, HttpStatus.OK);
     }
 }

@@ -39,7 +39,7 @@ public class PointController {
     // 포인트 충전
     @PostMapping("/chargepoint")
     public ResponseEntity<Boolean> chargePoint(@RequestBody Map<String, Long> list){
-        Long memberNum = list.get("membernum");
+        Long memberNum = list.get("userNum");
         Long point = list.get("point");
         boolean result = pointService.chargePointByMemberNum(memberNum, point);
         return new ResponseEntity<>(result, HttpStatus.OK);

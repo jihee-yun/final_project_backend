@@ -13,6 +13,6 @@ public class MainDto {
     private Long id;
     private String cafeName;
     private String intro;
-//    private List<String> imgList;
+    private String thumbnail;
 
 }

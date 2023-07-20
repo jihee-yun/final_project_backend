@@ -8,7 +8,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -64,21 +63,25 @@ public class ReportService {
         }
         return reportDtoList;
     }
+    public ReportDto saveReport(ReportDto reportDto) {
+        // ReportDto를 Report Entity로 변환
+        Report report = new Report();
+        report.setUserId(reportDto.getUserId());
+        report.setReportContent(reportDto.getContent());
+        report.setTitle(reportDto.getTitle());
+        report.setReportDate(reportDto.getReportDate());
 
+        // 데이터베이스에 저장
+        Report savedReport = reportRepository.save(report);
 
-    public List<ReportDto> getReportByNumAndDate(String userId, LocalDate startDate, LocalDate endDate) {
-        List<Report> reportList = reportRepository.findByUserIdAndReportDateBetween(userId, startDate, endDate);
-        List<ReportDto> reportDtoList = new ArrayList<>();
-        for(Report report : reportList) {
-            ReportDto reportDto = new ReportDto();
-            reportDto.setReportNum(report.getReportNum());
-            reportDto.setUserId(report.getUserId());
-            reportDto.setContent(report.getReportContent());
-            reportDto.setTitle(report.getTitle());
-            reportDto.setReportDate(report.getReportDate());
-            reportDtoList.add(reportDto);
-        }
-        return reportDtoList;
+        // 저장된 Report Entity를 ReportDto로 변환하여 반환
+        ReportDto savedReportDto = new ReportDto();
+        savedReportDto.setReportNum(savedReport.getReportNum());
+        savedReportDto.setUserId(savedReport.getUserId());
+        savedReportDto.setContent(savedReport.getReportContent());
+        savedReportDto.setTitle(savedReport.getTitle());
+        savedReportDto.setReportDate(savedReport.getReportDate());
+
+        return savedReportDto;
     }
-
 }

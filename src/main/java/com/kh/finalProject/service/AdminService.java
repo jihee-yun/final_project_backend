@@ -2,11 +2,9 @@ package com.kh.finalProject.service;
 
 import com.kh.finalProject.dto.*;
 import com.kh.finalProject.entity.Admin;
+import com.kh.finalProject.entity.Member;
 import com.kh.finalProject.entity.User;
-import com.kh.finalProject.repository.AdminRepository;
-import com.kh.finalProject.repository.ReportRepository;
-import com.kh.finalProject.repository.ReviewRepository;
-import com.kh.finalProject.repository.UserRepository;
+import com.kh.finalProject.repository.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -24,6 +22,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class AdminService {
     private final UserRepository userRepository;
+    private final MemberRepository memberRepository;
     private final ReviewRepository reviewRepository;
     private final ReportRepository reportRepository;
     private final AdminRepository adminRepository;
@@ -31,23 +30,24 @@ public class AdminService {
     private final PasswordEncoder passwordEncoder;
 
     // 전체 회원 조회
-    public List<UserDto> findAllUserList() {
-        List<User> users = userRepository.findAll();
-        List<UserDto> userDtos = new ArrayList<>();
-        for(User user : users) {
-            UserDto userDto = new UserDto();
-            userDto.setUserNum(user.getUserNum());
-            userDto.setUserId(user.getUserId());
-            userDto.setName(user.getName());
-            userDto.setEmail(user.getEmail());
-            userDto.setPhone(user.getPhone());
-            userDto.setGender(user.getGender());
-            userDto.setBirthday(user.getBirthday());
-            userDto.setExistence(user.getExistence());
-            userDto.setAuthority(user.getAuthority());
-            userDtos.add(userDto);
+    public List<MemberDto> findAllUserList() {
+        List<Member> members = memberRepository.findAll();
+        List<MemberDto> memberDtos = new ArrayList<>();
+        for (Member member : members) {
+            MemberDto memberDto = new MemberDto();
+            memberDto.setMemberNum(member.getMemberNum());
+            memberDto.setMemberId(member.getMemberId());
+            memberDto.setName(member.getName());
+            memberDto.setEmail(member.getEmail());
+            memberDto.setPhone(member.getPhone());
+            memberDto.setGender(member.getGender());
+            memberDto.setBirthday(member.getBirthday());
+            memberDto.setExistence(member.getExistence());
+            memberDto.setAuthority(member.getAuthority());
+            memberDto.setTotalPoint(member.getTotalPoint());
+            memberDtos.add(memberDto);
         }
-        return userDtos;
+        return memberDtos;
     }
 
     // 관리자 등록

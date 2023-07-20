@@ -51,8 +51,8 @@ public class AdminController {
 
     // 전체 회원 조회
     @GetMapping("/usermanage")
-    public ResponseEntity<List<UserDto>> userAll() {
-        List<UserDto> list = adminService.findAllUserList();
+    public ResponseEntity<List<MemberDto>> userAll() {
+        List<MemberDto> list = adminService.findAllUserList();
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
 

@@ -3,7 +3,6 @@ package com.kh.finalProject.service;
 import com.kh.finalProject.dto.*;
 import com.kh.finalProject.entity.Admin;
 import com.kh.finalProject.entity.Member;
-import com.kh.finalProject.entity.User;
 import com.kh.finalProject.repository.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -57,6 +56,17 @@ public class AdminService {
         }
         Admin admin = adminRequestDto.toAdmin();
         return AdminResponseDto.of(adminRepository.save(admin));
+    }
+
+    // 사용자관리 삭제
+    public boolean deleteMemberByMemberNum(Long memberNum) {
+        Optional<Member> memberOptional = memberRepository.findByMemberNum(memberNum);
+        if(memberOptional.isPresent()) {
+            memberRepository.deleteById(memberNum);
+            return true;
+        }else{
+            return false;
+        }
     }
 
     // 관리자 로그인

@@ -66,8 +66,8 @@ public class ReviewService {
     }
 
     // 관리자 리뷰번호
-    public List<ReviewDto> getAdminReviewNum(Long userNum) {
-        List<Review> adminReviewNum = reviewRepository.findByUserNum(userNum);
+    public List<ReviewDto> getAdminReviewNum(Long reviewNum) {
+        List<Review> adminReviewNum = reviewRepository.findByReviewNum(reviewNum);
         List<ReviewDto> adminReviewNumList = new ArrayList<>();
         for(Review review : adminReviewNum) {
             ReviewDto reviewDto = new ReviewDto();

@@ -70,10 +70,10 @@ public class AdminController {
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
-    // userNum 리뷰 조회
+    // reportNum 리뷰 조회
     @GetMapping("/review/getbynum")
-    public ResponseEntity<List<ReviewDto>> reviewByNum(@RequestParam Long userNum) {
-        List<ReviewDto> list = reviewService.getAdminReviewNum(userNum);
+    public ResponseEntity<List<ReviewDto>> reviewByNum(@RequestParam Long reviewNum) {
+        List<ReviewDto> list = reviewService.getAdminReviewNum(reviewNum);
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
@@ -90,4 +90,16 @@ public class AdminController {
         List<ReportDto> list = reportService.getReportContent(reportNum);
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
+
+    // 사용자 관리 삭제
+    @DeleteMapping("/usermanage/delete/{memberNum}")
+    public ResponseEntity<String> deleteMember(@PathVariable Long memberNum) {
+        boolean isDeleted = adminService.deleteMemberByMemberNum(memberNum);
+        if (isDeleted) {
+            return new ResponseEntity<>("사용자가 성공적으로 삭제되었습니다.", HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("사용자를 찾을 수 없거나 삭제에 실패했습니다.", HttpStatus.BAD_REQUEST);
+        }
+    }
+
 }

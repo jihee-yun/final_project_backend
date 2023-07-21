@@ -10,6 +10,7 @@ import java.util.List;
 @Repository
 public interface ReviewRepository extends JpaRepository<Review, Long> {
     List<Review> findByUserNum(Long userNum);
+    List<Review> findByReviewNum(Long reviewNum);
     List<Review> findByUserNumAndWrittenTimeBetween(Long userNum, LocalDate startDate, LocalDate endDate);
 
     List<Review> findByCafeNum(Long cafeNum);

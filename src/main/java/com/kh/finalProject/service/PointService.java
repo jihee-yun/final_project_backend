@@ -64,10 +64,9 @@ public class PointService {
         Optional<Member> memberOptional = memberRepository.findByMemberNum(memberNum);
         AtomicBoolean result = new AtomicBoolean(false);
         memberOptional.ifPresent(member -> {
-            Point point = pointRepository.findByMember(member).get(0);
-            int newTotalPoint = point.getPoint() + chargingPoint.intValue();  // 기존 포인트에 충전 포인트를 더합니다.
-            point.setPoint(newTotalPoint);
-            pointRepository.save(point);
+            int newTotalPoint = member.getTotalPoint() + chargingPoint.intValue();
+            member.setTotalPoint(newTotalPoint);
+            memberRepository.save(member);
             result.set(true);
         });
         return result.get();

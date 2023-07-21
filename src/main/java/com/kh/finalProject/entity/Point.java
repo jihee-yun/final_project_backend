@@ -6,6 +6,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "t_point")
@@ -30,4 +31,7 @@ public class Point {
     @ManyToOne
     @JoinColumn(name = "T_User_userNum")
     private Member member;
+
+    @Column(name = "point_date")
+    private LocalDate pointDate; // 포인트 변동 날짜
 }

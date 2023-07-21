@@ -1,6 +1,7 @@
 package com.kh.finalProject.service;
 
 import com.kh.finalProject.dto.PointDto;
+import com.kh.finalProject.dto.PointListDto;
 import com.kh.finalProject.entity.Member;
 import com.kh.finalProject.entity.Point;
 import com.kh.finalProject.repository.MemberRepository;
@@ -10,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -70,5 +72,24 @@ public class PointService {
             result.set(true);
         });
         return result.get();
+    }
+
+    // 회원 번호를 가지고 시작 날짜와 종료 날짜 사이의 포인트 내역 조회
+    public List<PointDto> getPointListByNumAndDate(Long memberNum, LocalDate startDate, LocalDate endDate) {
+        Member member = new Member();
+        member.setMemberNum(memberNum);
+        List<Point> pointList = pointRepository.findByMemberAndPointDateBetween(member ,startDate, endDate);
+
+        List<PointDto> pointDtoList = new ArrayList<>();
+        for (Point point : pointList) {
+            PointDto pointDto = new PointDto();
+            pointDto.setId(point.getId());
+            pointDto.setPoint(point.getPoint());
+            pointDto.setMemberNum(point.getMember().getMemberNum());
+            pointDto.setPointType(point.getPointType());
+            pointDto.setPointDate(point.getPointDate());
+            pointDtoList.add(pointDto);
+        }
+        return pointDtoList;
     }
 }

@@ -103,7 +103,7 @@ public class ReviewService {
         }
         return reviewDtoList;
     }
-
+    // 시작 날짜와 종료 날짜로 리뷰 검색
     public List<ReviewDto> getReviewListByNumAndDate(Long userNum, LocalDate startDate, LocalDate endDate) {
         List<Review> reviewList = reviewRepository.findByUserNumAndWrittenTimeBetween(userNum, startDate, endDate);
         List<ReviewDto> reviewDtoList = new ArrayList<>();

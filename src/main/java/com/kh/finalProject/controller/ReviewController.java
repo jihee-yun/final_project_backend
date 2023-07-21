@@ -17,7 +17,7 @@ import java.util.Map;
 @RestController
 @Slf4j
 @RequiredArgsConstructor
-@CrossOrigin(origins = "http://localhost:3000", exposedHeaders = "Authorization")
+@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/review")
 public class ReviewController {
     private final ReviewService reviewService;

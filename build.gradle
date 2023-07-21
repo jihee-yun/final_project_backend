@@ -27,6 +27,7 @@ dependencies {
 	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'
 	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
 	implementation 'org.springframework.boot:spring-boot-starter-mail'
+	implementation 'org.json:json:20220320'
 
 	testImplementation 'org.projectlombok:lombok:1.18.22'
 	compileOnly 'org.projectlombok:lombok'

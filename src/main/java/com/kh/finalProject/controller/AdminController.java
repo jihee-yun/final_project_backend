@@ -102,4 +102,26 @@ public class AdminController {
         }
     }
 
+    // 리뷰 관리 삭제
+    @DeleteMapping("/review/delete/{reviewNum}")
+    public ResponseEntity<String> deleteReview(@PathVariable Long reviewNum) {
+        boolean isDeleted = adminService.deleteReviewByReviewNum(reviewNum);
+        if(isDeleted) {
+            return new ResponseEntity<>("리뷰가 성공적으로 삭제되었습니다.", HttpStatus.OK);
+        }else{
+            return new ResponseEntity<>("리뷰 삭제에 실패했습니다.", HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    // 신고 내역 삭제
+    @DeleteMapping("/report/delete/{reportNum}")
+    public ResponseEntity<String> deleteReport(@PathVariable Long reportNum) {
+        boolean isDeleted = adminService.deleteReportByReportNum(reportNum);
+        if(isDeleted) {
+            return new ResponseEntity<>("신고정보가 성공적으로 삭제되었습니다.", HttpStatus.OK);
+        }else{
+            return new ResponseEntity<>("신고 삭제에 실패했습니다.", HttpStatus.BAD_REQUEST);
+        }
+    }
+
 }

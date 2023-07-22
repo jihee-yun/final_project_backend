@@ -3,6 +3,8 @@ package com.kh.finalProject.service;
 import com.kh.finalProject.dto.*;
 import com.kh.finalProject.entity.Admin;
 import com.kh.finalProject.entity.Member;
+import com.kh.finalProject.entity.Report;
+import com.kh.finalProject.entity.Review;
 import com.kh.finalProject.repository.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -63,6 +65,37 @@ public class AdminService {
         Optional<Member> memberOptional = memberRepository.findByMemberNum(memberNum);
         if(memberOptional.isPresent()) {
             memberRepository.deleteById(memberNum);
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    // 리뷰관리 삭제
+    public boolean deleteReviewByReviewNum(Long reviewNum) {
+        List<Review> reviewList = reviewRepository.findByReviewNum(reviewNum);
+        if (!reviewList.isEmpty()) {
+            // 주어진 리뷰 번호와 일치하는 리뷰가 존재하는 경우, 첫 번째 리뷰를 가져온다.
+            Review reviewToDelete = reviewList.get(0);
+
+            // 리뷰 엔티티를 삭제합니다.
+            reviewRepository.deleteById(reviewToDelete.getReviewNum());
+
+            return true; // 삭제 성공을 나타내는 true를 반환한다.
+        } else {
+            return false; // 삭제할 리뷰가 없는 경우 false를 반환한다.
+        }
+    }
+
+    // 신고내역 삭제
+    public boolean deleteReportByReportNum(Long reportNum) {
+        List<Report> reportList = reportRepository.findAllByReportNum(reportNum);
+        if(!reportList.isEmpty()) {
+            // 주어진 신고 번호와 일치하는 신고가 존재하는 경우, 첫 번째 신고를 가져온다.
+            Report reportToDelete = reportList.get(0);
+
+            reportRepository.deleteById(reportToDelete.getReportNum());
+
             return true;
         }else{
             return false;

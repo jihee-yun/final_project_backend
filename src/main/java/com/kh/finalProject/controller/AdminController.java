@@ -2,6 +2,7 @@ package com.kh.finalProject.controller;
 
 
 import com.kh.finalProject.dto.*;
+import com.kh.finalProject.entity.Member;
 import com.kh.finalProject.service.AdminService;
 import com.kh.finalProject.service.ReportService;
 import com.kh.finalProject.service.ReviewService;
@@ -124,4 +125,30 @@ public class AdminController {
         }
     }
 
+    // 사용자 정보 수정
+    @PutMapping("/usermanage/modify/{memberNum}")
+    public ResponseEntity<String> modifyMemberInfo(@PathVariable Long memberNum, @RequestBody Member member) {
+        // memberNum을 사용하여 해당 사용자 정보를 조회합니다.
+        Member existingMember = adminService.findMemberByMemberNum(memberNum);
+
+        if (existingMember == null) {
+            // 해당 회원 번호에 해당하는 사용자가 없는 경우
+            return new ResponseEntity<>("해당 회원을 찾을 수 없습니다.", HttpStatus.BAD_REQUEST);
+        }
+
+        // 사용자 정보 수정 로직 구현
+        existingMember.setName(member.getName());
+        existingMember.setBirthday(member.getBirthday());
+        existingMember.setAuthority(member.getAuthority());
+        existingMember.setTotalPoint(member.getTotalPoint());
+
+        // 수정된 사용자 정보를 저장합니다.
+        boolean isUpdated = adminService.saveMember(existingMember);
+
+        if (isUpdated) {
+            return new ResponseEntity<>("사용자 정보가 성공적으로 수정되었습니다.", HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("사용자 정보 수정에 실패했습니다.", HttpStatus.BAD_REQUEST);
+        }
+    }
 }

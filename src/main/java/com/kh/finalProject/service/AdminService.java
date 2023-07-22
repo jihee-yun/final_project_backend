@@ -102,6 +102,23 @@ public class AdminService {
         }
     }
 
+    // 사용자 정보 수정
+    public Member findMemberByMemberNum(Long memberNum) {
+        Optional<Member> memberOptional = memberRepository.findByMemberNum(memberNum);
+        return memberOptional.orElse(null);
+    }
+
+    // 사용자 정보 저장
+    public boolean saveMember(Member member) {
+        try {
+            memberRepository.save(member);
+            return true;
+        }catch(Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
     // 관리자 로그인
     public AdminDto findByAdminIdAndPassWord(String adminId, String password) {
         Optional<Admin> adminOptional = adminRepository.findByAdminIdAndPassword(adminId, password);

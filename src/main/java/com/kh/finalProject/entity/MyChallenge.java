@@ -24,7 +24,7 @@ public class MyChallenge {
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "T_User_userNum")
+    @JoinColumn(name = "T_user_num")
     private Member member;
 
     // 장바구니

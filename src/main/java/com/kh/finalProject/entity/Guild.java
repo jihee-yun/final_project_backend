@@ -21,10 +21,6 @@ public class Guild {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "T_User_userNum")
-    private User user;
-
-    @ManyToOne
     @JoinColumn(name = "T_userNum")
     private Member member;
 

@@ -22,10 +22,6 @@ public class ReviewLike {
     private Review review;
 
     @ManyToOne
-    @JoinColumn(name = "T_User_userNum")
-    private User user;
-
-    @ManyToOne
     @JoinColumn(name = "T_userNum")
     private Member member;
 }

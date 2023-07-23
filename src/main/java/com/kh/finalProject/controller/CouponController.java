@@ -1,6 +1,7 @@
 package com.kh.finalProject.controller;
 
 import com.kh.finalProject.dto.CouponDto;
+import com.kh.finalProject.dto.CouponPaymentDto;
 import com.kh.finalProject.dto.MemberDto;
 import com.kh.finalProject.dto.UserDto;
 import com.kh.finalProject.service.CouponService;
@@ -36,4 +37,12 @@ public class CouponController {
 //        List<UserDto> list = userService.getMemberList();
 //        return new ResponseEntity<>(list, HttpStatus.OK);
 //    }
+
+    @PostMapping("/couponPay")
+    public ResponseEntity<String> couponPayment (@RequestBody CouponPaymentDto request) {
+        Long memberNum = request.getMemberNum();
+        Long couponId = request.getCouponId();
+        String result = couponService.couponPayment(memberNum, couponId);
+        return ResponseEntity.ok(result);
+    }
 }

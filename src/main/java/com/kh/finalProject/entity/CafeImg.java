@@ -13,7 +13,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 public class CafeImg {
     @Id
-    @Column(name = "cafe_img_id")
+    @Column(name = "cafe_img_id", length = 2000)
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String url;

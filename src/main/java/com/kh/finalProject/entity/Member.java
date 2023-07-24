@@ -33,7 +33,9 @@ public class Member { // 사업자 회원, 아직 수정 중
     private LocalDate signUpDay; // 가입 날짜
     private Long followingId; // 내가 팔로우한 아이디 - 맵핑 아직 안함
     private Long followedId; // 나를 팔로우한 아이디 - 맵핑 아직 안함
+    @Column(length = 2000)
     private String profileImgUrl; // 프로필 이미지 url
+    @Column(length = 2000)
     private String intro; // 한 줄 소개
 
     @Enumerated(EnumType.STRING)

@@ -19,9 +19,11 @@ public class Review {
     private Long userNum; // 리뷰 작성자 ID (일반 회원)
     private Long cafeNum; // 리뷰 대상 카페 ID
     @Lob // 문자열 길이 증가
-    @Column(nullable = false) // null 방지
+    @Column(nullable = false, length = 2000) // null 방지
     private String reviewContent; // 리뷰 내용
+    @Column(length = 2000)
     private String reviewImgUrl1; // 이미지 url 1
+    @Column(length = 2000)
     private String reviewImgUrl2; // 이미지 url 2
     private LocalDate writtenTime; // 글 작성일
     private int likeCount; // 좋아요 카운트

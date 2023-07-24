@@ -34,14 +34,14 @@ public class Guild {
     private int limitMember;
 
     @Lob
-    @Column(nullable = false)
+    @Column(nullable = false, length = 2000)
     private String detailIntro;
 
     @Lob
     @Column(nullable = false)
     private String intro;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 2000)
     private String thumbnail;
 
     @Column(nullable = false)

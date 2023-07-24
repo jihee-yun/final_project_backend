@@ -31,7 +31,9 @@ public class User { // 일반 회원
     private LocalDate signUpTime; // 가입 날짜
     private Long followingId; // 내가 팔로우한 아이디
     private Long followedId; // 나를 팔로우한 아이디
+    @Column(length = 2000)
     private String profileImgUrl; // 프로필 이미지 url
+    @Column(length = 2000)
     private String intro; // 한 줄 소개
     @Enumerated(EnumType.STRING)
     private Existence existence; // 탈퇴 여부

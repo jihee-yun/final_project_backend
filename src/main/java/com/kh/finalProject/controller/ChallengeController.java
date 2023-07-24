@@ -14,7 +14,7 @@ import java.util.List;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/event")
+@RequestMapping("/challenge")
 @CrossOrigin(origins = "http://localhost:3000")
 public class ChallengeController {
     private final ChallengeService challengeService;

@@ -1,6 +1,7 @@
 package com.kh.finalProject.repository;
 
 import com.kh.finalProject.entity.Guild;
+import com.kh.finalProject.entity.Member;
 import com.kh.finalProject.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -26,4 +27,8 @@ public interface GuildRepository extends JpaRepository<Guild, Long> {
 
     @Query("SELECT g.member.memberNum FROM Guild g WHERE g.id = :guildId AND g.member.memberNum = :memberId")
     Optional<Long> findUserNumByGuildIdAndMemberId(@Param("guildId") Long guildId, @Param("memberId") Long memberId);
+
+    // 회원 객체로 길드 정보 전체 조회
+    List<Guild> findByMember(Member member);
+
 }

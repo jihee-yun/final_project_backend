@@ -19,6 +19,7 @@ import java.util.List;
 public class ChallengeController {
     private final ChallengeService challengeService;
 
+    // 챌린지 내역 조회
     @GetMapping("/chList")
     public ResponseEntity<List<ChallengeDto>> challengeList(@RequestParam String chList) {
         System.out.println("chList : " + chList);

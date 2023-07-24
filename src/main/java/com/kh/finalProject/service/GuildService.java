@@ -172,4 +172,22 @@ public class GuildService {
             throw new IllegalArgumentException("오류");
         }
     }
+
+    public List<GuildDto> getGuildInfoByMemberNum(Long memberNum) {
+        Member member = new Member();
+        member.setMemberNum(memberNum);
+        List<Guild> guildList = guildRepository.findByMember(member);
+
+        List<GuildDto> guildDtoList = new ArrayList<>();
+        for (Guild guild : guildList) {
+            GuildDto guildDto = new GuildDto();
+            guildDto.setId(guild.getId());
+            guildDto.setGuildName(guild.getGuildName());
+            guildDto.setCategory(guild.getCategory());
+            guildDto.setRegion(guild.getRegion());
+            guildDto.setThumbnail(guild.getThumbnail());
+        }
+        return guildDtoList;
+    }
+
 }

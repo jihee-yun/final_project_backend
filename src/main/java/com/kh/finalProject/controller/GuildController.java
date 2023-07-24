@@ -73,4 +73,13 @@ public class GuildController {
         boolean result = guildService.joinGuild(guildNum, userNum);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
+
+    // 회원 번호로 가입한 길드 정보 조회
+    // 회원정보 수정에 필요한 회원 정보 대부분 조회
+    @GetMapping("/guildinfo")
+    public ResponseEntity<List<GuildDto>> guildInfoByMemberNum(@RequestParam Long membernum) {
+        List<GuildDto> list = guildService.getGuildInfoByMemberNum(membernum);
+        return new ResponseEntity<>(list, HttpStatus.OK);
+    }
+
 }

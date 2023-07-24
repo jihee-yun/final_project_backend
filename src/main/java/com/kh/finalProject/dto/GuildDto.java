@@ -14,6 +14,7 @@ public class GuildDto {
     private int limitMember;
     private int category;
     private int countMember;
+    private String intro;
 
     private List<String> memberProfileList; // 길드원 프로필 리스트
 }

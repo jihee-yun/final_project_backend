@@ -185,7 +185,9 @@ public class GuildService {
             guildDto.setGuildName(guild.getGuildName());
             guildDto.setCategory(guild.getCategory());
             guildDto.setRegion(guild.getRegion());
+            guildDto.setIntro(guild.getIntro());
             guildDto.setThumbnail(guild.getThumbnail());
+            guildDtoList.add(guildDto);
         }
         return guildDtoList;
     }

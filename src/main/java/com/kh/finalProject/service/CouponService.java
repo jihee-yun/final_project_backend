@@ -37,7 +37,7 @@ public class CouponService {
         return couponDtoList;
     }
     // 쿠폰 결제
-    public String couponPayment (Long memberNum, Long couponId) {
+    public boolean couponPayment (Long memberNum, Long couponId) {
         Member member = memberRepository.findByMemberNum(memberNum).orElse(null);
         Coupon coupon = couponRepository.findById(couponId).orElse(null);
         int myPoint = member.getTotalPoint();
@@ -46,9 +46,9 @@ public class CouponService {
         if(myPoint >= couponPrice) {
             member.setTotalPoint(myPoint - couponPrice);
             memberRepository.save(member);
-            return "결제 완료";
+            return true;
         } else {
-            return "포인트 부족으로 결제 불가";
+            return false;
         }
     }
 }

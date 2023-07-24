@@ -14,11 +14,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping({"/couponstore", "/couponpayment"})
+@RequestMapping("/couponstore")
 @CrossOrigin(origins = "http://localhost:3000")
 public class CouponController {
     public final CouponService couponService;
@@ -38,11 +39,11 @@ public class CouponController {
 //        return new ResponseEntity<>(list, HttpStatus.OK);
 //    }
 
-    @PostMapping("/couponPay")
-    public ResponseEntity<String> couponPayment (@RequestBody CouponPaymentDto request) {
-        Long memberNum = request.getMemberNum();
-        Long couponId = request.getCouponId();
-        String result = couponService.couponPayment(memberNum, couponId);
+    @PostMapping("/couponpay")
+    public ResponseEntity<Boolean> couponPayment (@RequestBody Map<String, Long> request) {
+        Long memberNum = request.get("memberNum");
+        Long couponId = request.get("couponId");
+        boolean result = couponService.couponPayment(memberNum, couponId);
         return ResponseEntity.ok(result);
     }
 }

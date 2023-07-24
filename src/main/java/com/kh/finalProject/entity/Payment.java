@@ -6,6 +6,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "t_payment")
@@ -26,6 +27,9 @@ public class Payment { // 결제 내역 저장 테이블
     @Column(name = "point")
     private int point;
 
-    @Column(name = "point_type")
-    private String pointType;
+    @Column(name = "payment_type")
+    private String paymentType;
+
+    @Column(name = "payment_date")
+    private LocalDate paymentDate;
 }

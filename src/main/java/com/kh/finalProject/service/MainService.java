@@ -39,11 +39,7 @@ public class MainService {
 
             MainDto tmp = new MainDto();
             tmp.setId(c.getId());
-            List<CafeImg> cafeImgs = cafeImgRepository.findByCafeId(tmp.getId());
-            if(!cafeImgs.isEmpty()) {
-                tmp.setThumbnail(cafeImgs.get(0).getUrl());
-            }
-
+            tmp.setThumbnail(c.getThumbnail());
             tmp.setCafeName(c.getCafeName());
             tmp.setIntro(c.getIntro());
             mainDto.add(tmp);

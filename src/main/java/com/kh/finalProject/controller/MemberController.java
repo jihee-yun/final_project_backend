@@ -1,9 +1,6 @@
 package com.kh.finalProject.controller;
 
-import com.kh.finalProject.dto.MemberDto;
-import com.kh.finalProject.dto.MemberRequestDto;
-import com.kh.finalProject.dto.MemberResponseDto;
-import com.kh.finalProject.dto.TokenDto;
+import com.kh.finalProject.dto.*;
 import com.kh.finalProject.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -12,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @RestController
@@ -31,6 +29,30 @@ public class MemberController {
     public ResponseEntity<TokenDto> login(@RequestBody MemberRequestDto requestDto) {
         return ResponseEntity.ok(memberService.login(requestDto));
     }
+
+    // 아이디 찾기
+    @PostMapping("/findId")
+    public ResponseEntity<String> findId(@RequestBody Map<String, String> findIdData) {
+        String name = findIdData.get("name");
+        String email = findIdData.get("email");
+        String memberDto = memberService.findId(name, email);
+        if (memberDto == null) {
+            // 아이디를 찾지 못한 경우
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+        // 아이디를 찾은 경우
+        return ResponseEntity.ok(memberDto);
+    }
+
+    // 비밀번호 찾기
+//    @PostMapping("/findPw")
+//    public ResponseEntity<Boolean> findPw(@RequestBody UserPasswordDto userPasswordDto) {
+//        String name = userPasswordDto.getName();
+//        String phone = userPasswordDto.getPhone();
+//        String email = userPasswordDto.getEmail();
+//        Boolean result = memberService.findPw(name, phone, email);
+//        return new ResponseEntity<>(result, HttpStatus.OK);
+//    }
 
     // 회원 아이디로 회원 번호 조회
 //    @PostMapping("/numget")

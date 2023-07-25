@@ -1,11 +1,9 @@
 package com.kh.finalProject.service;
 
 import com.kh.finalProject.constant.Authority;
-import com.kh.finalProject.dto.MemberDto;
-import com.kh.finalProject.dto.MemberRequestDto;
-import com.kh.finalProject.dto.MemberResponseDto;
-import com.kh.finalProject.dto.TokenDto;
+import com.kh.finalProject.dto.*;
 import com.kh.finalProject.entity.Member;
+import com.kh.finalProject.entity.User;
 import com.kh.finalProject.jwt.TokenProvider;
 import com.kh.finalProject.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +14,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -47,6 +46,57 @@ public class MemberService {
 
         return tokenProvider.generateToken(authentication);
     }
+
+    // 아이디 찾기
+    public String findId(String name, String email) {
+        Optional<Member> memberInfo = memberRepository.findByNameAndEmail(name, email);
+        System.out.println("정보 : " + name + " " + email + " " + memberInfo);
+        if (!memberInfo.isPresent()) {
+            System.out.println("아이디를 찾지 못함");
+            return null; // 아이디를 찾지 못한 경우 null을 반환하거나 원하는 대응을 수행
+        }
+        Member member = memberInfo.get();
+        MemberDto memberDto = new MemberDto();
+        memberDto.setMemberId(member.getMemberId());
+        System.out.println("ID 찾기 :" + memberDto.getMemberId());
+        String result = member.getMemberId();
+        return result;
+    }
+
+    // 비밀번호 찾기
+//    public Boolean findPw(String name, String email, String phone) {
+//        Optional<Member> userOptional = memberRepository.findByNameAndPhoneAndEmail(name, phone, email);
+//        AtomicBoolean result = new AtomicBoolean(false);
+//        userOptional.ifPresent(member -> {
+//            String temporaryPassword = generateTemporaryPassword();
+//            member.setPassword(passwordEncoder.encode(temporaryPassword)); // 비밀번호 암호화하여 설정
+//            memberRepository.save(member);
+//            sendTemporaryPasswordEmail(member.getEmail(), temporaryPassword);
+//            result.set(true);
+//        });
+//        return result.get();
+//    }
+//
+//    private static final String CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()";
+//    private static final int PASSWORD_LENGTH = 10;
+//
+//    private String generateTemporaryPassword() {
+//        StringBuilder temporaryPassword = new StringBuilder();
+//        SecureRandom secureRandom = new SecureRandom();
+//
+//        for (int i = 0; i < PASSWORD_LENGTH; i++) {
+//            int randomIndex = secureRandom.nextInt(CHARACTERS.length());
+//            temporaryPassword.append(CHARACTERS.charAt(randomIndex));
+//        }
+//
+//        return temporaryPassword.toString();
+//    }
+//
+//    private void sendTemporaryPasswordEmail(String email, String temporaryPassword) {
+//        // 여기서는 간단하게 콘솔에 메시지를 출력하는 것으로 대체합니다.
+//        System.out.println("임시 비밀번호를 다음 이메일로 발송합니다 : " + email);
+//        System.out.println("임시 비밀번호 : " + temporaryPassword);
+//    }
 
 //    // 사업자 회원 아이디로 사업자 회원 번호 조회
 //    public List<MemberDto> getMemberNumById(String memberId) {

@@ -22,7 +22,6 @@ import java.util.Map;
 @RequestMapping("/admin")
 public class AdminController {
     private final ReportService reportService;
-    private final UserService userService;
     private final ReviewService reviewService;
     private final AdminService adminService;
 

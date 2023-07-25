@@ -3,13 +3,16 @@ package com.kh.finalProject.service;
 import com.kh.finalProject.dto.CouponDto;
 import com.kh.finalProject.entity.Coupon;
 import com.kh.finalProject.entity.Member;
+import com.kh.finalProject.entity.Point;
 import com.kh.finalProject.repository.CouponRepository;
 import com.kh.finalProject.repository.MemberRepository;
+import com.kh.finalProject.repository.PointRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +23,7 @@ import java.util.List;
 public class CouponService {
     public final CouponRepository couponRepository;
     public final MemberRepository memberRepository;
+    public final PointRepository pointRepository;
 
     // 쿠폰 조회
     public List<CouponDto> selectCouponList() {
@@ -45,6 +49,14 @@ public class CouponService {
 
         if(myPoint >= couponPrice) {
             member.setTotalPoint(myPoint - couponPrice);
+
+            Point point = new Point();
+            point.setPoint(-couponPrice);
+            point.setPointType("coupon");
+            point.setMember(member);
+            point.setPointDate(LocalDate.now());
+            pointRepository.save(point);
+
             memberRepository.save(member);
             return true;
         } else {

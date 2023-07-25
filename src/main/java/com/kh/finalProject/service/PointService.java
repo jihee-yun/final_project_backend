@@ -35,6 +35,7 @@ public class PointService {
             point.setPoint(points);
             point.setPointType(pointType);
             point.setMember(member);
+            point.setPointDate(LocalDate.now());
 
             pointRepository.save(point);
             member.setTotalPoint(member.getTotalPoint() + points);

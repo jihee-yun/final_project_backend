@@ -7,6 +7,8 @@ import lombok.ToString;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "t_coupon")
@@ -29,4 +31,7 @@ public class Coupon {
 
     @Column (nullable = false)
     private LocalDateTime endTime;
+
+    @OneToMany(mappedBy = "coupon")
+    private List<MyCoupon> myCoupons = new ArrayList<>();
 }

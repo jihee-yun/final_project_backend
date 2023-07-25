@@ -78,4 +78,7 @@ public class Member { // 사업자 회원, 아직 수정 중
 
     @OneToMany(mappedBy = "member")
     private List<ReviewLike> reviewLikeList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member")
+    private List<MyCoupon> myCoupons = new ArrayList<>();
 }

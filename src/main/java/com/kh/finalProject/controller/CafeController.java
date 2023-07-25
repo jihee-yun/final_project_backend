@@ -72,4 +72,11 @@ public class CafeController {
         boolean isLike = cafeService.isLike(cafeNum, memNum);
         return new ResponseEntity<>(isLike, HttpStatus.OK);
     }
+
+    // 카페 4곳 조회
+    @GetMapping("/fourCafes")
+    public ResponseEntity<List<CafeDto>> getCafes() {
+        List<CafeDto> list = cafeService.fourCafes();
+        return new ResponseEntity<>(list, HttpStatus.OK);
+    }
 }

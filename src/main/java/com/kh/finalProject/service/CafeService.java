@@ -197,4 +197,23 @@ public class CafeService {
             throw new IllegalArgumentException("해당 유저 또는 카페를 찾을 수 없습니다");
         }
     }
+
+    // 카페 인기순 4곳만 조회
+    public List<CafeDto> fourCafes() {
+        List<Cafe> cafes = cafeRepository.findAllByOrderByLikeCountDesc();
+        List<CafeDto> cafeDtos = new ArrayList<>();
+        int limit = 4;
+
+        for(int i = 0; i < Math.min(cafes.size(), limit); i++) {
+            Cafe cafe = cafes.get(i);
+            CafeDto cafeDto = new CafeDto();
+            cafeDto.setCafeName(cafe.getCafeName());
+            cafeDto.setId(cafe.getId());
+            cafeDto.setIntro(cafe.getIntro());
+            cafeDto.setRegion(cafe.getRegion());
+            cafeDto.setThumbnail(cafe.getThumbnail());
+            cafeDtos.add(cafeDto);
+        }
+        return cafeDtos;
+    }
 }

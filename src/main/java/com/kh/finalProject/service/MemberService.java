@@ -1,6 +1,7 @@
 package com.kh.finalProject.service;
 
 import com.kh.finalProject.constant.Authority;
+import com.kh.finalProject.constant.Existence;
 import com.kh.finalProject.dto.*;
 import com.kh.finalProject.entity.Member;
 import com.kh.finalProject.entity.User;
@@ -41,6 +42,15 @@ public class MemberService {
 
     // 사업자 회원 로그인
     public TokenDto login(MemberRequestDto requestDto) {
+        Optional<Member> optionalMember = memberRepository.findByMemberId(requestDto.getMemberId());
+
+        if (!optionalMember.isPresent()) {
+            throw new RuntimeException("아이디와 비밀번호를 다시 확인해주세요.."); // 예외처리 (멤버가 존재하지 않을 때)
+        }
+        Member member = optionalMember.get();
+        if (member.getExistence() != Existence.Yes) {
+            throw new RuntimeException("Member is not active"); // 예외처리 (멤버가 비활성화 상태일 때)
+        }
         UsernamePasswordAuthenticationToken authenticationToken = requestDto.toAuthentication();
         Authentication authentication = managerBuilder.getObject().authenticate(authenticationToken);
 
@@ -206,6 +216,17 @@ public class MemberService {
         AtomicBoolean result = new AtomicBoolean(false);
         memberOptional.ifPresent(member -> {
             member.setEmail(email);
+            memberRepository.save(member);
+            result.set(true);
+        });
+        return result.get();
+    }
+    // 회원 탈퇴
+    public Boolean memberWithdrawByNum(Long memberNum) {
+        Optional<Member> memberOptional = memberRepository.findByMemberNum(memberNum);
+        AtomicBoolean result = new AtomicBoolean(false);
+        memberOptional.ifPresent(member -> {
+            member.setExistence(Existence.NO);
             memberRepository.save(member);
             result.set(true);
         });

@@ -16,7 +16,7 @@ import java.util.Map;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/mychallenge")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "http://localhost:3000", exposedHeaders = "Authorization")
 public class MyChallengeController {
     private final MyChallengeService myChallengeService;
     private final ChallengeService challengeService;

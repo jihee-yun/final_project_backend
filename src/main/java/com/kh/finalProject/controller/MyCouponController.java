@@ -15,7 +15,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/mycoupon")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "http://localhost:3000", exposedHeaders = "Authorization")
 public class MyCouponController {
     private final MyCouponService myCouponService;
     private final CouponService couponService;

@@ -20,7 +20,7 @@ import java.util.Map;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/couponstore")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "http://localhost:3000", exposedHeaders = "Authorization")
 public class CouponController {
     public final CouponService couponService;
     public final UserService userService;

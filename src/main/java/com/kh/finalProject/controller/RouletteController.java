@@ -20,7 +20,7 @@ import java.util.Map;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/roulette")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "http://localhost:3000", exposedHeaders = "Authorization")
 public class RouletteController {
     private final RouletteService rouletteService;
 

@@ -10,6 +10,7 @@ public class PasswordDto {
     private Long memberNum;
     private String memberId;
     private String password;
+    private String email;
     private String newPassword;
     private Authority authority; // 회원 종류 구분
 

@@ -20,16 +20,16 @@ public class MailController {
 
     @PostMapping("/confirm")
     public ResponseEntity<Boolean> mailConfirm(@RequestBody Map<String, String> mailData) {
-        String mail = mailData.get("mail");
-        boolean result = mailService.confirm(mail);
+        String email = mailData.get("email");
+        boolean result = mailService.confirm(email);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     @PostMapping("/verify")
     public ResponseEntity<Boolean> verifyCode(@RequestBody Map<String, String> verifyData) {
-        String mail = verifyData.get("mail");
+        String email = verifyData.get("email");
         String code = verifyData.get("code");
-        boolean result = mailService.verifyCode(mail, code);
+        boolean result = mailService.verifyCode(email, code);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 }

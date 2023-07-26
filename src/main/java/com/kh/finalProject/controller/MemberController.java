@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.SecureRandom;
 import java.util.List;
 import java.util.Map;
 
@@ -45,14 +46,24 @@ public class MemberController {
     }
 
     // 비밀번호 찾기
-//    @PostMapping("/findPw")
-//    public ResponseEntity<Boolean> findPw(@RequestBody UserPasswordDto userPasswordDto) {
-//        String name = userPasswordDto.getName();
-//        String phone = userPasswordDto.getPhone();
-//        String email = userPasswordDto.getEmail();
-//        Boolean result = memberService.findPw(name, phone, email);
-//        return new ResponseEntity<>(result, HttpStatus.OK);
-//    }
+    @PostMapping("/findPw")
+    public ResponseEntity<Boolean> findPw(@RequestBody Map<String, String> requestData) {
+        String email = requestData.get("email");
+        String phone = requestData.get("phone");
+        String name = requestData.get("name");
+        Boolean result = memberService.findPw(email, phone, name);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    // 새 비밀번호 변경
+    @PostMapping("/changePw")
+    public ResponseEntity<Boolean> changePw(@RequestBody PasswordDto passwordDto) {
+        String email = passwordDto.getEmail();
+        String newPassword = passwordDto.getNewPassword();
+        Boolean result = memberService.changePw(email, newPassword);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
 
     // 회원 아이디로 회원 번호 조회
 //    @PostMapping("/numget")
@@ -68,7 +79,4 @@ public class MemberController {
         List<MemberDto> list = memberService.getMemberInfoByNum(memberNum);
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
-
-
-
 }

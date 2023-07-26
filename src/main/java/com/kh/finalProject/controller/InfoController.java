@@ -1,8 +1,8 @@
 package com.kh.finalProject.controller;
 
+import com.kh.finalProject.dto.MemberAllInfoDto;
 import com.kh.finalProject.dto.MemberDto;
 import com.kh.finalProject.dto.PasswordDto;
-import com.kh.finalProject.dto.UserDto;
 import com.kh.finalProject.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,6 +19,13 @@ import java.util.List;
 @CrossOrigin(origins = "http://localhost:3000")
 public class InfoController {
     private final MemberService memberService;
+
+    // 대시보드용 회원 정보 전체 조회
+    @GetMapping("/allinfo")
+    public ResponseEntity<List<MemberAllInfoDto>> memberAllInfoByNum(@RequestParam Long membernum) {
+        List<MemberAllInfoDto> list = memberService.getMemberAllInfoByNum(membernum);
+        return new ResponseEntity<>(list, HttpStatus.OK);
+    }
 
     // 회원정보 수정에 필요한 회원 정보 대부분 조회
     @GetMapping("/memberinfo")

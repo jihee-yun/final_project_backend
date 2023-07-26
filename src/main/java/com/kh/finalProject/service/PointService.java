@@ -3,8 +3,10 @@ package com.kh.finalProject.service;
 import com.kh.finalProject.dto.PointDto;
 import com.kh.finalProject.dto.PointListDto;
 import com.kh.finalProject.entity.Member;
+import com.kh.finalProject.entity.Payment;
 import com.kh.finalProject.entity.Point;
 import com.kh.finalProject.repository.MemberRepository;
+import com.kh.finalProject.repository.PaymentRepository;
 import com.kh.finalProject.repository.PointRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,6 +25,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 @RequiredArgsConstructor
 public class PointService {
     public final PointRepository pointRepository;
+    public final PaymentRepository paymentRepository;
     public final MemberRepository memberRepository;
 
     // 포인트 적립
@@ -70,6 +73,14 @@ public class PointService {
             int newTotalPoint = member.getTotalPoint() + chargingPoint.intValue();
             member.setTotalPoint(newTotalPoint);
             memberRepository.save(member);
+            // 결제 테이블에 저장
+            Payment payment = new Payment();
+            payment.setMember(member);
+            payment.setPoint(chargingPoint.intValue());
+            payment.setPaymentType("포인트 결제 충전");
+            payment.setPaymentDate(LocalDate.now());
+            paymentRepository.save(payment);
+
             result.set(true);
         });
         return result.get();
@@ -89,6 +100,25 @@ public class PointService {
             pointDto.setMemberNum(point.getMember().getMemberNum());
             pointDto.setPointType(point.getPointType());
             pointDto.setPointDate(point.getPointDate());
+            pointDtoList.add(pointDto);
+        }
+        return pointDtoList;
+    }
+
+    // 회원 번호를 가지고 시작 날짜와 종료 날짜 사이의 충전, 사용 내역 조회
+    public List<PointDto> getPaymentListByNumAndDate(Long memberNum, LocalDate startDate, LocalDate endDate) {
+        Member member = new Member();
+        member.setMemberNum(memberNum);
+        List<Payment> paymentList = paymentRepository.findByMemberAndPaymentDateBetween(member ,startDate, endDate);
+
+        List<PointDto> pointDtoList = new ArrayList<>();
+        for (Payment payment : paymentList) {
+            PointDto pointDto = new PointDto();
+            pointDto.setId(payment.getPaymentId());
+            pointDto.setPoint(payment.getPoint());
+            pointDto.setMemberNum(payment.getMember().getMemberNum());
+            pointDto.setPointType(payment.getPaymentType());
+            pointDto.setPointDate(payment.getPaymentDate());
             pointDtoList.add(pointDto);
         }
         return pointDtoList;

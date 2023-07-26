@@ -1,6 +1,7 @@
 package com.kh.finalProject.controller;
 
 import com.kh.finalProject.dto.PointDto;
+import com.kh.finalProject.dto.PointListDto;
 import com.kh.finalProject.service.PointService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -8,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
@@ -37,6 +39,15 @@ public class PointController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
+    // 기간 내의 포인트 충전, 사용 내역 조회
+    @PostMapping("/getbynumdate")
+    public ResponseEntity<List<PointDto>> paymentListByNumAndDate(@RequestBody PointListDto checkData) {
+        Long memberNum = checkData.getUserNum();
+        LocalDate startDate = checkData.getStartDate();
+        LocalDate endDate = checkData.getEndDate();
+        List<PointDto> list = pointService.getPaymentListByNumAndDate(memberNum, startDate, endDate);
+        return new ResponseEntity<>(list, HttpStatus.OK);
+    }
 
     // 포인트 충전
     @PostMapping("/chargepoint")

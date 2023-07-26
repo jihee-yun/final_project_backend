@@ -15,6 +15,10 @@ public interface GuildMemberRepository extends JpaRepository<GuildMember, Long> 
     // 해당 길드 길드원 조회
     List<GuildMember> findByGuildId(Long guildId);
 
+    // 회원 번호를 기준으로 조회
+    @Query("SELECT gm.guild.guildName FROM GuildMember gm WHERE gm.member.memberNum = :memberNum")
+    List<String> findGuildNamesByMemberNum(@Param("memberNum") Long memberNum);
+
     // 가입 여부 확인
 //    @Query("SELECT gm.user.userNum FROM GuildMember gm WHERE gm.guild.id = :guildId AND gm.user.userNum = :memberId")
 //    Optional<Long> findMemberNumByGuildIdAndMemberId(@Param("guildId") Long guildId, @Param("memberId") Long memberId);

@@ -5,7 +5,7 @@ import com.kh.finalProject.constant.Existence;
 import com.kh.finalProject.dto.*;
 import com.kh.finalProject.entity.Member;
 import com.kh.finalProject.jwt.TokenProvider;
-import com.kh.finalProject.repository.MemberRepository;
+import com.kh.finalProject.repository.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -28,6 +28,12 @@ public class MemberService {
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
     private final TokenProvider tokenProvider;
+    private final ReviewRepository reviewRepository;
+    private final MyChallengeRepository myChallengeRepository;
+    private final GuildMemberRepository guildMemberRepository;
+    private final PointRepository pointRepository;
+    private final PaymentRepository paymentRepository;
+    private final ReportRepository reportRepository;
 
     // 사업자 회원 가입
     public MemberResponseDto signup(MemberRequestDto requestDto) {
@@ -170,6 +176,34 @@ public class MemberService {
             memberDtoList.add(memberDto);
         }
         return memberDtoList;
+    }
+
+    // 회원 번호로 대시보드용 전체 정보 조회
+    public List<MemberAllInfoDto> getMemberAllInfoByNum(Long memberNum) {
+        Optional<Member> memberOptional = memberRepository.findByMemberNum(memberNum);
+        List<MemberAllInfoDto> memberAllInfoDtoList = new ArrayList<>();
+        if (memberOptional.isPresent()) {
+            Member member = memberOptional.get();
+            MemberAllInfoDto memberAllInfoDto = new MemberAllInfoDto();
+            memberAllInfoDto.setMemberNum(member.getMemberNum());
+            List<String> reviewContents = reviewRepository.findReviewContentByUserNum(memberNum);
+            memberAllInfoDto.setReviewContents(reviewContents);
+            List<String> guildNames = guildMemberRepository.findGuildNamesByMemberNum(memberNum);
+            memberAllInfoDto.setGuildNames(guildNames);
+            List<String> challengeNames = myChallengeRepository.findChallengeNamesByMemberNum(memberNum);
+            memberAllInfoDto.setChallengeNames(challengeNames);
+            List<String> pointTypes = pointRepository.findPointTypeByMember(member);
+            memberAllInfoDto.setPointTypes(pointTypes);
+            List<String> paymentTypes = paymentRepository.findPaymentTypeByMember(member);
+            memberAllInfoDto.setPaymentTypes(paymentTypes);
+            List<String> reportTitles = reportRepository.findTitleByUserId(member.getMemberId());
+            memberAllInfoDto.setReportTitles(reportTitles);
+
+            memberAllInfoDtoList.add(memberAllInfoDto);
+
+
+        }
+        return memberAllInfoDtoList;
     }
 
     // 회원 비밀번호 변경

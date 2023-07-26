@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import com.kh.finalProject.constant.RequestCategory;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -29,5 +30,10 @@ public class Report {
     private String title;
 
     private LocalDate reportDate;
+
+    @Column (name = "category", length = 10)
+    @Enumerated(EnumType.STRING)
+    private RequestCategory category;
+
 
 }

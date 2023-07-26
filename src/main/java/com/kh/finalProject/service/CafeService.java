@@ -216,4 +216,24 @@ public class CafeService {
         }
         return cafeDtos;
     }
+
+    // 카페 검색
+    public List<CafeDetailDto> searchDataLoad(String keyword) {
+        List<CafeDetailDto> cafeDetails = new ArrayList<>();
+        List<Cafe> cafeList = cafeRepository.findWithKeyword(keyword);
+        log.info("cafe = {}", cafeList);
+        for (Cafe c : cafeList) {
+            CafeDetailDto CafeDetailDtos = new CafeDetailDto();
+            CafeDetailDtos.setId(c.getId());
+            CafeDetailDtos.setCafeName(c.getCafeName());
+            CafeDetailDtos.setMenuList(c.getCafeMenuList()
+                    .stream()
+                    .map(menu -> menu.getId() + " - " + menu.getName() + " - " + menu.getPrice()) // name과 price를 함께 매핑
+                    .collect(Collectors.toList()));
+
+            cafeDetails.add(CafeDetailDtos);
+        }
+
+        return cafeDetails;
+    }
 }

@@ -79,4 +79,11 @@ public class CafeController {
         List<CafeDto> list = cafeService.fourCafes();
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
+
+    // 검색 키워드에 해당하는 리스트 불러오기
+    @GetMapping("/searchList")
+    public ResponseEntity<List<CafeDetailDto>> searchListLoad(@RequestParam String keyword) {
+        List<CafeDetailDto> cafeList = cafeService.searchDataLoad(keyword);
+        return new ResponseEntity<>(cafeList, HttpStatus.OK);
+    }
 }

@@ -81,4 +81,7 @@ public class Member { // 사업자 회원, 아직 수정 중
 
     @OneToMany(mappedBy = "member")
     private List<MyCoupon> myCoupons = new ArrayList<>();
+
+    @OneToOne(mappedBy = "member")
+    private Roulette roulette;
 }

@@ -61,4 +61,11 @@ public class InfoController {
         Boolean result = memberService.changeMemberEmailByNum(memberNum, email);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
+    // 회원 탈퇴
+    @GetMapping("/memberwithdraw")
+    public ResponseEntity<Boolean> memberWithdraw(@RequestParam Long membernum) {
+        Boolean result = memberService.memberWithdrawByNum(membernum);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
 }

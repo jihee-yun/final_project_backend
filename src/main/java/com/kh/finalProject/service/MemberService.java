@@ -187,21 +187,37 @@ public class MemberService {
             MemberAllInfoDto memberAllInfoDto = new MemberAllInfoDto();
             memberAllInfoDto.setMemberNum(member.getMemberNum());
             List<String> reviewContents = reviewRepository.findReviewContentByUserNum(memberNum);
+            if (reviewContents.size() > 6) {
+                reviewContents = reviewContents.subList(0, 6);
+            }
             memberAllInfoDto.setReviewContents(reviewContents);
             List<String> guildNames = guildMemberRepository.findGuildNamesByMemberNum(memberNum);
+            if (guildNames.size() > 6) {
+                guildNames = guildNames.subList(0, 6);
+            }
             memberAllInfoDto.setGuildNames(guildNames);
             List<String> challengeNames = myChallengeRepository.findChallengeNamesByMemberNum(memberNum);
+            if (challengeNames.size() > 6) {
+                challengeNames = challengeNames.subList(0, 6);
+            }
             memberAllInfoDto.setChallengeNames(challengeNames);
             List<String> pointTypes = pointRepository.findPointTypeByMember(member);
+            if (pointTypes.size() > 6) {
+                pointTypes = pointTypes.subList(0, 6);
+            }
             memberAllInfoDto.setPointTypes(pointTypes);
             List<String> paymentTypes = paymentRepository.findPaymentTypeByMember(member);
+            if (paymentTypes.size() > 6) {
+                paymentTypes = paymentTypes.subList(0, 6);
+            }
             memberAllInfoDto.setPaymentTypes(paymentTypes);
             List<String> reportTitles = reportRepository.findTitleByUserId(member.getMemberId());
+            if (reportTitles.size() > 6) {
+                reportTitles = reportTitles.subList(0, 6);
+            }
             memberAllInfoDto.setReportTitles(reportTitles);
 
             memberAllInfoDtoList.add(memberAllInfoDto);
-
-
         }
         return memberAllInfoDtoList;
     }

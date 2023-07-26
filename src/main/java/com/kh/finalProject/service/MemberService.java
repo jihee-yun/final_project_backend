@@ -1,9 +1,9 @@
 package com.kh.finalProject.service;
 
 import com.kh.finalProject.constant.Authority;
+import com.kh.finalProject.constant.Existence;
 import com.kh.finalProject.dto.*;
 import com.kh.finalProject.entity.Member;
-import com.kh.finalProject.entity.User;
 import com.kh.finalProject.jwt.TokenProvider;
 import com.kh.finalProject.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +14,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
-import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -41,6 +40,15 @@ public class MemberService {
 
     // 사업자 회원 로그인
     public TokenDto login(MemberRequestDto requestDto) {
+        Optional<Member> optionalMember = memberRepository.findByMemberId(requestDto.getMemberId());
+
+        if (!optionalMember.isPresent()) {
+            throw new RuntimeException("아이디와 비밀번호를 다시 확인해주세요.."); // 예외처리 (멤버가 존재하지 않을 때)
+        }
+        Member member = optionalMember.get();
+        if (member.getExistence() != Existence.Yes) {
+            throw new RuntimeException("Member is not active"); // 예외처리 (멤버가 비활성화 상태일 때)
+        }
         UsernamePasswordAuthenticationToken authenticationToken = requestDto.toAuthentication();
         Authentication authentication = managerBuilder.getObject().authenticate(authenticationToken);
 
@@ -98,7 +106,7 @@ public class MemberService {
 //        System.out.println("임시 비밀번호 : " + temporaryPassword);
 //    }
 
-//    // 사업자 회원 아이디로 사업자 회원 번호 조회
+    //    // 사업자 회원 아이디로 사업자 회원 번호 조회
 //    public List<MemberDto> getMemberNumById(String memberId) {
 //        Optional<Member> memberOptional = memberRepository.findByMemberId(memberId);
 //        List<MemberDto> memberDtoList = new ArrayList<>();
@@ -211,6 +219,16 @@ public class MemberService {
         });
         return result.get();
     }
+    // 회원 탈퇴
+    public Boolean memberWithdrawByNum(Long memberNum) {
+        Optional<Member> memberOptional = memberRepository.findByMemberNum(memberNum);
+        AtomicBoolean result = new AtomicBoolean(false);
+        memberOptional.ifPresent(member -> {
+            member.setExistence(Existence.NO);
+            memberRepository.save(member);
+            result.set(true);
+        });
+        return result.get();
+    }
 }
-
 

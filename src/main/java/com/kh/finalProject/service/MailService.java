@@ -48,8 +48,8 @@ public class MailService {
         return true;
     }
 
-    public boolean verifyCode(String email, String code) {
-        String savedCode = verificationCodes.get(email);
+    public boolean verifyCode(String mail, String code) {
+        String savedCode = verificationCodes.get(mail);
         return code.equals(savedCode);
     }
 

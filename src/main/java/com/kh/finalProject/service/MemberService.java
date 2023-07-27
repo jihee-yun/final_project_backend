@@ -13,10 +13,12 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
 import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.security.SecureRandom;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 @Slf4j
@@ -34,6 +36,8 @@ public class MemberService {
     private final PointRepository pointRepository;
     private final PaymentRepository paymentRepository;
     private final ReportRepository reportRepository;
+    private final MailService mailService;
+    private static Map<String, String> verificationCodes = new HashMap<>();
 
     // 사업자 회원 가입
     public MemberResponseDto signup(MemberRequestDto requestDto) {
@@ -77,40 +81,56 @@ public class MemberService {
         return result;
     }
 
+
     // 비밀번호 찾기
-//    public Boolean findPw(String name, String email, String phone) {
-//        Optional<Member> userOptional = memberRepository.findByNameAndPhoneAndEmail(name, phone, email);
-//        AtomicBoolean result = new AtomicBoolean(false);
-//        userOptional.ifPresent(member -> {
-//            String temporaryPassword = generateTemporaryPassword();
-//            member.setPassword(passwordEncoder.encode(temporaryPassword)); // 비밀번호 암호화하여 설정
+    public Boolean findPw(String email, String memberId, String name) {
+        Optional<Member> memberOptional = memberRepository.findByEmailAndMemberIdAndName(email, memberId, name);
+        if (memberOptional.isEmpty()) {
+            System.out.println("회원 정보가 없습니다: email=" + email + ", memberId : " + memberId + ", name=" + name);
+            return false; // 회원 정보가 없을 경우 false 반환
+        }
+
+        Member member = memberOptional.get();
+        memberRepository.save(member);
+
+        // 인증 번호를 이메일로 전송
+        sendAuthNumberEmail(email);
+
+        return true; // 인증 번호 전송 성공 시 true 반환
+    }
+
+    private void sendAuthNumberEmail(String email) {
+        MimeMessage message = mailService.CreateMail(email);
+
+        try {
+            message.setSubject("비밀번호 재설정 인증 번호");
+            mailService.confirm(email);
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
+    // 새 비밀번호
+//    public Boolean changePw(String email, String newPassword) {
+//        Optional<Member> memberOptional = memberRepository.findByEmail(email);
+//
+//        // 이메일에 해당하는 회원을 찾았는지 확인
+//        if (memberOptional.isPresent()) {
+//            Member member = memberOptional.get();
+//            // 회원을 찾았을 경우에만 비밀번호 변경
+//            member.setPassword(newPassword);
 //            memberRepository.save(member);
-//            sendTemporaryPasswordEmail(member.getEmail(), temporaryPassword);
-//            result.set(true);
-//        });
-//        return result.get();
-//    }
-//
-//    private static final String CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()";
-//    private static final int PASSWORD_LENGTH = 10;
-//
-//    private String generateTemporaryPassword() {
-//        StringBuilder temporaryPassword = new StringBuilder();
-//        SecureRandom secureRandom = new SecureRandom();
-//
-//        for (int i = 0; i < PASSWORD_LENGTH; i++) {
-//            int randomIndex = secureRandom.nextInt(CHARACTERS.length());
-//            temporaryPassword.append(CHARACTERS.charAt(randomIndex));
+//            return true; // 비밀번호 변경 성공
 //        }
 //
-//        return temporaryPassword.toString();
+//        return false; // 회원을 찾지 못한 경우, 비밀번호 변경 실패
 //    }
-//
-//    private void sendTemporaryPasswordEmail(String email, String temporaryPassword) {
-//        // 여기서는 간단하게 콘솔에 메시지를 출력하는 것으로 대체합니다.
-//        System.out.println("임시 비밀번호를 다음 이메일로 발송합니다 : " + email);
-//        System.out.println("임시 비밀번호 : " + temporaryPassword);
-//    }
+
+
+
+
 
     //    // 사업자 회원 아이디로 사업자 회원 번호 조회
 //    public List<MemberDto> getMemberNumById(String memberId) {

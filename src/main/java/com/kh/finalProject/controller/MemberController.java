@@ -46,16 +46,16 @@ public class MemberController {
     }
 
 //    // 비밀번호 찾기
-//    @PostMapping("/findPw")
-//    public ResponseEntity<Boolean> findPw(@RequestBody Map<String, String> requestData) {
-//        String email = requestData.get("email");
-//        String phone = requestData.get("phone");
-//        String name = requestData.get("name");
-//        Boolean result = memberService.findPw(email, phone, name);
-//        return new ResponseEntity<>(result, HttpStatus.OK);
-//    }
-//
-//    // 새 비밀번호 변경
+    @PostMapping("/findPw")
+    public ResponseEntity<Boolean> findPw(@RequestBody Map<String, String> requestData) {
+        String email = requestData.get("email");
+        String memberId = requestData.get("memberId");
+        String name = requestData.get("name");
+        Boolean result = memberService.findPw(email, memberId, name);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    // 새 비밀번호 변경
 //    @PostMapping("/changePw")
 //    public ResponseEntity<Boolean> changePw(@RequestBody PasswordDto passwordDto) {
 //        String email = passwordDto.getEmail();

@@ -208,7 +208,7 @@ public class ReviewService {
         List<Review> reviews;
 
         if(category.equals("최신순")) {
-            reviews = reviewRepository.findByCafeNumOrderByWrittenTimeDesc(cafeNum);
+            reviews = reviewRepository.findByCafeNumOrderByReviewNumDesc(cafeNum);
         } else if(category.equals("좋아요순")) {
             reviews = reviewRepository.findByCafeNumOrderByLikeCountDesc(cafeNum);
         } else {

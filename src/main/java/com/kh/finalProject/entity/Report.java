@@ -1,5 +1,6 @@
 package com.kh.finalProject.entity;
 
+import com.kh.finalProject.constant.QnaCategory;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -16,7 +17,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class Report {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "report_num")
     private Long reportNum;
 
@@ -35,5 +36,7 @@ public class Report {
     @Enumerated(EnumType.STRING)
     private RequestCategory category;
 
-
+    @Column(name = "member_type")
+    @Enumerated(EnumType.STRING)
+    private QnaCategory memberType;
 }

@@ -19,7 +19,7 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
 
     List<Review> findByCafeNum(Long cafeNum);
 
-    List<Review> findByCafeNumOrderByWrittenTimeDesc(Long cafeNum);
+    List<Review> findByCafeNumOrderByReviewNumDesc(Long cafeNum);
 
     List<Review> findByCafeNumOrderByLikeCountDesc(Long cafeNum);
 }

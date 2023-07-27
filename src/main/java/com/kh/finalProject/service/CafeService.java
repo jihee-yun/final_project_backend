@@ -226,6 +226,7 @@ public class CafeService {
             CafeDetailDto CafeDetailDtos = new CafeDetailDto();
             CafeDetailDtos.setId(c.getId());
             CafeDetailDtos.setCafeName(c.getCafeName());
+            CafeDetailDtos.setIntro(c.getIntro());
             CafeDetailDtos.setMenuList(c.getCafeMenuList()
                     .stream()
                     .map(menu -> menu.getId() + " - " + menu.getName() + " - " + menu.getPrice()) // name과 price를 함께 매핑

@@ -27,7 +27,7 @@ public class MailController {
 
     @PostMapping("/verify")
     public ResponseEntity<Boolean> verifyCode(@RequestBody Map<String, String> verifyData) {
-        String mail = verifyData.get("email");
+        String mail = verifyData.get("mail");
         String code = verifyData.get("code");
         boolean result = mailService.verifyCode(mail, code);
         return new ResponseEntity<>(result, HttpStatus.OK);

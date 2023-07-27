@@ -4,7 +4,6 @@ import com.kh.finalProject.constant.Authority;
 import com.kh.finalProject.constant.Existence;
 import com.kh.finalProject.dto.*;
 import com.kh.finalProject.entity.Member;
-import com.kh.finalProject.entity.Point;
 import com.kh.finalProject.entity.Report;
 import com.kh.finalProject.jwt.TokenProvider;
 import com.kh.finalProject.repository.*;
@@ -19,15 +18,9 @@ import org.springframework.stereotype.Service;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import javax.transaction.Transactional;
-<<<<<<< Updated upstream
 import java.security.SecureRandom;
 import java.util.*;
-=======
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
->>>>>>> Stashed changes
 import java.util.concurrent.atomic.AtomicBoolean;
 
 @Slf4j

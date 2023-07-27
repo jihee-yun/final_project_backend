@@ -1,8 +1,6 @@
 package com.kh.finalProject.controller;
 
-import com.kh.finalProject.dto.MemberAllInfoDto;
-import com.kh.finalProject.dto.MemberDto;
-import com.kh.finalProject.dto.PasswordDto;
+import com.kh.finalProject.dto.*;
 import com.kh.finalProject.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -10,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Slf4j
@@ -73,6 +72,16 @@ public class InfoController {
     public ResponseEntity<Boolean> memberWithdraw(@RequestParam Long membernum) {
         Boolean result = memberService.memberWithdrawByNum(membernum);
         return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    // 임시 메소드 : 문의,신고 내역 조회
+    @PostMapping("/reportgetbynumdate")
+    public ResponseEntity<List<ReportDto>> reportInfoByNum(@RequestBody ReportDateDto checkData) {
+        Long memberNum = checkData.getMemberNum();
+        LocalDate startDate = checkData.getStartDate();
+        LocalDate endDate = checkData.getEndDate();
+        List<ReportDto> list = memberService.getReportListByNumAndDate(memberNum, startDate, endDate);
+        return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
 }

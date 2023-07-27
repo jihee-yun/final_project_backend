@@ -4,6 +4,8 @@ import com.kh.finalProject.constant.Authority;
 import com.kh.finalProject.constant.Existence;
 import com.kh.finalProject.dto.*;
 import com.kh.finalProject.entity.Member;
+import com.kh.finalProject.entity.Point;
+import com.kh.finalProject.entity.Report;
 import com.kh.finalProject.jwt.TokenProvider;
 import com.kh.finalProject.repository.*;
 import lombok.RequiredArgsConstructor;
@@ -17,8 +19,15 @@ import org.springframework.stereotype.Service;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import javax.transaction.Transactional;
+<<<<<<< Updated upstream
 import java.security.SecureRandom;
 import java.util.*;
+=======
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+>>>>>>> Stashed changes
 import java.util.concurrent.atomic.AtomicBoolean;
 
 @Slf4j
@@ -299,5 +308,26 @@ public class MemberService {
             result.set(true);
         });
         return result.get();
+    }
+
+    // 임시 메소드 : 회원 번호와 기간으로 문의,신고 조회
+    public List<ReportDto> getReportListByNumAndDate(Long memberNum, LocalDate startDate, LocalDate endDate) {
+        Member member = new Member();
+        member.setMemberNum(memberNum);
+        Optional<Member> memberOpt = memberRepository.findByMemberNum(memberNum);
+        if (memberOpt.isPresent()) {
+            Member memberFromOpt = memberOpt.get();
+            List<Report> reportList = reportRepository.findByUserIdAndReportDateBetween(memberFromOpt.getMemberId(), startDate, endDate);
+            List<ReportDto> reportDtoList = new ArrayList<>();
+            for (Report report : reportList) {
+                ReportDto reportDto = new ReportDto();
+                reportDto.setReportNum(report.getReportNum());
+                reportDto.setTitle(report.getTitle());
+                reportDto.setReportDate(report.getReportDate());
+                reportDtoList.add(reportDto);
+            }
+            return reportDtoList;
+        }
+        return new ArrayList<>();
     }
 }

@@ -8,6 +8,7 @@ import java.time.LocalDate;
 @Getter
 @Setter
 public class ReportDateDto {
+    private Long memberNum;
     private String userId;
     private LocalDate startDate;
     private LocalDate endDate;

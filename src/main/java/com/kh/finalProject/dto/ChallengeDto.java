@@ -3,7 +3,7 @@ package com.kh.finalProject.dto;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -11,9 +11,9 @@ public class ChallengeDto {
     private Long id;
     private String challengeName;
     private String thumbnail;
-//    private String detail;
-//    private int count;
+    private String detail;
+    private int count;
 //    private Long myChallengeId;
 //    private LocalDateTime startTime;
-//    private LocalDateTime endTime;
+    private LocalDate endTime;
 }

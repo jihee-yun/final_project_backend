@@ -6,7 +6,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,17 +26,17 @@ public class Challenge {
     @Column(nullable = false, length = 1000)
     private String thumbnail;
 
-//    @Column(nullable = false, length = 1000)
-//    private String detail;
-//
-//    @Column (nullable = false)
-//    private int count;
-//
+    @Column(nullable = false, length = 1000)
+    private String detail;
+
+    @Column (nullable = false)
+    private int count;
+
 //    @Column (nullable = false)
 //    private LocalDateTime startTime;
-//
-//    @Column (nullable = false)
-//    private LocalDateTime endTime;
+
+    @Column (nullable = false)
+    private LocalDate endTime;
 
     // 상품
 //    @ManyToOne

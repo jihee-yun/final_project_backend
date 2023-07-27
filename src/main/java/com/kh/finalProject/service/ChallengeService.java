@@ -59,4 +59,25 @@ public class ChallengeService {
             throw new IllegalArgumentException("챌린지 신청을 실패하였습니다.");
         }
     }
+
+    // 회원 번호로 첼린지 조회
+    public List<ChallengeDto> getChallengeListByMemberNum(Long memberNum) {
+        Optional<Member> memberOptional = memberRepository.findByMemberNum(memberNum);
+        List<ChallengeDto> challengeDtoList = new ArrayList<>();
+        if (memberOptional.isPresent()) {
+            Member member = memberOptional.get();
+            for (MyChallenge myChallenge : member.getMyChallenges()) {
+                Challenge challenge = myChallenge.getChallenge();
+                ChallengeDto challengeDto = new ChallengeDto();
+                challengeDto.setId(challenge.getId());
+                challengeDto.setChallengeName(challenge.getChallengeName());
+                challengeDto.setThumbnail(challenge.getThumbnail());
+                challengeDto.setDetail(challenge.getDetail());
+                challengeDto.setCount(challenge.getCount());
+                challengeDto.setEndTime(challenge.getEndTime());
+                challengeDtoList.add(challengeDto);
+            }
+        }
+        return  challengeDtoList;
+    }
 }

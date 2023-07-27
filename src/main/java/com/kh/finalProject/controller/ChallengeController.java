@@ -27,5 +27,12 @@ public class ChallengeController {
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
+    // 회원 번호로 챌린지 조회
+    @GetMapping("/getbynum")
+    public ResponseEntity<List<ChallengeDto>> getChallengeListByMemberNum(@RequestParam Long usernum) {
+        List<ChallengeDto> list = challengeService.getChallengeListByMemberNum(usernum);
+        return new ResponseEntity<>(list, HttpStatus.OK);
+    }
+
 
 }

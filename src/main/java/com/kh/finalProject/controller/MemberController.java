@@ -45,25 +45,24 @@ public class MemberController {
         return ResponseEntity.ok(memberDto);
     }
 
-    // 비밀번호 찾기
-    @PostMapping("/findPw")
-    public ResponseEntity<Boolean> findPw(@RequestBody Map<String, String> requestData) {
-        String email = requestData.get("email");
-        String phone = requestData.get("phone");
-        String name = requestData.get("name");
-        Boolean result = memberService.findPw(email, phone, name);
-        return new ResponseEntity<>(result, HttpStatus.OK);
-    }
-
-    // 새 비밀번호 변경
-    @PostMapping("/changePw")
-    public ResponseEntity<Boolean> changePw(@RequestBody PasswordDto passwordDto) {
-        String email = passwordDto.getEmail();
-        String newPassword = passwordDto.getNewPassword();
-        Boolean result = memberService.changePw(email, newPassword);
-        return new ResponseEntity<>(result, HttpStatus.OK);
-    }
-
+//    // 비밀번호 찾기
+//    @PostMapping("/findPw")
+//    public ResponseEntity<Boolean> findPw(@RequestBody Map<String, String> requestData) {
+//        String email = requestData.get("email");
+//        String phone = requestData.get("phone");
+//        String name = requestData.get("name");
+//        Boolean result = memberService.findPw(email, phone, name);
+//        return new ResponseEntity<>(result, HttpStatus.OK);
+//    }
+//
+//    // 새 비밀번호 변경
+//    @PostMapping("/changePw")
+//    public ResponseEntity<Boolean> changePw(@RequestBody PasswordDto passwordDto) {
+//        String email = passwordDto.getEmail();
+//        String newPassword = passwordDto.getNewPassword();
+//        Boolean result = memberService.changePw(email, newPassword);
+//        return new ResponseEntity<>(result, HttpStatus.OK);
+//    }
 
     // 회원 아이디로 회원 번호 조회
 //    @PostMapping("/numget")

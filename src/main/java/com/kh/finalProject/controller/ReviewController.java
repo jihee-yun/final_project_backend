@@ -58,9 +58,9 @@ public class ReviewController {
 
     // 특정 카페 리뷰 조회
     @GetMapping("/cafeReview")
-    public ResponseEntity<List<CafeReviewDto>> cafeReview(@RequestParam Long cafeNum) {
+    public ResponseEntity<List<CafeReviewDto>> cafeReview(@RequestParam Long cafeNum, String category) {
         System.out.println("넘어온 값 :" + cafeNum);
-        List<CafeReviewDto> list = reviewService.cafeReview(cafeNum);
+        List<CafeReviewDto> list = reviewService.cafeReview(cafeNum, category);
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
 

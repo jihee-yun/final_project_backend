@@ -204,8 +204,17 @@ public class ReviewService {
     }
 
     // 특정 카페 리뷰 조회
-    public List<CafeReviewDto> cafeReview(Long cafeNum) {
-        List<Review> reviews = reviewRepository.findByCafeNum(cafeNum);
+    public List<CafeReviewDto> cafeReview(Long cafeNum, String category) {
+        List<Review> reviews;
+
+        if(category.equals("최신순")) {
+            reviews = reviewRepository.findByCafeNumOrderByWrittenTimeDesc(cafeNum);
+        } else if(category.equals("좋아요순")) {
+            reviews = reviewRepository.findByCafeNumOrderByLikeCountDesc(cafeNum);
+        } else {
+            throw new IllegalArgumentException("잘못된 카테고리입니다.");
+        }
+
         List<CafeReviewDto> cafeReviewDtos = new ArrayList<>();
         double totalScore = 0.0;
 
@@ -239,6 +248,7 @@ public class ReviewService {
         }
         return cafeReviewDtos;
     }
+
 
     // 리뷰 좋아요 기능
     public boolean changeReviewLike(Long memNum, Long reviewNum) {

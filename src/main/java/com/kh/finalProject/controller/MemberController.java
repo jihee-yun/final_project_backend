@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.SecureRandom;
@@ -19,6 +20,7 @@ import java.util.Map;
 @CrossOrigin(origins = "http://localhost:3000")
 public class MemberController {
     private final MemberService memberService;
+    private final PasswordEncoder passwordEncoder;
 
     // 사업자 회원 회원가입
     @PostMapping("/signup")
@@ -56,13 +58,12 @@ public class MemberController {
     }
 
     // 새 비밀번호 변경
-//    @PostMapping("/changePw")
-//    public ResponseEntity<Boolean> changePw(@RequestBody PasswordDto passwordDto) {
-//        String email = passwordDto.getEmail();
-//        String newPassword = passwordDto.getNewPassword();
-//        Boolean result = memberService.changePw(email, newPassword);
-//        return new ResponseEntity<>(result, HttpStatus.OK);
-//    }
+    @PostMapping("/changePw")
+    public ResponseEntity<Boolean> changePw(@RequestBody Map<String, String> resetData) {
+        String memberId = resetData.get("memberId");
+        String newPassword = resetData.get("newPassword");
+        return ResponseEntity.ok(memberService.changePw(memberId, newPassword));
+    }
 
     // 회원 아이디로 회원 번호 조회
 //    @PostMapping("/numget")

@@ -12,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -112,29 +113,19 @@ public class MemberService {
         }
     }
 
+    // 비밀번호 변경 로직
+    public boolean changePw(String memberId, String newPassword) {
+        Optional<Member> memberOptional = memberRepository.findByMemberId(memberId);
+        if (memberOptional.isEmpty()) return false;
+        Member member = memberOptional.get();
+        member.setPassword(passwordEncoder.encode(newPassword));
+        Member savedMember = memberRepository.save(member);
+        log.info(savedMember.toString());
+        return true;
+    }
 
 
-    // 새 비밀번호
-//    public Boolean changePw(String email, String newPassword) {
-//        Optional<Member> memberOptional = memberRepository.findByEmail(email);
-//
-//        // 이메일에 해당하는 회원을 찾았는지 확인
-//        if (memberOptional.isPresent()) {
-//            Member member = memberOptional.get();
-//            // 회원을 찾았을 경우에만 비밀번호 변경
-//            member.setPassword(newPassword);
-//            memberRepository.save(member);
-//            return true; // 비밀번호 변경 성공
-//        }
-//
-//        return false; // 회원을 찾지 못한 경우, 비밀번호 변경 실패
-//    }
-
-
-
-
-
-    //    // 사업자 회원 아이디로 사업자 회원 번호 조회
+    // 사업자 회원 아이디로 사업자 회원 번호 조회
 //    public List<MemberDto> getMemberNumById(String memberId) {
 //        Optional<Member> memberOptional = memberRepository.findByMemberId(memberId);
 //        List<MemberDto> memberDtoList = new ArrayList<>();

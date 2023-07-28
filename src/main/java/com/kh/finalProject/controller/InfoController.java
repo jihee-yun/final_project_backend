@@ -33,6 +33,15 @@ public class InfoController {
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
+    // 프로필 이미지 수정
+    @PostMapping("/profileimgupdate")
+    public ResponseEntity<Boolean> memberProfileImgChange(@RequestBody MemberDto profileUrlData) {
+        Long memberNum = profileUrlData.getMemberNum();
+        String profileImgUrl = profileUrlData.getProfileImgUrl();
+        Boolean result = memberService.changeMemberProfileImageByNum(memberNum, profileImgUrl);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
     // 비밀번호 수정
     @PostMapping("/passwordchange")
     public ResponseEntity<Boolean> memberPasswordChange(@RequestBody PasswordDto passwordData) {

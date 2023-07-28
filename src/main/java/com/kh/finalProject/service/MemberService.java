@@ -235,6 +235,18 @@ public class MemberService {
         return memberAllInfoDtoList;
     }
 
+    // 회원 프로필 이미지 변경
+    public Boolean changeMemberProfileImageByNum(Long memberNum, String profileImgUrl) {
+        Optional<Member> memberOptional = memberRepository.findByMemberNum(memberNum);
+        AtomicBoolean result = new AtomicBoolean(false);
+        memberOptional.ifPresent(member -> {
+            member.setProfileImgUrl(profileImgUrl);
+            memberRepository.save(member);
+            result.set(true);
+        });
+        return result.get();
+    }
+
     // 회원 비밀번호 변경
     public Boolean changeMemberPasswordByNum(Long memberNum, String password, String newPassword) {
         Optional<Member> memberOptional = memberRepository.findByMemberNum(memberNum);

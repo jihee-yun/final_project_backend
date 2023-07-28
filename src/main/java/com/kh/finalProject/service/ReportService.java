@@ -37,6 +37,8 @@ public class ReportService {
             reportDto.setContent(report.getReportContent());
             reportDto.setTitle(report.getTitle());
             reportDto.setReportDate(report.getReportDate());
+            reportDto.setCategory(report.getCategory());
+            reportDto.setMemberType(report.getMemberType());
             reportDtoList.add(reportDto);
         }
         return reportDtoList;
@@ -52,6 +54,8 @@ public class ReportService {
             reportDto.setContent(report.getReportContent());
             reportDto.setTitle(report.getTitle());
             reportDto.setReportDate(report.getReportDate());
+            reportDto.setCategory(report.getCategory());
+            reportDto.setMemberType(report.getMemberType());
             reportDtoList.add(reportDto);
         }
         return reportDtoList;
@@ -67,6 +71,8 @@ public class ReportService {
             reportDto.setContent(report.getReportContent());
             reportDto.setTitle(report.getTitle());
             reportDto.setReportDate(report.getReportDate());
+            reportDto.setCategory(report.getCategory());
+            reportDto.setMemberType(report.getMemberType());
             reportDtoList.add(reportDto);
         }
         return reportDtoList;
@@ -78,6 +84,8 @@ public class ReportService {
         report.setReportContent(reportDto.getContent());
         report.setTitle(reportDto.getTitle());
         report.setReportDate(reportDto.getReportDate());
+        report.setCategory(report.getCategory());
+        report.setMemberType(report.getMemberType());
 
         // 데이터베이스에 저장
         Report savedReport = reportRepository.save(report);
@@ -89,6 +97,8 @@ public class ReportService {
         savedReportDto.setContent(savedReport.getReportContent());
         savedReportDto.setTitle(savedReport.getTitle());
         savedReportDto.setReportDate(savedReport.getReportDate());
+        savedReportDto.setCategory(report.getCategory());
+        savedReportDto.setMemberType(report.getMemberType());
 
         return savedReportDto;
     }

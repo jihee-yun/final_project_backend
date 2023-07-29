@@ -218,21 +218,19 @@ public class CafeService {
     }
 
     // 카페 검색
-    public List<CafeDetailDto> searchDataLoad(String keyword) {
-        List<CafeDetailDto> cafeDetails = new ArrayList<>();
+    public List<CafeDto> searchDataLoad(String keyword) {
+        List<CafeDto> cafeDetails = new ArrayList<>();
         List<Cafe> cafeList = cafeRepository.findWithKeyword(keyword);
         log.info("cafe = {}", cafeList);
         for (Cafe c : cafeList) {
-            CafeDetailDto CafeDetailDtos = new CafeDetailDto();
-            CafeDetailDtos.setId(c.getId());
-            CafeDetailDtos.setCafeName(c.getCafeName());
-            CafeDetailDtos.setIntro(c.getIntro());
-            CafeDetailDtos.setMenuList(c.getCafeMenuList()
-                    .stream()
-                    .map(menu -> menu.getId() + " - " + menu.getName() + " - " + menu.getPrice()) // name과 price를 함께 매핑
-                    .collect(Collectors.toList()));
+            CafeDto CafeDtos = new CafeDto();
+            CafeDtos.setId(c.getId());
+            CafeDtos.setCafeName(c.getCafeName());
+            CafeDtos.setRegion(c.getRegion());
+            CafeDtos.setIntro(c.getIntro());
+            CafeDtos.setThumbnail(c.getThumbnail());
 
-            cafeDetails.add(CafeDetailDtos);
+            cafeDetails.add(CafeDtos);
         }
 
         return cafeDetails;

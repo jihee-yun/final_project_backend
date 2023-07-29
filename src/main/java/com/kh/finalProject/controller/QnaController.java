@@ -33,7 +33,7 @@ public class QnaController {
 
     // 검색 키워드에 해당하는 리스트 불러오기
     @GetMapping("/searchList")
-    public ResponseEntity<List<QnaDto>> searchListLoad(@RequestParam String keyword) {
+    public ResponseEntity<List<QnaDto>> qnaSearchListLoad(@RequestParam String keyword) {
         List<QnaDto> qnaList = qnaService.searchDataLoad(keyword);
         return new ResponseEntity<>(qnaList, HttpStatus.OK);
     }

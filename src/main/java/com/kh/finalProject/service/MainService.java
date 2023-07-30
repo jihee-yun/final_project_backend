@@ -32,7 +32,6 @@ public class MainService {
 
 
         for(Cafe c : cafe) {
-            Collections.shuffle(mainDto);
             if (count >= 6) {
                 break; // 6개의 데이터를 가져왔으면 반복문 종료
             }

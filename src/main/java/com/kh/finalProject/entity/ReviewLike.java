@@ -9,7 +9,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "t_review_like")
-@Getter @Setter @ToString
+@Getter @Setter
 @NoArgsConstructor
 public class ReviewLike {
     @Id

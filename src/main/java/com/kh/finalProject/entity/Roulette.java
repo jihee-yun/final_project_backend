@@ -10,7 +10,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "t_roulette")
-@Getter @Setter @ToString
+@Getter @Setter
 @NoArgsConstructor
 public class Roulette {
     @Id

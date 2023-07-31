@@ -9,7 +9,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "t_review")
-@Getter @Setter @ToString(exclude = {"reviewLikeList"})
+@Getter @Setter
 @NoArgsConstructor // 빌더용(안쓰면 없어도 됨)
 public class Review {
     @Id

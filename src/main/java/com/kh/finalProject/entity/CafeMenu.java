@@ -9,7 +9,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "t_cafe_menu")
-@Getter @Setter @ToString
+@Getter @Setter
 @NoArgsConstructor
 public class CafeMenu {
     @Id

@@ -12,7 +12,7 @@ import java.util.List;
 
 @Entity // 디비로 생성
 @Table(name = "t_member") // 테이블 이름 정의
-@Getter @Setter @ToString
+@Getter @Setter
 @NoArgsConstructor // 디폴트 생성자 생성
 public class Member { // 사업자 회원, 아직 수정 중
     @Id
@@ -24,7 +24,6 @@ public class Member { // 사업자 회원, 아직 수정 중
     private String password;
     private String name;
     private String phone;
-    @Column(unique = true)
     private String email;
     private LocalDate birthday; // 생년월일
     @Enumerated(EnumType.STRING)
@@ -61,30 +60,30 @@ public class Member { // 사업자 회원, 아직 수정 중
     }
     
     // 아래는 맵핑 수정 필요
-    @OneToMany(mappedBy = "member")
+    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
     private List<Guild> guildList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "member")
+    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
     private List<GuildMember> guildMemberList = new ArrayList<>();
     
-    @OneToMany(mappedBy = "member")
+    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
     private List<Point> pointList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "member")
+    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
     private List<MyChallenge> myChallenges = new ArrayList<>();
 
-    @OneToMany(mappedBy = "member")
+    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
     private List<CafeLike> cafeLikeList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "member")
+    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
     private List<ReviewLike> reviewLikeList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "member")
+    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
     private List<MyCoupon> myCoupons = new ArrayList<>();
 
-    @OneToOne(mappedBy = "member")
+    @OneToOne(mappedBy = "member", fetch = FetchType.LAZY)
     private Roulette roulette;
 
-    @OneToMany(mappedBy = "member")
+    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
     private List<Cafe> cafeList = new ArrayList<>();
 }

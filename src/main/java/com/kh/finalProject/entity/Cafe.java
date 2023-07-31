@@ -11,7 +11,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "t_cafe")
-@Getter @Setter @ToString(exclude = {"cafeImgList", "cafeMenuList", "cafeLikeList"})
+@Getter @Setter
 @NoArgsConstructor
 public class Cafe {
     @Id
@@ -21,7 +21,7 @@ public class Cafe {
 
     @ManyToOne
     @JoinColumn(name = "member_num")
-    private Member member;
+    private Member member; // 카페 등록자의 회원 번호
 
     @Column(nullable = false)
     private String cafeName;

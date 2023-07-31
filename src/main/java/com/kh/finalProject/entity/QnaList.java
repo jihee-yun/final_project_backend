@@ -9,7 +9,7 @@ import javax.persistence.*;
 
 @Entity
 @Table (name = "t_qna_list")
-@Getter @Setter @ToString
+@Getter @Setter
 public class QnaList {
     @Id
     @Column(name = "qna_id")

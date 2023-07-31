@@ -12,7 +12,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "t_coupon")
-@Getter @Setter @ToString
+@Getter @Setter
 @NoArgsConstructor
 public class Coupon {
     @Id

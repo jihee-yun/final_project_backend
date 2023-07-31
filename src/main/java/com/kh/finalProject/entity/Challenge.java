@@ -12,7 +12,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "t_challenge")
-@Getter @Setter @ToString
+@Getter @Setter
 @NoArgsConstructor
 public class Challenge {
     @Id

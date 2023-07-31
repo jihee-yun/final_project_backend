@@ -1,9 +1,6 @@
 package com.kh.finalProject.controller;
 
-import com.kh.finalProject.dto.CafeCreateDto;
-import com.kh.finalProject.dto.CafeDetailDto;
-import com.kh.finalProject.dto.CafeDto;
-import com.kh.finalProject.dto.ImgDto;
+import com.kh.finalProject.dto.*;
 import com.kh.finalProject.service.CafeService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -28,8 +25,12 @@ public class CafeController {
         boolean isCreated = cafeService.createCafeByNum(cafeCreateDto);
         return new ResponseEntity<>(isCreated, HttpStatus.OK);
     }
-
-
+    // 회원 번호로 등록 카페 조회
+    @GetMapping("/memberinfo")
+    public ResponseEntity<List<CafeDto>> memberInfoByNum(@RequestParam Long membernum) {
+        List<CafeDto> list = cafeService.getCafeInfoByNum(membernum);
+        return new ResponseEntity<>(list, HttpStatus.OK);
+    }
     // 지역 및 필터링 값으로 카페 조회
     @GetMapping("/region")
     public ResponseEntity<List<CafeDto>> selectCafeList(@RequestParam String region, @RequestParam(required = false) String sortingOption) {

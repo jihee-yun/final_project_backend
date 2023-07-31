@@ -1,6 +1,7 @@
 package com.kh.finalProject.repository;
 
 import com.kh.finalProject.entity.Cafe;
+import com.kh.finalProject.entity.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -11,6 +12,8 @@ import java.util.Optional;
 
 @Repository
 public interface CafeRepository extends JpaRepository<Cafe, Long> {
+    // 회원 객체(내부 값)로 카페 조회
+    List<Cafe> findByMember(Member member);
 
     // 지역별 카페 조회
     List<Cafe> findByRegion(String region);

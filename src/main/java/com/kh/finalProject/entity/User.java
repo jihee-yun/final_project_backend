@@ -12,7 +12,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "T_User")
-@Getter @Setter @ToString
+@Getter @Setter
 @NoArgsConstructor
 public class User { // 일반 회원
     @Id

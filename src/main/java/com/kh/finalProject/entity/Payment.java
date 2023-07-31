@@ -12,7 +12,6 @@ import java.time.LocalDate;
 @Table(name = "t_payment")
 @Getter
 @Setter
-@ToString
 @NoArgsConstructor
 public class Payment { // 결제 내역 저장 테이블
     @Id

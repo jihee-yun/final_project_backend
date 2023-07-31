@@ -23,6 +23,9 @@ public class MyChallenge {
     @JoinColumn(name = "T_user_num")
     private Member member;
 
+    @Column (nullable = false)
+    private int count;
+
     // 장바구니
 //    @OneToMany(mappedBy = "myChallenge")
 //    private List<Challenge> challenges = new ArrayList<>();

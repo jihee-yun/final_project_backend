@@ -84,4 +84,7 @@ public class Member { // 사업자 회원, 아직 수정 중
 
     @OneToOne(mappedBy = "member")
     private Roulette roulette;
+
+    @OneToMany(mappedBy = "member")
+    private List<Cafe> cafeList = new ArrayList<>();
 }

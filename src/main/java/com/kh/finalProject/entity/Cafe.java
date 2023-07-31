@@ -19,6 +19,10 @@ public class Cafe {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @ManyToOne
+    @JoinColumn(name = "member_num")
+    private Member member;
+
     @Column(nullable = false)
     private String cafeName;
 

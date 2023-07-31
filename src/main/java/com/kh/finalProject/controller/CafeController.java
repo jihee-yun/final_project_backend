@@ -1,5 +1,6 @@
 package com.kh.finalProject.controller;
 
+import com.kh.finalProject.dto.CafeCreateDto;
 import com.kh.finalProject.dto.CafeDetailDto;
 import com.kh.finalProject.dto.CafeDto;
 import com.kh.finalProject.dto.ImgDto;
@@ -20,6 +21,14 @@ import java.util.Map;
 @CrossOrigin(origins = "http://localhost:3000", exposedHeaders = "Authorization")
 public class CafeController {
     private final CafeService cafeService;
+
+    // 카페 등록
+    @PostMapping("/cafecreate")
+    public ResponseEntity<Boolean> createCafe(@RequestBody CafeCreateDto cafeCreateDto) {
+        boolean isCreated = cafeService.createCafeByNum(cafeCreateDto);
+        return new ResponseEntity<>(isCreated, HttpStatus.OK);
+    }
+
 
     // 지역 및 필터링 값으로 카페 조회
     @GetMapping("/region")

@@ -35,6 +35,7 @@ public class MemberService {
     private final TokenProvider tokenProvider;
     private final ReviewRepository reviewRepository;
     private final MyChallengeRepository myChallengeRepository;
+    private final GuildRepository guildRepository;
     private final GuildMemberRepository guildMemberRepository;
     private final PointRepository pointRepository;
     private final PaymentRepository paymentRepository;
@@ -204,11 +205,22 @@ public class MemberService {
                 reviewContents = reviewContents.subList(0, 6);
             }
             memberAllInfoDto.setReviewContents(reviewContents);
-            List<String> guildNames = guildMemberRepository.findGuildNamesByMemberNum(memberNum);
-            if (guildNames.size() > 6) {
-                guildNames = guildNames.subList(0, 6);
+
+            List<String> guildNames = new ArrayList<>();
+            List<String> guildNames1 = guildRepository.findGuildNamesByMemberNum(memberNum);
+            List<String> guildNames2 = guildMemberRepository.findGuildNamesByMemberNum(memberNum);
+            // guildNames1에서 데이터를 추가
+            for (int i = 0; i < Math.min(6, guildNames1.size()); i++) {
+                guildNames.add(guildNames1.get(i));
+            }
+            // guildNames1의 크기가 6보다 작을 경우 guildNames2에서 데이터를 추가
+            if (guildNames.size() < 6) {
+                for (int i = 0; i < Math.min(6 - guildNames.size(), guildNames2.size()); i++) {
+                    guildNames.add(guildNames2.get(i));
+                }
             }
             memberAllInfoDto.setGuildNames(guildNames);
+
             List<String> challengeNames = myChallengeRepository.findChallengeNamesByMemberNum(memberNum);
             if (challengeNames.size() > 6) {
                 challengeNames = challengeNames.subList(0, 6);

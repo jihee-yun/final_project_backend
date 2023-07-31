@@ -24,10 +24,6 @@ public class Point {
     @Column
     private String pointType;
 
-    @OneToOne
-    @JoinColumn(name = "user_num", referencedColumnName = "userNum")
-    private User user;
-
     @ManyToOne
     @JoinColumn(name = "T_userNum")
     private Member member;

@@ -28,10 +28,8 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class GuildService {
     private final GuildRepository guildRepository;
-    private final UserRepository userRepository;
     private final MemberRepository memberRepository;
     private final GuildMemberRepository guildMemberRepository;
-    private final EntityManager entityManager;
 
     // 생성 길드 전체 조회(네이티브 쿼리문 날리지 않고)
     public List<GuildDto> allGuildListWithUsers(String guildList) {
@@ -177,7 +175,6 @@ public class GuildService {
         Member member = new Member();
         member.setMemberNum(memberNum);
         List<Guild> guildList = guildRepository.findByMember(member);
-
         List<GuildDto> guildDtoList = new ArrayList<>();
         for (Guild guild : guildList) {
             GuildDto guildDto = new GuildDto();
@@ -189,6 +186,21 @@ public class GuildService {
             guildDto.setThumbnail(guild.getThumbnail());
             guildDtoList.add(guildDto);
         }
+        List<String> guildNameList = guildMemberRepository.findGuildNamesByMemberNum(memberNum);
+        for (String guildName : guildNameList) {
+            List<Guild> guildList1 = guildRepository.findByGuildName(guildName);
+                for (Guild guild : guildList1) {
+                    GuildDto guildDto = new GuildDto();
+                    guildDto.setId(guild.getId());
+                    guildDto.setGuildName(guild.getGuildName());
+                    guildDto.setCategory(guild.getCategory());
+                    guildDto.setRegion(guild.getRegion());
+                    guildDto.setIntro(guild.getIntro());
+                    guildDto.setThumbnail(guild.getThumbnail());
+                    guildDtoList.add(guildDto);
+                }
+        }
+
         return guildDtoList;
     }
 

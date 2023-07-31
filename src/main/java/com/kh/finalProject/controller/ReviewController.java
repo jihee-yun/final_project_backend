@@ -33,7 +33,7 @@ public class ReviewController {
         List<ReviewDto> list = reviewService.getReviewListByNum(userNum);
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
-
+    // 회원 번호와 기간을 두 개 받아와 기간 내 리뷰 조회
     @PostMapping("/getbynumdate")
     public ResponseEntity<List<ReviewDto>> reviewListByNumAndDate(@RequestBody ReviewDateDto checkData) {
         Long userNum = checkData.getUserNum();

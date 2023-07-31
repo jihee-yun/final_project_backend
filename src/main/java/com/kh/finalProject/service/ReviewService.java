@@ -21,7 +21,6 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class ReviewService {
     private final ReviewRepository reviewRepository;
-    private final UserRepository userRepository;
     private final MemberRepository memberRepository;
     private final CafeRepository cafeRepository;
     private final ReviewLikeRepository reviewLikeRepository;
@@ -112,6 +111,8 @@ public class ReviewService {
             reviewDto.setReviewNum(review.getReviewNum());
             reviewDto.setUserNum(review.getUserNum());
             reviewDto.setCafeNum(review.getCafeNum());
+            Cafe cafe = cafeRepository.findById(review.getCafeNum()).orElseThrow(() -> new RuntimeException("Cafe not found"));
+            reviewDto.setCafeName(cafe.getCafeName());
             reviewDto.setReviewContent(review.getReviewContent());
             reviewDto.setReviewImgUrl1(review.getReviewImgUrl1());
             reviewDto.setReviewImgUrl2(review.getReviewImgUrl2());

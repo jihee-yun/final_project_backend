@@ -10,7 +10,7 @@ import java.time.LocalDate;
 
 @Entity
 @Table(name = "t_point")
-@Getter @Setter
+@Getter @Setter @ToString
 @NoArgsConstructor
 public class Point {
     @Id

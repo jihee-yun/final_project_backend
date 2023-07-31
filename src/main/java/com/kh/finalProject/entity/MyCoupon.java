@@ -8,7 +8,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "t_my_coupon")
-@Getter @Setter
+@Getter @Setter @ToString
 public class MyCoupon {
 
     @Id

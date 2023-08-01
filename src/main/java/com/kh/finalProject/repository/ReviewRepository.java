@@ -3,6 +3,7 @@ package com.kh.finalProject.repository;
 import com.kh.finalProject.entity.Review;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
@@ -16,10 +17,13 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
     List<String> findReviewContentByUserNum(Long userNum);
     List<Review> findByReviewNum(Long reviewNum);
     List<Review> findByUserNumAndWrittenTimeBetween(Long userNum, LocalDate startDate, LocalDate endDate);
+    // 회원 번호로 등록된 카페 조회 후 해당 카페의 리뷰를 두 기간 사이로 조회함
+    List<Review> findByCafeNumAndWrittenTimeBetween(Long userNum, LocalDate startDate, LocalDate endDate);
 
     List<Review> findByCafeNum(Long cafeNum);
 
     List<Review> findByCafeNumOrderByReviewNumDesc(Long cafeNum);
 
     List<Review> findByCafeNumOrderByLikeCountDesc(Long cafeNum);
+
 }

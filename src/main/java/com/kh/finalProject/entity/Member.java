@@ -14,7 +14,7 @@ import java.util.List;
 @Table(name = "t_member") // 테이블 이름 정의
 @Getter @Setter
 @NoArgsConstructor // 디폴트 생성자 생성
-public class Member { // 사업자 회원, 아직 수정 중
+public class Member {
     @Id
     @Column(name = "member_num_pk")
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -59,18 +59,18 @@ public class Member { // 사업자 회원, 아직 수정 중
         this.authority = authority;
     }
     
-    // 아래는 맵핑 수정 필요
+    // 맵핑
     @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
     private List<Guild> guildList = new ArrayList<>();
 
     @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
     private List<GuildMember> guildMemberList = new ArrayList<>();
-    
-    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
-    private List<Point> pointList = new ArrayList<>();
 
     @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
     private List<MyChallenge> myChallenges = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
+    private List<Cafe> cafeList = new ArrayList<>();
 
     @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
     private List<CafeLike> cafeLikeList = new ArrayList<>();
@@ -79,11 +79,11 @@ public class Member { // 사업자 회원, 아직 수정 중
     private List<ReviewLike> reviewLikeList = new ArrayList<>();
 
     @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
+    private List<Point> pointList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
     private List<MyCoupon> myCoupons = new ArrayList<>();
 
     @OneToOne(mappedBy = "member", fetch = FetchType.LAZY)
     private Roulette roulette;
-
-    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
-    private List<Cafe> cafeList = new ArrayList<>();
 }

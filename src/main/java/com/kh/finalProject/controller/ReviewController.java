@@ -29,8 +29,8 @@ public class ReviewController {
     }
 
     @GetMapping("/getbynum")
-    public ResponseEntity<List<ReviewDto>> reviewListByNum(@RequestParam Long userNum) {
-        List<ReviewDto> list = reviewService.getReviewListByNum(userNum);
+    public ResponseEntity<List<ReviewDto>> reviewListByNum(@RequestParam Long usernum) {
+        List<ReviewDto> list = reviewService.getReviewListByNum(usernum);
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
     // 회원 번호와 기간을 두 개 받아와 기간 내 리뷰 조회
@@ -40,6 +40,16 @@ public class ReviewController {
         LocalDate startDate = checkData.getStartDate();
         LocalDate endDate = checkData.getEndDate();
         List<ReviewDto> list = reviewService.getReviewListByNumAndDate(userNum, startDate, endDate);
+        return new ResponseEntity<>(list, HttpStatus.OK);
+    }
+
+    // 회원 번호를 받아 등록 카페 검색 후 해당 카페들 리뷰 조회
+    @PostMapping("/getbymembercafe")
+    public ResponseEntity<List<ReviewDto>> reviewListByMemberNumCafe(@RequestBody ReviewDateDto checkData) {
+        Long userNum = checkData.getUserNum();
+        LocalDate startDate = checkData.getStartDate();
+        LocalDate endDate = checkData.getEndDate();
+        List<ReviewDto> list = reviewService.getCafeReviewListByNumAndDate(userNum, startDate, endDate);
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
 

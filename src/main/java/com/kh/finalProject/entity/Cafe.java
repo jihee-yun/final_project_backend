@@ -53,12 +53,15 @@ public class Cafe {
     @Column(nullable = false)
     private double score; // 별점
 
-    @OneToMany(mappedBy = "cafe")
+    @OneToMany(mappedBy = "cafe", fetch = FetchType.LAZY)
     private List<CafeImg> cafeImgList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "cafe")
+    @OneToMany(mappedBy = "cafe", fetch = FetchType.LAZY)
     private List<CafeMenu> cafeMenuList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "cafe")
+    @OneToMany(mappedBy = "cafe", fetch = FetchType.LAZY)
     private List<CafeLike> cafeLikeList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "cafe", fetch = FetchType.LAZY)
+    private List<Review> reviewList = new ArrayList<>();
 }

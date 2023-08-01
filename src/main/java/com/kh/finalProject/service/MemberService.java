@@ -192,7 +192,7 @@ public class MemberService {
         return memberDtoList;
     }
 
-    // 회원 번호로 대시보드용 전체 정보 조회
+    // 회원 번호로 대시보드용 전체 조회
     public List<MemberAllInfoDto> getMemberAllInfoByNum(Long memberNum) {
         Optional<Member> memberOptional = memberRepository.findByMemberNum(memberNum);
         List<MemberAllInfoDto> memberAllInfoDtoList = new ArrayList<>();
@@ -245,6 +245,18 @@ public class MemberService {
             memberAllInfoDtoList.add(memberAllInfoDto);
         }
         return memberAllInfoDtoList;
+    }
+    // 회원 번호로 사업자 대시보드요 정보 조회
+    public List<BusinessMemberAllInfoDto> getBusinessAllInfoByNum(Long memberNum) {
+        Optional<Member> memberOptional = memberRepository.findByMemberNum(memberNum);
+        List<BusinessMemberAllInfoDto> infoDtoList = new ArrayList<>();
+
+
+
+
+
+
+        return infoDtoList;
     }
 
     // 회원 프로필 이미지 변경

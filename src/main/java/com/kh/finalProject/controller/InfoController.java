@@ -26,6 +26,13 @@ public class InfoController {
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
+    // 대시보드용 사업자 회원 정보 전체 조회
+    @GetMapping("/businessallinfo")
+    public ResponseEntity<List<BusinessMemberAllInfoDto>> businessMemberAllInfoByNum(@RequestParam Long membernum) {
+        List<BusinessMemberAllInfoDto> list = memberService.getBusinessAllInfoByNum(membernum);
+        return new ResponseEntity<>(list, HttpStatus.OK);
+    }
+
     // 회원정보 수정에 필요한 회원 정보 대부분 조회
     @GetMapping("/memberinfo")
     public ResponseEntity<List<MemberDto>> memberInfoByNum(@RequestParam Long membernum) {

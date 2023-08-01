@@ -12,6 +12,8 @@ import java.util.Optional;
 
 @Repository
 public interface CafeRepository extends JpaRepository<Cafe, Long> {
+    List<Cafe> findByMemberMemberNum(Long memberNum);
+
     // 회원 객체(내부 값)로 카페 조회
     List<Cafe> findByMember(Member member);
 

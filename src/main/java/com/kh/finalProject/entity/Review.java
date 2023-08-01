@@ -10,7 +10,7 @@ import java.util.List;
 @Entity
 @Table(name = "t_review")
 @Getter @Setter @ToString(exclude = {"reviewLikeList"})
-@NoArgsConstructor // 빌더용(안쓰면 없어도 됨)
+@NoArgsConstructor // 빌더용
 public class Review {
     @Id
     @Column(name = "review_num_pk")
@@ -31,5 +31,7 @@ public class Review {
     @OneToMany(mappedBy = "review", cascade = CascadeType.ALL)
     private List<ReviewLike> reviewLikeList = new ArrayList<>();
 
-
+    @ManyToOne
+    @JoinColumn(name = "cafe_id")
+    private Cafe cafe; // Review가 작성된 Cafe 정보
 }

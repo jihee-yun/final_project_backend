@@ -1,17 +1,19 @@
 # SWEETKINGDOM
 <div align="center">
-	<img src="https://img.shields.io/badge/Java-007396?style=flat&logo=Java&logoColor=white" />
-  <img src="https://img.shields.io/badge/Spring Boot-6DB33F?style=flat&logo=Java&logoColor=white" />
-  <img src="https://img.shields.io/badge/Javascript-F7DF1E?style=flat&logo=Java&logoColor=white" />
-  <img src="https://img.shields.io/badge/React-61DAFB?style=flat&logo=Java&logoColor=white" />
-	<img src="https://img.shields.io/badge/React Native-09D3AC?style=flat&logo=HTML5&logoColor=white" />
-	<img src="https://img.shields.io/badge/HTML5-E34F26?style=flat&logo=CSS3&logoColor=white" />
-  <img src="https://img.shields.io/badge/Sass-CC6699?style=flat&logo=CSS3&logoColor=white" />
-  <img src="https://img.shields.io/badge/MySQL-4479A1?style=flat&logo=CSS3&logoColor=white" />
-  <img src="https://img.shields.io/badge/Firebase-FFCA28?style=flat&logo=CSS3&logoColor=white" />
+	<img src="https://img.shields.io/badge/Java-FF160B?style=for-the-badge&logo=Conda-Forge&logoColor=white" />
+	<img src="https://img.shields.io/badge/Spring Boot-6DB33F?style=for-the-badge&logo=Java&logoColor=white" />
+ 	<img src="https://img.shields.io/badge/Javascript-F7DF1E?style=for-the-badge&logo=Javascript&logoColor=white" />
+ 	<img src="https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=React&logoColor=white" />
+	<img src="https://img.shields.io/badge/React Native-09D3AC?style=for-the-badge&logo=Create React App&logoColor=white" />
+	<img src="https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=HTML5&logoColor=white" />
+ 	<img src="https://img.shields.io/badge/Sass-CC6699?style=for-the-badge&logo=Sass&logoColor=white" />
+ 	<img src="https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=MySQL&logoColor=white" />
+ 	<img src="https://img.shields.io/badge/Firebase-FFCA28?style=for-the-badge&logo=firebase&logoColor=white" />
+	<img src="https://img.shields.io/badge/Firebase-FFCA28?style=for-the-badge&logo=firebase&logoColor=white" />
+	<img src="https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=Git&logoColor=white" />
+	<img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=GitHub&logoColor=white" />
+  	<img src="https://img.shields.io/badge/AWS-FF9900?style=for-the-badge&logo=AmazonAWS&logoColor=white" />
 </div>  
-
-
 
   
 

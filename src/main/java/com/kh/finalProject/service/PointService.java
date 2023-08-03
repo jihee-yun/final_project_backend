@@ -77,7 +77,7 @@ public class PointService {
             Payment payment = new Payment();
             payment.setMember(member);
             payment.setPoint(chargingPoint.intValue());
-            payment.setPaymentType("포인트 결제 충전");
+            payment.setPaymentType(chargingPoint.intValue() + "포인트 결제 충전");
             payment.setPaymentDate(LocalDate.now());
             paymentRepository.save(payment);
 

@@ -39,4 +39,9 @@ public interface CafeRepository extends JpaRepository<Cafe, Long> {
     // 카페 이름 & 메뉴로 검색 조회
     @Query("SELECT c FROM Cafe c LEFT JOIN CafeMenu menu ON c.id = menu.id WHERE c.cafeName LIKE %:keyword% OR menu.name LIKE %:keyword% ORDER BY c.id DESC")
     List<Cafe> findWithKeyword(@Param("keyword") String keyword);
+
+    // 카페 이름만 등록 회원 번호로 조회
+    @Query("SELECT c.cafeName FROM Cafe c WHERE c.member.memberNum = :memberNum")
+    List<String> findCafeNamesByMemberNum(@Param("memberNum") Long memberNum);
+
 }

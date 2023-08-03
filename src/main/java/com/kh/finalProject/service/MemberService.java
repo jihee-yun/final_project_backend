@@ -40,6 +40,7 @@ public class MemberService {
     private final PointRepository pointRepository;
     private final PaymentRepository paymentRepository;
     private final ReportRepository reportRepository;
+    private final CafeRepository cafeRepository;
     private final MailService mailService;
     private static Map<String, String> verificationCodes = new HashMap<>();
 
@@ -250,12 +251,31 @@ public class MemberService {
     public List<BusinessMemberAllInfoDto> getBusinessAllInfoByNum(Long memberNum) {
         Optional<Member> memberOptional = memberRepository.findByMemberNum(memberNum);
         List<BusinessMemberAllInfoDto> infoDtoList = new ArrayList<>();
+        if (memberOptional.isPresent()) {
+            Member member = memberOptional.get();
+            BusinessMemberAllInfoDto memberAllInfoDto = new BusinessMemberAllInfoDto();
+            memberAllInfoDto.setMemberNum(member.getMemberNum());
 
+            List<String> cafeNames = cafeRepository.findCafeNamesByMemberNum(memberNum);
+            if (cafeNames.size() > 6) {
+                cafeNames = cafeNames.subList(0, 6);
+            }
+            memberAllInfoDto.setCafeNames(cafeNames);
 
+            List<String> reviewContents = reviewRepository.findReviewContentByUserNum(memberNum);
+            if (reviewContents.size() > 6) {
+                reviewContents = reviewContents.subList(0, 6);
+            }
+            memberAllInfoDto.setReviewContents(reviewContents);
 
+            List<String> reportTitles = reportRepository.findTitleByUserId(member.getMemberId());
+            if (reportTitles.size() > 6) {
+                reportTitles = reportTitles.subList(0, 6);
+            }
+            memberAllInfoDto.setReportTitles(reportTitles);
 
-
-
+            infoDtoList.add(memberAllInfoDto);
+        }
         return infoDtoList;
     }
 
